@@ -1,0 +1,18 @@
+2021-07-13 14:24:43,258 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 14:25:02,674 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 14:26:21,588 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 14:29:43,605 - pyswarms.single.global_best - INFO - Optimization finished | best cost: 103.0773798516055, best pos: [520.  24. 416. 656. 216.   0. 224.  40. 888.]
+2021-07-13 14:36:39,257 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 14:40:04,379 - pyswarms.single.global_best - INFO - Optimization finished | best cost: 19.41276004041467, best pos: [864.    712.    680.    616.    776.      0.    542.875 384.    168.   ]
+2021-07-13 14:42:52,508 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 14:42:56,422 - pyswarms.single.global_best - INFO - Optimization finished | best cost: 379.4429476171324, best pos: [130.75311693 835.21185146 722.2023744  510.07896882  75.98347489
+ 168.77824368 797.00564761  33.45324802  63.96118719]
+2021-07-13 14:43:18,653 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 14:46:44,733 - pyswarms.single.global_best - INFO - Optimization finished | best cost: 0.5617825377925746, best pos: [200.  576.  280.  808.  655.5   0.   24.  624.  216. ]
+2021-07-13 17:20:42,173 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 17:21:06,654 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 17:24:25,150 - pyswarms.single.global_best - INFO - Optimization finished | best cost: 0.9792755048454977, best pos: [ 984.  136.  520.  376.  936.    0.    8.  752. 1000.]
+2021-07-13 17:24:54,160 - pyswarms.single.global_best - INFO - Optimize for 100 iters with {'c1': 0.5, 'c2': 2, 'w': 2}
+2021-07-13 17:31:46,224 - pyswarms.single.global_best - INFO - Optimization finished | best cost: 1.32143062443503, best pos: [9.44402771e+02 8.29172003e+02 1.99255310e+02 4.68277344e+02
+ 8.44547974e+02 3.22433472e-01 8.59356567e+02 6.73669113e+02
+ 7.24939514e+02]

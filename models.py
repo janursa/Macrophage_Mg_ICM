@@ -32,20 +32,14 @@ def initial_conditions(model,calib_params):
 
 
 class PARAMS:
-    # targets = ['NFKB', 'pIKK', 'TAK1']
-    # targets = ['NFKB','pIKK']
-    targets = ['pIKK']
+    targets = ['NFKB', 'pIKK', 'TAK1']
     duration = 1500
-    free_params = {'NEMO_IKK':[0,100000],'k301':[0,10000],'k302':[0,1000],
-                'k303':[0,1000],'k304':[0,1000],'k305':[0,1000],'k306':[0,1000],
-                'k307':[0,1000],'k308':[0,1000]}
-    free_params = {'k191':[0,100000]}
-    # free_params=['k191']
-    # free_params = ['NEMO_IKK','k301']
+    free_params = {'Mg_e':[0,1000], 'NEMO_IKK':[0,1000],'k301':[0,1000],'k302':[0,1000],
+                'k303':[0,1000],'k304':[0,1000],'k308':[0,1000]}
+
     replica_n = 1
 
 Zhao_2021 = te.loadSBMLModel("Zhao_2021.xml") 
-# Mg_model = te.loadSBMLModel("Mg_M.xml") 
 Mg_model = te.loadSBMLModel("Mg_M.xml") 
 
 

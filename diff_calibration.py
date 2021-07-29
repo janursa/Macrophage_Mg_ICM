@@ -50,8 +50,6 @@ def cost_function(calib_params):
 	# print('error',error)
 	return error
 
-
-
 def optimize():
 	# Call instance of PSO
 	results = differential_evolution(cost_function,bounds=SETTINGS.params,disp=True,maxiter=SETTINGS.max_iters)

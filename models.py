@@ -30,17 +30,38 @@ def initial_conditions(model,calib_params):
         free_param_name = keys[i]
         model[free_param_name] = calib_params[i]
 
-
+def reset(model,params = None): # resets the given model and also sets those that cannot be reset by default
+    model.reset()
+    model['Mg_e_mM'] = 0.8
+    if params == None:
+        pass
+    else:
+        for key,value in params.items():
+            model[key] = value
+    
 class PARAMS:
     targets = ['NFKB', 'pIKK', 'TAK1']
     duration = 1500
-    free_params = {'Mg_e':[0,1000], 'NEMO_IKK':[0,1000],'k301':[0,1000],'k302':[0,1000],
-                'k303':[0,1000],'k304':[0,1000],'k308':[0,1000]}
+    free_params_model = { 'NEMO_IKK':[0,1000],
+                          'k301':[0,1], # Mg diffusion should be really slow
+                          'k302':[0,1],
+                          'k303':[0,1],
+                          'k304':[0,1],
+                          'k308':[0,1000],
+                          'k309':[0,1], # degradation of Mg_NEMO
+                          'k310':[0,1000], # saturation coeff of NEMO_IKK
+                          'Mg_NEMO':[0,10000],
+                          'Mg_copy':[0,10000]}
+    free_params_model_n = len(free_params_model.keys())
 
+    free_params_observations = {'Quao_2021':[0.001,1000]}
+    free_params_observations_n = len(free_params_observations.keys())
+
+    free_params = {**free_params_model, **free_params_observations}
     replica_n = 1
 
 Zhao_2021 = te.loadSBMLModel("Zhao_2021.xml") 
-Mg_model = te.loadSBMLModel("Mg_M.xml") 
+Mg_M = te.loadSBMLModel("Mg_M.xml") 
 
 
 

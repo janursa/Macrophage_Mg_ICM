@@ -218,10 +218,10 @@
       <species id="pIRAK4" compartment="unnamed" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="GSK3b" compartment="unnamed" initialAmount="87270" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pGSK3b" compartment="unnamed" initialAmount="52730" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="NEMO_IKK" compartment="default_compartment" initialConcentration="1000" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="Mg" compartment="default_compartment" initialAmount="1000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg_NEMO" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg_e" compartment="default_compartment" initialConcentration="1000" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="NEMO_IKK" compartment="default_compartment" initialAmount="1000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg" compartment="default_compartment" initialAmount="800" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_NEMO" compartment="default_compartment" initialAmount="1000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_e" compartment="default_compartment" initialConcentration="800" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="NEMO_IKK_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
@@ -456,9 +456,9 @@
       <parameter id="k188" value="0.5" constant="true"/>
       <parameter id="k189" value="5e-08" constant="true"/>
       <parameter id="k190" value="1" constant="true"/>
-      <parameter id="k302" value="100" constant="true"/>
-      <parameter id="k303" value="100" constant="true"/>
-      <parameter id="k304" value="100" constant="true"/>
+      <parameter id="k302" value="0.01" constant="true"/>
+      <parameter id="k303" value="0.01" constant="true"/>
+      <parameter id="k304" value="0.01" constant="true"/>
       <parameter id="k192" value="5.2e-10" constant="true"/>
       <parameter id="k193" value="0.3" constant="true"/>
       <parameter id="k195" value="4.9739" constant="true"/>
@@ -549,13 +549,30 @@
       <parameter id="k257" value="1.04e-10" constant="true"/>
       <parameter id="k258" value="0.1" constant="true"/>
       <parameter id="k191" value="100" constant="true"/>
-      <parameter id="k301" value="100" constant="true"/>
+      <parameter id="Mg_e_mM" value="0.8" constant="true"/>
+      <parameter id="Mg_copy" value="1000" constant="true"/>
+      <parameter id="k301" value="0.1" constant="true"/>
       <parameter id="k308" value="100" constant="true"/>
+      <parameter id="k310" value="100" constant="true"/>
+      <parameter id="k309" value="0.1" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="Mg">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <ci> Mg_e </ci>
+          <apply>
+            <times/>
+            <cn> 0.8 </cn>
+            <ci> Mg_copy </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="Mg_e">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> Mg_e_mM </ci>
+            <ci> Mg_copy </ci>
+          </apply>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -7274,7 +7291,32 @@
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <ci> k308 </ci>
+            <apply>
+              <minus/>
+              <ci> k308 </ci>
+              <apply>
+                <times/>
+                <ci> k310 </ci>
+                <ci> NEMO_IKK </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J2" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="Mg_NEMO" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k309 </ci>
+              <ci> Mg_NEMO </ci>
+            </apply>
           </math>
         </kineticLaw>
       </reaction>

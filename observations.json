@@ -8,6 +8,9 @@
         "experiment_period": 72,
         "measurement_scheme": {
             "IL1b": [
+                6,
+                12,
+                24,
                 48,
                 72
             ]
@@ -35,6 +38,9 @@
             "expectations": {
                 "IL1b": {
                     "mean": [
+                        1950,
+                        1200,
+                        1000,
                         1700,
                         1950
                     ]

@@ -7,15 +7,12 @@
         "culture_volume": null,
         "experiment_period": 72,
         "measurement_scheme": {
-            "IL1b": [
-                6,
-                12,
-                24,
-                48,
+            "IL8": [
                 72
             ]
         },
         "IDs": [
+            "Mg_.08",
             "Mg_8"
         ],
         "Mg_.08": {
@@ -23,6 +20,11 @@
                 "Mg_e_mM": 0.08
             },
             "expectations": {
+                "IL8": {
+                    "mean": [
+                        32000
+                    ]
+                },
                 "IL1b": {
                     "mean": [
                         3000,
@@ -36,6 +38,11 @@
                 "Mg_e_mM": 8
             },
             "expectations": {
+                "IL8": {
+                    "mean": [
+                        37000
+                    ]
+                },
                 "IL1b": {
                     "mean": [
                         1950,

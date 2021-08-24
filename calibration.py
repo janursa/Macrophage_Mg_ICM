@@ -10,8 +10,7 @@ with open('samples.json') as json_file:
 	samples = json.load(json_file)
 
 #// load the observation
-with open('observations.json') as file:
-	observations = json.load(file)
+from observations import observations
 #// Set-up hyperparameters
 class SETTINGS:
 	params = list(PARAMS.free_params.values())
@@ -79,7 +78,8 @@ def cost_function(calib_params):
 					Mg_M[key] = value
 				ID_results = Mg_M.simulate(0,simulation_period,simulation_period,selections=selections)
 				tag_errors = []
-				for key in ID_observations.keys():
+				for key in measurement_scheme.keys():
+					# print(key)
 					exp = ID_observations[key]['mean'] # the whole array
 					sim = ID_results[key]
 					

@@ -4,46 +4,66 @@ import numpy as np
 class PARAMS:
     targets = ['NFKB', 'pIKK', 'TAK1']
     duration = 1500
-    free_params_model = { 'NEMO_IKK':[0,10000],
-                          'k301':[0,1], # Mg diffusion should be really slow
-                          'k302':[0,1],
-                          'k303':[0,1],
-                          'k304':[0,1],
-                          'k308':[0,1000],
-                          'k309':[0,1], # degradation of Mg_NEMO
-                          'k310':[0,1000], # saturation coeff of NEMO_IKK
-                          'k311':[0,100], # production coeff of TRPM
-                          'k312':[0,100], # saturation coeff of TRPM
-                          'k313':[0,1], # degradation of TRPM
-                          'k315':[0,1000], # saturation coeff of M7CKs
-                          'M7CKs':[0,10000],
-                          'M7CKs_n':[0,10000], 
-                          'k316':[0,100], #  coeff of M7CKs nuclear translocation
-                          'k317':[0,100], # saturation coeff of M7CKs_n
-                          'k318':[0,100], # coeff of M7CKs cytoplasm translocation
-                          'k319':[0,100], # saturation coeff of M7CKs
-                          'k320':[0,100], # coeff of H3S10 activation
-                          'k321':[0,100], # saturation coeff of H3S10
-                          'k322':[0,1], # degradation rate of H3S10
-                          'TRPM':[0,10000], #initial concentration of TRPM
-                          'H3S10':[0,10000],
-                          'k323':[0,100], # phosphorylatio rate of H3S10
-                          'k324':[0,100], # saturation rate of pH3S10
-                          'pH3S10': [0,10000],
-                          'k325':[0,100], # production rate of IL8
-                          'k326':[0,100], # saturation rate of IL8
-                          'IL8':[0,10000],
-                          'k327':[0,1],
-                          
+    free_params_model = { 
+                          'k301_1':[0,1], # extra to intra transportation of Mg
+                          'k301_2':[0,1], # saturation coeff of Mg intracellular
+                          'Mg_copy':[0,10000],
 
-                          'Mg_NEMO':[0,10000],
-                          'Mg_copy':[0,10000]}
+                          # 'k302':[0,1], # production rate of IKK
+                          # 'k303':[0,1], # saturation coeff of IKK
+                          # 'k304':[0,1], # saturation coeff of Mg_NEMO
+                          # 'k308':[0,1000], # production rate of NEMO_IKK
+                          # 'k309':[0,1], # degradation of Mg_NEMO
+                          # 'k310':[0,10], # saturation coeff of NEMO_IKK
+                          # 'Mg_NEMO':[0,10000],
+                          # 'NEMO_IKK':[0,10000],
+
+
+                          'k311':[0,1], # production coeff of TRPM
+                          'n300':[0,10], # n as the power of Mg
+                          # 'k312':[0,1], # saturation coeff of TRPM
+                          # 'k313':[0,1], # degradation of TRPM
+                          'TRPM':[0,10000], #initial concentration of TRPM
+
+                          # 'k314':[0,1], # production coeff M7CKs
+                          # 'k315':[0,1000], # saturation coeff of M7CKs
+                          # 'M7CKs':[0,10000],
+
+                          # 'k316':[0,1], #  coeff of M7CKs nuclear translocation
+                          # 'k317':[0,1], # saturation coeff of M7CKs_n
+                          # 'k318':[0,1], # coeff of M7CKs cytoplasm translocation
+                          # 'k319':[0,100], # saturation coeff of M7CKs
+                          # 'M7CKs_n':[0,10000], 
+
+                          # 'k320':[0,100], # coeff of H3S10 activation
+                          # 'k321':[0,100], # saturation coeff of H3S10
+                          # 'k322':[0,1], # degradation rate of H3S10
+                          # 'k323':[0,1], # phosphorylatio rate of H3S10
+                          # 'k324':[0,100], # saturation rate of pH3S10
+                          # 'H3S10':[0,10000],
+                          # 'pH3S10': [0,10000],
+
+                          # 'k325':[0,100], # production rate of IL8
+                          # 'k326':[0,100], # saturation rate of IL8
+                          # 'k327':[0,1], # degradation of IL8
+                          # 'k328': [0,1], # intra to extra transportation of IL8
+                          # 'k329': [0,1], # saturation in extracellular IL8
+                          # 'k330': [0,1], # extra to intra transportation of IL8
+                          # 'k331': [0,1], # saturation in intracellular IL8
+                          # 'IL8':[0,10000]
+                          
+                          }
+
     free_params_model_n = len(free_params_model.keys())
 
-    free_params_observations = {'Quao_2021':[0.001,1000]}
-    free_params_observations_n = len(free_params_observations.keys())
+    hyperparams = {
+    # 'Quao_2021_TRPM':[0,1000],
+                    # 'Mg_normalization_f':[0,1000], # to scale the models' outputs to the standrdized format of the observations
+                    # 'Quao_2021_Mg':[0,1]
+                    }
+    hyperparams_n = len(hyperparams.keys())
 
-    free_params = {**free_params_model, **free_params_observations}
+    free_params = {**free_params_model, **hyperparams}
     replica_n = 1
 
 ## run function
@@ -77,7 +97,7 @@ def initial_conditions(model,calib_params):
 
 def reset(model,params = None): # resets the given model and also sets those that cannot be reset by default
     model.reset()
-    model['Mg_e_mM'] = 0.8
+    # model['Mg_e_mM'] = 0.8
     if params == None:
         pass
     else:

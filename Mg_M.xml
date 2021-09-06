@@ -224,15 +224,7 @@
       <species id="Mg_e" compartment="default_compartment" initialConcentration="800" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="NEMO_IKK_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="TRPM_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="TRPM" compartment="default_compartment" initialAmount="100" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="TRPM7" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="M7CKs" compartment="default_compartment" initialAmount="1000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="M7CKs_n" compartment="default_compartment" initialAmount="100" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="H3S10_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="H3S10" compartment="default_compartment" initialAmount="100" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="pH3S10" compartment="default_compartment" initialAmount="1000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="IL8_prod" compartment="default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="IL8" compartment="default_compartment" initialAmount="100" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="TRPM" compartment="default_compartment" initialAmount="1000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="kf1" value="1.6e-07" constant="true"/>
@@ -559,29 +551,16 @@
       <parameter id="k257" value="1.04e-10" constant="true"/>
       <parameter id="k258" value="0.1" constant="true"/>
       <parameter id="k191" value="100" constant="true"/>
-      <parameter id="Mg_e_mM" value="0.8" constant="true"/>
       <parameter id="Mg_copy" value="1000" constant="true"/>
-      <parameter id="k301" value="0.1" constant="true"/>
+      <parameter id="k301_1" value="0" constant="true"/>
+      <parameter id="k301_2" value="0" constant="true"/>
       <parameter id="k308" value="100" constant="true"/>
       <parameter id="k310" value="100" constant="true"/>
       <parameter id="k309" value="0.1" constant="true"/>
-      <parameter id="k311" value="100" constant="true"/>
-      <parameter id="k312" value="100" constant="true"/>
-      <parameter id="k313" value="100" constant="true"/>
-      <parameter id="k314" value="100" constant="true"/>
-      <parameter id="k315" value="100" constant="true"/>
-      <parameter id="k316" value="100" constant="true"/>
-      <parameter id="k317" value="100" constant="true"/>
-      <parameter id="k318" value="100" constant="true"/>
-      <parameter id="k319" value="100" constant="true"/>
-      <parameter id="k320" value="100" constant="true"/>
-      <parameter id="k321" value="100" constant="true"/>
-      <parameter id="k322" value="100" constant="true"/>
-      <parameter id="k323" value="100" constant="true"/>
-      <parameter id="k324" value="100" constant="true"/>
-      <parameter id="k325" value="100" constant="true"/>
-      <parameter id="k326" value="100" constant="true"/>
-      <parameter id="k327" value="100" constant="true"/>
+      <parameter id="k311" value="0.1" constant="true"/>
+      <parameter id="n300" value="1" constant="true"/>
+      <parameter id="k312" value="0.1" constant="true"/>
+      <parameter id="k313" value="0.1" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="Mg">
@@ -597,7 +576,7 @@
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <times/>
-            <ci> Mg_e_mM </ci>
+            <cn> 0.8 </cn>
             <ci> Mg_copy </ci>
           </apply>
         </math>
@@ -7298,11 +7277,15 @@
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
-              <times/>
-              <ci> k301 </ci>
+              <minus/>
               <apply>
-                <minus/>
+                <times/>
+                <ci> k301_1 </ci>
                 <ci> Mg_e </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k301_2 </ci>
                 <ci> Mg </ci>
               </apply>
             </apply>
@@ -7360,236 +7343,13 @@
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
-              <minus/>
-              <apply>
-                <times/>
-                <ci> k311 </ci>
-                <ci> Mg </ci>
-              </apply>
-              <apply>
-                <times/>
-                <ci> k312 </ci>
-                <ci> TRPM </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J4" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="TRPM7" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="deg" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
               <times/>
-              <ci> k313 </ci>
-              <ci> TRPM7 </ci>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J5" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="TRPM7" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="M7CKs" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <listOfModifiers>
-          <modifierSpeciesReference species="Mg"/>
-        </listOfModifiers>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <minus/>
+              <ci> k311 </ci>
               <apply>
-                <times/>
-                <ci> k314 </ci>
+                <power/>
                 <ci> Mg </ci>
-                <ci> TRPM7 </ci>
+                <ci> n300 </ci>
               </apply>
-              <apply>
-                <times/>
-                <ci> k315 </ci>
-                <ci> M7CKs </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J6" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="M7CKs" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="M7CKs_n" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <listOfModifiers>
-          <modifierSpeciesReference species="Mg"/>
-        </listOfModifiers>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <minus/>
-              <apply>
-                <times/>
-                <ci> k316 </ci>
-                <ci> M7CKs </ci>
-                <ci> Mg </ci>
-              </apply>
-              <apply>
-                <times/>
-                <ci> k317 </ci>
-                <ci> M7CKs_n </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J7" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="M7CKs_n" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="M7CKs" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <minus/>
-              <apply>
-                <times/>
-                <ci> k318 </ci>
-                <ci> M7CKs_n </ci>
-              </apply>
-              <apply>
-                <times/>
-                <ci> k319 </ci>
-                <ci> M7CKs </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J8" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="H3S10_prod" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="H3S10" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <listOfModifiers>
-          <modifierSpeciesReference species="M7CKs_n"/>
-        </listOfModifiers>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <minus/>
-              <apply>
-                <times/>
-                <ci> k320 </ci>
-                <ci> M7CKs_n </ci>
-              </apply>
-              <apply>
-                <times/>
-                <ci> k321 </ci>
-                <ci> H3S10 </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J9" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="H3S10" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="deg" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> k322 </ci>
-              <ci> H3S10 </ci>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J10" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="H3S10" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="pH3S10" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <listOfModifiers>
-          <modifierSpeciesReference species="M7CKs_n"/>
-        </listOfModifiers>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <minus/>
-              <apply>
-                <times/>
-                <ci> k323 </ci>
-                <ci> M7CKs_n </ci>
-                <ci> H3S10 </ci>
-              </apply>
-              <apply>
-                <times/>
-                <ci> k324 </ci>
-                <ci> pH3S10 </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J11" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="IL8_prod" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <listOfModifiers>
-          <modifierSpeciesReference species="pH3S10"/>
-        </listOfModifiers>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <minus/>
-              <apply>
-                <times/>
-                <ci> k325 </ci>
-                <ci> pH3S10 </ci>
-              </apply>
-              <apply>
-                <times/>
-                <ci> k326 </ci>
-                <ci> IL8 </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="_J12" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="deg" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> k327 </ci>
-              <ci> IL8 </ci>
             </apply>
           </math>
         </kineticLaw>

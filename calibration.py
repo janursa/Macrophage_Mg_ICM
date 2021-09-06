@@ -35,16 +35,86 @@ def categorize(calib_params): # divides the calib values between the model param
 	inferred_params_model = {}
 	for key,value in zip(PARAMS.free_params_model.keys(),free_params_model_list):
 	    inferred_params_model[key] = value
-	free_params_observations_list = calib_params[PARAMS.free_params_model_n:PARAMS.free_params_model_n+PARAMS.free_params_observations_n]
-	free_params_observations = {}
-	for key,value in zip(PARAMS.free_params_observations.keys(),free_params_observations_list):
-		free_params_observations[key] = value
-	free_params = {**inferred_params_model,**free_params_observations}
-	return free_params,inferred_params_model,free_params_observations
+	hyperparams_list = calib_params[PARAMS.free_params_model_n:PARAMS.free_params_model_n+PARAMS.hyperparams_n]
+	hyperparams = {}
+	for key,value in zip(PARAMS.hyperparams.keys(),hyperparams_list):
+		hyperparams[key] = value
+	free_params = {**inferred_params_model,**hyperparams}
+	return free_params,inferred_params_model,hyperparams
 
+def cost_function_study(study,free_params_model,hyperparams,select_sim = True):
+	study_observations = observations[study]
+	measurement_scheme = study_observations['measurement_scheme']
+	simulation_period = study_observations['experiment_period'] # changing from hour to minute
+	selections = ['TIME']+ list(measurement_scheme.keys())
+	IDs_results = {}
+	for ID in study_observations['IDs']:
+		reset(Mg_M,free_params_model) #reset the model
+		ID_inputs = study_observations[ID]['inputs']
+		ID_observations = study_observations[ID]['expectations']
+		## apply the boundary condition
+		for key,value in ID_inputs.items():
+			if key == 'Mg_e':
+				Mg_M[key] = value*free_params_model['Mg_copy']
+			else:
+				Mg_M[key] = value
+		ID_results = Mg_M.simulate(0,simulation_period,simulation_period,selections=selections)
+		
+		ID_results_selected = {}
+		for key in measurement_scheme.keys():
+			sim = ID_results[key]
+			if select_sim == True:
+				sim_selected = [sim[i-1] for i in measurement_scheme[key]]
+			else:
+				sim_selected = sim
+			# sim_selected = [i*hyperparams[study] for i in sim_selected] #TODO check this out later
+			ID_results_selected[key] = sim_selected
+		IDs_results[ID] = ID_results_selected
+
+
+	if study == 'Quao_2021_TRPM':
+		#// normalize the outputs
+		base_ID = 'Mg_.8'
+		tag = 'TRPM'
+		# print(IDs_results)
+		IDs_results_norm = {}
+		for ID,data in IDs_results.items():
+			IDs_results_norm.update({ID:{}})
+			n_values=[]
+			for i in range(len(data[tag])):
+				if IDs_results[base_ID][tag][i] != 0:
+					n_value = data[tag][i]/IDs_results[base_ID][tag][i]
+				else:
+					raise ValueError('Denominator is zero')
+					n_value = None #TODO: this is not correct
+				n_values.append(n_value)
+			# print(n_values)
+
+			IDs_results_norm[ID].update({tag:n_values})
+		IDs_results = IDs_results_norm
+
+	#// now calculate the error
+	IDs_errors = {}
+	for ID in study_observations['IDs']:
+		tag_errors = []
+		ID_results = IDs_results[ID] 
+		for key in measurement_scheme.keys():
+			exp = ID_observations[key]['mean'] # the whole array
+			sim = ID_results[key]
+			# print('ID {} sim {} exp {}'.format(ID,sim,exp))
+			# if key == 'Mg':
+			# 	sim_selected = [i*hyperparams['Mg_normalization_f'] for i in sim_selected]
+			abs_diff = [np.abs(exp_item - sim_item) for exp_item,sim_item in zip(exp,sim)]
+			norm_abs_diff = np.mean(abs_diff)/((np.mean(exp)+np.mean(sim))/2)
+
+			tag_errors.append(norm_abs_diff)
+		IDs_errors[ID] = np.mean(tag_errors)
+	# print(IDs_errors)
+	# exit(2)
+	return np.mean(list(IDs_errors.values())),IDs_results
 def cost_function(calib_params):
 
-	free_params,free_params_model,free_params_observations = categorize(calib_params)
+	free_params,free_params_model,hyperparams = categorize(calib_params)
 
 	def vs_Zhao(): # to compare the model's results with the Zhao
 		reset(Mg_M,params=free_params_model)
@@ -64,35 +134,11 @@ def cost_function(calib_params):
 	def vs_observations(): # to compare the model's predictions with the observations
 		studies_errors = []
 		for study in observations['studies']:
-			study_observations = observations[study]
-			measurement_scheme = study_observations['measurement_scheme']
-			simulation_period = study_observations['experiment_period']*60 # changing from hour to minute
-			selections = ['TIME']+ list(measurement_scheme.keys())
-			IDs_errors = []
-			for ID in study_observations['IDs']:
-				reset(Mg_M,free_params_model) #reset the model
-				ID_inputs = study_observations[ID]['inputs']
-				ID_observations = study_observations[ID]['expectations']
-				## apply the boundary condition
-				for key,value in ID_inputs.items():
-					Mg_M[key] = value
-				ID_results = Mg_M.simulate(0,simulation_period,simulation_period,selections=selections)
-				tag_errors = []
-				for key in measurement_scheme.keys():
-					# print(key)
-					exp = ID_observations[key]['mean'] # the whole array
-					sim = ID_results[key]
-					
-					sim_selected = [sim[i*60-1] for i in measurement_scheme[key]]
-
-					sim_selected = [i*free_params_observations[study] for i in sim_selected]
-
-					abs_diff = [np.abs(exp_item - sim_item) for exp_item,sim_item in zip(exp,sim_selected)]
-					norm_abs_diff = np.mean(abs_diff)/((np.mean(exp)+np.mean(sim_selected))/2)
-
-					tag_errors.append(norm_abs_diff)
-				IDs_errors.append(np.mean(tag_errors))
-			studies_errors.append(np.mean(IDs_errors))
+			try:
+				study_error,_ = cost_function_study(study=study,free_params_model=free_params_model,hyperparams=hyperparams)
+			except:
+				study_error = 1
+			studies_errors.append(study_error)
 
 		return np.mean(studies_errors)
 
@@ -106,9 +152,10 @@ def optimize():
 	# Call instance of PSO
 	results = differential_evolution(cost_function,bounds=SETTINGS.params,disp=True,maxiter=SETTINGS.max_iters)
 	return results
-results = optimize()
-inferred_params = {}
-for key,value in zip(PARAMS.free_params.keys(),results.x):
-	inferred_params[key] = value
-with open('inferred_params.json','w') as file:
-	file.write(json.dumps(inferred_params,indent=4))
+if __name__ == '__main__':
+	results = optimize()
+	inferred_params = {}
+	for key,value in zip(PARAMS.free_params.keys(),results.x):
+		inferred_params[key] = value
+	with open('inferred_params.json','w') as file:
+		file.write(json.dumps(inferred_params,indent=4))

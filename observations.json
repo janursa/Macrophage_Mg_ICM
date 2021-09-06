@@ -1,23 +1,113 @@
 {
     "studies": [
-        "Quao_2021"
+        "Quao_2021_TRPM"
     ],
-    "Quao_2021": {
+    "Quao_2021_Mg": {
         "exposure_period": null,
         "culture_volume": null,
-        "experiment_period": 72,
+        "experiment_period": 12,
         "measurement_scheme": {
-            "IL8": [
-                72
+            "Mg": [
+                0,
+                6,
+                8,
+                12
             ]
         },
+        "IDs": [
+            "Mg_8"
+        ],
+        "Mg_8": {
+            "inputs": {
+                "Mg_e": 8
+            },
+            "expectations": {
+                "Mg": {
+                    "mean": [
+                        100,
+                        145,
+                        125,
+                        125
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        }
+    },
+    "Quao_2021_TRPM": {
+        "exposure_period": null,
+        "culture_volume": null,
+        "experiment_period": 4320,
+        "measurement_scheme": {
+            "TRPM": [
+                4320
+            ]
+        },
+        "IDs": [
+            "Mg_.08",
+            "Mg_.8",
+            "Mg_8"
+        ],
+        "Mg_.08": {
+            "inputs": {
+                "Mg_e": 0.08
+            },
+            "expectations": {
+                "TRPM": {
+                    "mean": [
+                        1.1
+                    ],
+                    "std": [
+                        0.1
+                    ]
+                }
+            }
+        },
+        "Mg_.8": {
+            "inputs": {
+                "Mg_e": 0.8
+            },
+            "expectations": {
+                "TRPM": {
+                    "mean": [
+                        1
+                    ],
+                    "std": [
+                        0.01
+                    ]
+                }
+            }
+        },
+        "Mg_8": {
+            "inputs": {
+                "Mg_e": 8
+            },
+            "expectations": {
+                "TRPM": {
+                    "mean": [
+                        2.5
+                    ],
+                    "std": [
+                        0.7
+                    ]
+                }
+            }
+        }
+    },
+    "Quao_2021_1": {
+        "exposure_period": null,
+        "culture_volume": null,
+        "experiment_period": 4320,
+        "measurement_scheme": {},
         "IDs": [
             "Mg_.08",
             "Mg_8"
         ],
         "Mg_.08": {
             "inputs": {
-                "Mg_e_mM": 0.08
+                "Mg_e": 0.08
             },
             "expectations": {
                 "IL8": {
@@ -35,7 +125,7 @@
         },
         "Mg_8": {
             "inputs": {
-                "Mg_e_mM": 8
+                "Mg_e": 8
             },
             "expectations": {
                 "IL8": {

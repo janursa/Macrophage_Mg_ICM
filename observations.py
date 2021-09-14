@@ -1,9 +1,9 @@
 observations = {
-	'studies':['Quao_2021_TRPM'],
+	'studies':['Quao_2021_Mg'],
 	"Quao_2021_Mg": { 
         "exposure_period": None,
         "culture_volume": None,
-        "experiment_period": 12, #minutes
+        "experiment_period": 13, #minutes
         "measurement_scheme": {
             "Mg": [0,6,8,12]
         },

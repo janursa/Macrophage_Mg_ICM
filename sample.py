@@ -1,15 +1,19 @@
-from models import Zhao_2021, PARAMS,average,run
+import tellurium as te
 import numpy as np
 import json
 
+Zhao_2021 = te.loadSBMLModel("Zhao_2021.xml")
+targets = ['NFKB', 'pIKK', 'TAK1']
+# targets = ['pIKK']
+duration = 1500
 stack_results = [] # store for each iteration
-for i in range(PARAMS.replica_n):
-    Zhao_2021.reset()
-    results_dict=run(Zhao_2021,targets=PARAMS.targets,duration=PARAMS.duration)
-    stack_results.append(results_dict)
-mean_results = average(stack_results)
 
+
+results=Zhao_2021.simulate(0,duration,selections=['TIME']+targets)
 # mean_results_no_tag = np.array([mean_results[tag] for tag in mean_results.keys()])
+results_dict = {'time':list(results['time'])} 
+for key in targets:
+    results_dict[key] = list(results[key])
 
 with open('samples.json', 'w', encoding='utf-8') as f:
-    json.dump(mean_results, f, ensure_ascii=False, indent=4)
+    json.dump(results_dict, f, ensure_ascii=False, indent=4)

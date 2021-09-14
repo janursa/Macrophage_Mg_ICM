@@ -1,11 +1,11 @@
 {
     "studies": [
-        "Quao_2021_TRPM"
+        "Quao_2021_Mg"
     ],
     "Quao_2021_Mg": {
         "exposure_period": null,
         "culture_volume": null,
-        "experiment_period": 12,
+        "experiment_period": 13,
         "measurement_scheme": {
             "Mg": [
                 0,

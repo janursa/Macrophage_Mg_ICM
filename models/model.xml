@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
+  <model metaid="__main" id="__main">
+    <listOfCompartments>
+      <compartment sboTerm="SBO:0000410" id="default_compartment" spatialDimensions="3" size="1" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="Mg_e" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="TRPM" compartment="default_compartment" initialAmount="10" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="TRPM_n" compartment="default_compartment" initialAmount="10" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_f" compartment="default_compartment" initialAmount="0.5" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_ATP" compartment="default_compartment" initialAmount="10" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ATP" compartment="default_compartment" initialAmount="10" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ATP_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="TRPM_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="M7CKs" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="Mg" value="10.5" constant="false"/>
+      <parameter id="K11" value="0.1" constant="true"/>
+      <parameter id="K12" value="0.1" constant="true"/>
+      <parameter id="n1" value="1" constant="true"/>
+      <parameter id="K21" value="10" constant="true"/>
+      <parameter id="K22" value="10" constant="true"/>
+      <parameter id="Kd2" value="10" constant="true"/>
+      <parameter id="n2" value="2" constant="true"/>
+      <parameter id="K4" value="0.1" constant="true"/>
+      <parameter id="K31" value="0.1" constant="true"/>
+      <parameter id="K32" value="0.1" constant="true"/>
+      <parameter id="K5" value="10" constant="true"/>
+      <parameter id="K6" value="0.1" constant="true"/>
+      <parameter id="K7" value="0.1" constant="true"/>
+      <parameter id="K8" value="0.1" constant="true"/>
+    </listOfParameters>
+    <listOfRules>
+      <assignmentRule variable="Mg">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> Mg_f </ci>
+            <ci> Mg_ATP </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+    </listOfRules>
+    <listOfReactions>
+      <reaction id="V1" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="Mg_e" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="TRPM"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> K11 </ci>
+                <ci> Mg_e </ci>
+                <ci> TRPM </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> K12 </ci>
+                <ci> Mg_f </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="V2" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="ATP_prod" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="Mg_f"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> K21 </ci>
+                  <apply>
+                    <power/>
+                    <ci> Mg_f </ci>
+                    <ci> n2 </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <power/>
+                    <ci> Mg_f </ci>
+                    <ci> n2 </ci>
+                  </apply>
+                  <ci> Kd2 </ci>
+                </apply>
+              </apply>
+              <ci> K22 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="V4" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> K4 </ci>
+              <ci> ATP </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="V3" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
+          <speciesReference species="ATP" stoichiometry="5" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="Mg_ATP" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> K31 </ci>
+                <ci> Mg_f </ci>
+                <ci> ATP </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> K32 </ci>
+                <ci> Mg_ATP </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="V5" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="TRPM_prod" stoichiometry="1" constant="true"/>
+          <speciesReference species="Mg_ATP" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="TRPM_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="Mg_ATP" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> K5 </ci>
+              <ci> Mg_ATP </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="V6" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="TRPM_n" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="TRPM" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> K6 </ci>
+              <ci> TRPM_n </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="V7" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="TRPM" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M7CKs" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> K7 </ci>
+              <ci> TRPM </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

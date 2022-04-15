@@ -1,16 +1,22 @@
 import matplotlib.pyplot as plt
-import matplotlib
-import copy
+from pathlib import Path
 import os
+import sys
+import copy
+dir_file = Path(__file__).resolve().parent
+main_dir = os.path.join(dir_file,'..')
+from data.observations import observations,t2m
+from plots.plots import graph_line
 plt.rcParams["font.family"] = "serif"
 plt.style.use('seaborn-deep')
 # plt.style.use('Agg')
+
 plt.rcParams["font.serif"] = ["Times New Roman"] + plt.rcParams["font.serif"]
 
+font_type = 'Arial'
 
 
-
-class Plot_bar:
+class graph_bar:
 	"""
 	Plots the results of a study by allocting a figure for each target and a bar for each ID
 	"""
@@ -73,15 +79,29 @@ class Plot_bar:
 	@staticmethod
 	def determine_ylabel(study,target):
 		label = ''
+		if study == 'Q21_nTRPM' or study == 'Q21_TRPM' or study == 'Q21_nM7CK' or study == 'Q21_H3S10':
+
+			label = 'Relative intensity \n (To control)'
+		
 		return label
 	@staticmethod
 	def determine_title(study,target):
 		label = study
+		if study == 'Q21_nTRPM':
+			label = 'Nuclear TRPM'
+		elif study == 'Q21_TRPM':
+			label = 'TRPM'
+		elif study == 'Q21_nM7CK':
+			label = 'Nuclear M7CK'
+		elif study == 'Q21_H3S10':
+			label = 'Phosphorylated H3S10'
 
 		return label
 	@staticmethod
 	def determine_xlabel(study,target):
 		label = ''
+		if study == 'Q21_nTRPM' or study == 'Q21_TRPM' or study == 'Q21_nM7CK' or study == 'Q21_H3S10':
+			label = 'Mg conc. (ng/ml)'
 		return label
 	
 	@staticmethod
@@ -94,8 +114,8 @@ class Plot_bar:
 		else:
 			raise ValueError('define')
 		return sims_n
-
-	def plot(self,simulation_results,processed_detailed_errors={}):
+	
+	def plot(self,ax,simulation_results,processed_detailed_errors={}):
 		##/ sort out based on the measurement_scheme
 		IDs = list(simulation_results.keys())
 		x_labels = self.adjust_x_label(IDs)
@@ -105,48 +125,43 @@ class Plot_bar:
 
 		##/ plot for each target
 		target_n = len(self.measurement_scheme)
-		fig = plt.figure(figsize=(self.graph_size[0],self.graph_size[1]))
-		fig.canvas.draw()
-		fig.tight_layout()
-		
-		fig.subplots_adjust(hspace=.4)
 
-		for target,ii in zip(self.measurement_scheme.keys(),range(target_n)):
-			ax = fig.add_subplot(target_n,1,ii+1)
-			sim_values = [item[0] for item in sim_target_results[target]]
-			sim_values = Plot_bar.normalize_sim_values(study = self.study, sims= sim_values)
-			processed_detailed_errors_sorted_values = [item[0] for item in processed_detailed_errors_sorted[target]]
-			# ax.bar(x=x_sim,height=sim_values,width = self.bar_width, label = "S", 
-			# 		facecolor = self.colors[0],
-			# 		 edgecolor="black", yerr =  processed_detailed_errors_sorted_values,
-			# 		 error_kw = dict(capsize= self.error_bar_width))
-			ax.bar(x=x_sim,height=sim_values,width = self.bar_width, label = "S", 
-					facecolor = self.colors[0],
-					 edgecolor="black", yerr =  0,
-					 error_kw = dict(capsize= self.error_bar_width))
-			exp_values = [exp_target_results[target][i]['mean'] for i in range(len(exp_target_results[target]))]
-			exp_std = [exp_target_results[target][i]['std'] for i in range(len(exp_target_results[target]))]
-			exp_values = [item[0] for item in exp_values]
-			exp_std = [item[0] for item in exp_std]
+		target = list(self.measurement_scheme.keys())[0]
 
-			ax.bar(x=x_exp,height=exp_values,width = self.bar_width, label = 'E', 
-					facecolor = self.colors[1],hatch=r'\\\\',
-					 edgecolor="black", yerr =  exp_std,
-					 error_kw = dict(capsize= self.error_bar_width))
-			# if ii == 0: # legend only for the first target
-			# 	if self.study == 'Qiao_2021_IL8_IL1b' or self.study == 'Qiao_2021_IL1b':
-			# 		pass
-			# 	else:
-			# 		if self.study == 'Chen_2018' or self.study == 'Valles_2020_TNFa' or self.study == 'Valles_2020_IL10':
-			# 			ncol = 1
-			# 		else:
-			# 			ncol = 2
-			# 		ax.legend(bbox_to_anchor=self.legend_location,loc = 'upper right', borderaxespad=2,prop={ 'family':'Times New Roman','size':self.legend_font_size},ncol=ncol)
+		# for target,ii in zip(self.measurement_scheme.keys(),range(target_n)):
+		sim_values = [item[0] for item in sim_target_results[target]]
+		sim_values = graph_bar.normalize_sim_values(study = self.study, sims= sim_values)
+		processed_detailed_errors_sorted_values = [item[0] for item in processed_detailed_errors_sorted[target]]
+		# ax.bar(x=x_sim,height=sim_values,width = self.bar_width, label = "S", 
+		# 		facecolor = self.colors[0],
+		# 		 edgecolor="black", yerr =  processed_detailed_errors_sorted_values,
+		# 		 error_kw = dict(capsize= self.error_bar_width))
+		ax.bar(x=x_sim,height=sim_values,width = self.bar_width, label = "S", 
+				facecolor = self.colors[0],
+				 edgecolor="black", yerr =  0,
+				 error_kw = dict(capsize= self.error_bar_width))
+		exp_values = [exp_target_results[target][i]['mean'] for i in range(len(exp_target_results[target]))]
+		exp_std = [exp_target_results[target][i]['std'] for i in range(len(exp_target_results[target]))]
+		exp_values = [item[0] for item in exp_values]
+		exp_std = [item[0] for item in exp_std]
 
-			x_ticks = [(i+j)/2 for i,j in zip(x_sim,x_exp)]
-			x_ticks_adj,x_labels_adj = self.add_adjustements(ax=ax,study=self.study,target=target,base_x=base_x,x_ticks=x_ticks,x_labels=x_labels)
-			self.finalize_and_save(ax=ax,target=target,exp_xx=x_ticks_adj,x_ticks=x_ticks_adj,x_labels=x_labels_adj)
-		return fig
+		ax.bar(x=x_exp,height=exp_values,width = self.bar_width, label = 'E', 
+				facecolor = self.colors[1],hatch=r'\\\\',
+				 edgecolor="black", yerr =  exp_std,
+				 error_kw = dict(capsize= self.error_bar_width))
+		# if ii == 0: # legend only for the first target
+		# 	if self.study == 'Qiao_2021_IL8_IL1b' or self.study == 'Qiao_2021_IL1b':
+		# 		pass
+		# 	else:
+		# 		if self.study == 'Chen_2018' or self.study == 'Valles_2020_TNFa' or self.study == 'Valles_2020_IL10':
+		# 			ncol = 1
+		# 		else:
+		# 			ncol = 2
+		graph_line.legend(ax=ax,study=self.study)
+		x_ticks = [(i+j)/2 for i,j in zip(x_sim,x_exp)]
+		x_ticks_adj,x_labels_adj = self.add_adjustements(ax=ax,study=self.study,target=target,base_x=base_x,x_ticks=x_ticks,x_labels=x_labels)
+		self.finalize_and_save(ax=ax,target=target,exp_xx=x_ticks_adj,x_ticks=x_ticks_adj,x_labels=x_labels_adj)
+		# return fig
 	def add_adjustements(self,ax,study,target,base_x,x_ticks,x_labels):
 		x_ticks_adj = copy.deepcopy(x_ticks)
 		x_labels_adj = copy.deepcopy(x_labels)
@@ -182,16 +197,16 @@ class Plot_bar:
 			ax.set_xticklabels(x_labels)
 
 		for label in (ax.get_xticklabels() + ax.get_yticklabels()):
-			label.set_fontname('Times New Roman')
+			label.set_fontname(font_type)
 			label.set_fontsize(self.tick_font_size)
-		# unit_value = Plot_bar.unit(study = self.study,target=target)
-		ax.set_ylabel(Plot_bar.determine_ylabel(study=self.study,target = target),fontdict ={'family':'Times New Roman','size':self.title_font_size})
-		ax.set_xlabel(Plot_bar.determine_xlabel(study=self.study,target = target),fontdict ={'family':'Times New Roman','size':self.title_font_size})
+		# unit_value = graph_bar.unit(study = self.study,target=target)
+		ax.set_ylabel(graph_bar.determine_ylabel(study=self.study,target = target),fontdict ={'family':font_type,'size':self.title_font_size})
+		ax.set_xlabel(graph_bar.determine_xlabel(study=self.study,target = target),fontdict ={'family':font_type,'size':self.title_font_size})
 
-		ax.set_title(Plot_bar.determine_title(study=self.study,target = target),fontdict ={'family':'Times New Roman','size':self.title_font_size})
+		ax.set_title(graph_bar.determine_title(study=self.study,target = target),fontdict ={'family':font_type,'size':self.title_font_size})
 		
-		# Xs,Ys = Plot_bar.p_values_positions(study=self.study,target=target,xx = exp_xx)	
-		# Plot_bar.draw_p_values(ax,study=self.study,target=target,Xs=Xs,Ys=Ys)
+		# Xs,Ys = graph_bar.p_values_positions(study=self.study,target=target,xx = exp_xx)	
+		# graph_bar.draw_p_values(ax,study=self.study,target=target,Xs=Xs,Ys=Ys)
 
 
 		# self.draw_R2(ax,study=self.study,target=target)

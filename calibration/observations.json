@@ -44,7 +44,7 @@
     "Q21_IkBa": {
         "experiment_period": 360,
         "measurement_scheme": {
-            "ZZ_IKB": [
+            "IKB": [
                 360
             ]
         },
@@ -54,24 +54,30 @@
         ],
         "Mg_.08": {
             "inputs": {
-                "M1_Mg_e": 0.08
+                "Mg_e": 0.08
             },
             "expectations": {
-                "ZZ_IKB": {
+                "IKB": {
                     "mean": [
                         0.05
+                    ],
+                    "std": [
+                        0
                     ]
                 }
             }
         },
         "Mg_8": {
             "inputs": {
-                "M1_Mg_e": 8
+                "Mg_e": 8
             },
             "expectations": {
-                "ZZ_IKB": {
+                "IKB": {
                     "mean": [
                         0.7
+                    ],
+                    "std": [
+                        0.1
                     ]
                 }
             }

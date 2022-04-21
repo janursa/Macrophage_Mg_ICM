@@ -7,7 +7,7 @@
   </annotation>
   <model id="mw45f2123b_178c_4dcc_849c_7cd8dd530370" name="model_Mg">
     <listOfCompartments>
-      <compartment id="mwce50f639_d7cc_428e_b931_95a61ab5304c" name="Compartment 1" size="1" constant="false"/>
+      <compartment id="mwce50f639_d7cc_428e_b931_95a61ab5304c" name="comp1" size="1" constant="false"/>
     </listOfCompartments>
     <listOfSpecies>
       <species id="mw189e3769_660b_4bb7_b2db_965d2507c952" name="Mg_e" compartment="mwce50f639_d7cc_428e_b931_95a61ab5304c" initialConcentration="0.5" boundaryCondition="true" constant="false"/>
@@ -33,6 +33,8 @@
       <species id="mw471e422e_8d1e_40d7_a32e_d3e9cf4b8804" name="pH3S10" compartment="mwce50f639_d7cc_428e_b931_95a61ab5304c" initialConcentration="1" boundaryCondition="false" constant="false"/>
       <species id="mw9381f59a_cf56_4cc4_af5c_6f049a840342" name="Mg_IM_n" compartment="mwce50f639_d7cc_428e_b931_95a61ab5304c" initialConcentration="0" boundaryCondition="false" constant="false"/>
       <species id="mw9dc53c39_fe40_442c_862e_251ed66a8a44" name="Mg_ATP_n" compartment="mwce50f639_d7cc_428e_b931_95a61ab5304c" initialConcentration="9" boundaryCondition="false" constant="false"/>
+      <species id="mwdd3658ef_d324_4111_a916_0f6203467d12" name="Mg_f_1" compartment="mwce50f639_d7cc_428e_b931_95a61ab5304c" initialConcentration="0.5" boundaryCondition="false" constant="false"/>
+      <species id="mw737f6467_20be_4bb4_97ab_ed7a2eeebd07" name="pH3S10_0" compartment="mwce50f639_d7cc_428e_b931_95a61ab5304c" initialConcentration="0.5" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="mw45706840_a37c_4628_bfa4_56cd76652262" name="k_m_i" value="0.253776534576068" constant="true"/>
@@ -48,20 +50,20 @@
       <parameter id="mw13c100db_e6a9_4821_82f5_5b2d84e51f13" name="n_matp_b" value="0.0211040228587016" constant="true"/>
       <parameter id="mw6d2c5b66_dd53_4b28_a231_d97f6ee35757" name="F_mg_i" value="1" constant="false"/>
       <parameter id="mw223f8e88_447d_4d13_beb8_f26b9b34717c" name="n_mim_b" value="8.19693224705306" constant="true"/>
-      <parameter id="mw3f4508b6_6d2f_41f9_92c3_a1a46360d96a" name="k_ntrpm_p" value="0.1" constant="true"/>
-      <parameter id="mw55670502_195a_48fb_9295_dc5f8c262f62" name="k_ntrpm_t" value="0.1" constant="true"/>
-      <parameter id="mwca8f10db_8782_4246_b0c3_0381459aafc0" name="k_trpm_s" value="0.1" constant="true"/>
+      <parameter id="mw3f4508b6_6d2f_41f9_92c3_a1a46360d96a" name="k_ntrpm_p" value="0.11" constant="true"/>
+      <parameter id="mw55670502_195a_48fb_9295_dc5f8c262f62" name="k_ntrpm_t" value="0.96" constant="true"/>
+      <parameter id="mwca8f10db_8782_4246_b0c3_0381459aafc0" name="k_trpm_s" value="0.955" constant="true"/>
       <parameter id="mw43124fdc_37bf_4b0b_af77_273bff5105cb" name="Mg_ATP_0" value="1" constant="true"/>
-      <parameter id="mw3bf0d026_8639_486a_bf5d_88e64c28c1f5" name="k_m7ck_t1" value="0.1" constant="true"/>
-      <parameter id="mwc3d5b23d_5639_4a62_bd78_143da15847c9" name="k_m7ck_t2" value="0.1" constant="true"/>
-      <parameter id="mw7ba0ce84_e9f8_4fec_88a6_ca6959732cf4" name="k_m7ck_deg" value="1" constant="true"/>
-      <parameter id="mw3f37302d_fcd5_4066_845e_6b3d544e1843" name="k_h3s10_p" value="0.1" constant="true"/>
-      <parameter id="mwf3135e7f_e046_4f84_a19d_e22bac599433" name="k_h3s10_up" value="0.1" constant="true"/>
+      <parameter id="mw3bf0d026_8639_486a_bf5d_88e64c28c1f5" name="k_m7ck_t1" value="0.83" constant="true"/>
+      <parameter id="mwc3d5b23d_5639_4a62_bd78_143da15847c9" name="k_m7ck_t2" value="0.96" constant="true"/>
+      <parameter id="mw7ba0ce84_e9f8_4fec_88a6_ca6959732cf4" name="k_m7ck_deg" value="0.89" constant="true"/>
+      <parameter id="mw3f37302d_fcd5_4066_845e_6b3d544e1843" name="k_h3s10_p" value="0.0008" constant="true"/>
+      <parameter id="mwf3135e7f_e046_4f84_a19d_e22bac599433" name="k_h3s10_up" value="0.0007" constant="true"/>
       <parameter id="mw7cb80ea4_f68a_4591_9ef7_0b144eeeaaa4" name="k_ntrpm_d" value="0.1" constant="true"/>
-      <parameter id="mw0ee9fa81_6354_49aa_a4e6_a0cda7bdadbf" name="n_ntrpm_t" value="1" constant="true"/>
-      <parameter id="mw79a78ee5_f06e_4175_a27b_cd413df6b921" name="n_m7ck_t" value="1" constant="true"/>
-      <parameter id="mw926564ef_aa46_49b8_acb4_f93a19b7f669" name="n_ntrpm_p" value="1" constant="true"/>
-      <parameter id="mw6f84c099_d0e7_4f2d_aa27_8a2759c9b8f0" name="n_h3s10_p" value="1" constant="true"/>
+      <parameter id="mw0ee9fa81_6354_49aa_a4e6_a0cda7bdadbf" name="n_ntrpm_t" value="0.516" constant="true"/>
+      <parameter id="mw79a78ee5_f06e_4175_a27b_cd413df6b921" name="n_m7ck_t" value="1.9" constant="true"/>
+      <parameter id="mw926564ef_aa46_49b8_acb4_f93a19b7f669" name="n_ntrpm_p" value="12.22" constant="true"/>
+      <parameter id="mw6f84c099_d0e7_4f2d_aa27_8a2759c9b8f0" name="n_h3s10_p" value="1.83" constant="true"/>
       <parameter id="mw4619f0ac_f8a8_4edb_bae8_54a9b975393e" name="Mg_IM_0" value="1" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
@@ -88,6 +90,11 @@
       <initialAssignment symbol="mw4619f0ac_f8a8_4edb_bae8_54a9b975393e">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> mw524bbb3a_2637_4bac_ab78_04cc4b3627f5 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="mw737f6467_20be_4bb4_97ab_ed7a2eeebd07">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> mw471e422e_8d1e_40d7_a32e_d3e9cf4b8804 </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>

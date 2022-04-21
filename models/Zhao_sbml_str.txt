@@ -1,4 +1,62 @@
-Zhao_text = """
+// Created by libAntimony v2.12.0
+model *model_Zhao()
+
+  // Compartments and Species:
+  compartment comp1;
+  species deg in comp1, V165a in comp1, IFNG in comp1, IFNGR_JAK in comp1;
+  species IFNG_R_JAK in comp1, pIFNG_R_JAK in comp1, STAT1 in comp1, pIFNG_R_JAK_STAT1 in comp1;
+  species pSTAT1 in comp1, pSTAT1D in comp1, pSTAT1D_n in comp1, STAT1D_n in comp1;
+  species STAT1_n in comp1, $SOCS1_prod in comp1, SOCS1 in comp1, IFNG_R_JAK_SOCS1 in comp1;
+  species IFNG_R_lyso in comp1, SOCS1_JAK in comp1, IRF9 in comp1, IRF9_n in comp1;
+  species pSTAT1D_IRF9 in comp1, pSTAT1D_IRF9_n in comp1, $CXCL10_prod in comp1;
+  species SOCS3 in comp1, IFNG_R_JAK_SOCS3 in comp1, SOCS3_JAK in comp1, $SOCS3_prod in comp1;
+  species IL4 in comp1, IL4R_JAK in comp1, IL4_R_JAK in comp1, pIL4_R_JAK in comp1;
+  species STAT6 in comp1, pIL4_R_JAK_STAT6 in comp1, pSTAT6 in comp1, pSTAT6D in comp1;
+  species pSTAT6D_n in comp1, STAT6D_n in comp1, STAT6_n in comp1, IL4_R_JAK_SOCS1_i in comp1;
+  species IL4_R_lyso in comp1, IL4_R_JAK_SOCS3_i in comp1, PTEN in comp1;
+  species IRF4 in comp1, $IRF4_prod in comp1, IL10 in comp1, JAK in comp1;
+  species IFNGR in comp1, IFNG_R in comp1, IL4R in comp1, IL4_R in comp1;
+  species $IL10_prod in comp1, $ARG1_prod in comp1, ARG1 in comp1, $IL12_prod in comp1;
+  species $CXCL9_prod in comp1, $miR3473_prod in comp1, m3473b in comp1, mPTEN in comp1;
+  species m3473b_mPTEN in comp1, $IRF1_prod in comp1, $iNOS_prod in comp1;
+  species iNOS in comp1, m93 in comp1, HIF1a in comp1, HIF2a in comp1, $HIF1a_prod in comp1;
+  species $HIF2a_prod in comp1, $PPARG_prod in comp1, PPARG in comp1, aPPARG in comp1;
+  species HIF1b_n in comp1, HIF2a_n in comp1, HIF1a_n in comp1, HIF2a_b_n in comp1;
+  species HIF1a_b_n in comp1, IRF1 in comp1, PHD in comp1, $O2 in comp1, O2_aPHD in comp1;
+  species HIF1a_OH in comp1, HIF2a_OH in comp1, TNFa in comp1, CXCL9 in comp1;
+  species mIRF9 in comp1, m93_mIRF9 in comp1, $IRF9_prod in comp1, $PTEN_prod in comp1;
+  species $VEGF_prod in comp1, $IFNG_prod in comp1, IL12 in comp1, $PHD_prod in comp1;
+  species $miR93_prod in comp1, $IFNGR_prod in comp1, $jak_prod in comp1;
+  species aPHD in comp1, mCXCL10 in comp1, pIL4_R_JAK_i in comp1, $IL4_prod in comp1;
+  species IL4_R_JAK_SOCS1 in comp1, IL4_R_JAK_SOCS3 in comp1, $TNFa_prod in comp1;
+  species $il4r_prod in comp1, $IRG1_prod in comp1, IRG1 in comp1, Itaconate in comp1;
+  species $Itaconate_prod in comp1, $IRF9T in comp1, STAT3 in comp1, pSTAT3 in comp1;
+  species pSTAT3D in comp1, pSTAT3D_n in comp1, STAT3D_n in comp1, STAT3_n in comp1;
+  species pSTAT1_3 in comp1, pSTAT1_3_n in comp1, PI3K in comp1, pPI3K in comp1;
+  species AKT1 in comp1, AKT2 in comp1, pAKT1 in comp1, pAKT2 in comp1, $IL10R_prod in comp1;
+  species IL10R in comp1, IL10R_JAK in comp1, IL10_R_JAK in comp1, pIL10_R_JAK in comp1;
+  species pIL10_R_JAK_STAT3 in comp1, IL10_R_lyso in comp1, IL10_R_JAK_SOCS1 in comp1;
+  species IL10_R in comp1, $pAKT_t in comp1, mIL10 in comp1, $STAT1_prod in comp1;
+  species $miR146b_prod in comp1, m146b in comp1, pre_m146b in comp1, $mir155_prod in comp1;
+  species pre_m155 in comp1, m155 in comp1, $cebpb_prod in comp1, CEBPB in comp1;
+  species TNFR in comp1, TNFa_R in comp1, TNFa_R_lyso in comp1, RIP1 in comp1;
+  species aRIP1 in comp1, $rip_prod in comp1, A20 in comp1, $tnfr_prod in comp1;
+  species TAK1 in comp1, pTAK1 in comp1, p38 in comp1, pp38 in comp1, pp38_n in comp1;
+  species JNK in comp1, pJNK in comp1, IKK in comp1, pIKK in comp1, $ikk_prod in comp1;
+  species pJNK_n in comp1, ERK in comp1, pERK in comp1, pERK_n in comp1, VEGFR1 in comp1;
+  species V165a_R1 in comp1, pV165a_R1 in comp1, V165_R1_lyso in comp1, V165b in comp1;
+  species V165b_R1 in comp1, pV165a_R1_STAT3 in comp1, $R1_prod in comp1;
+  species p65 in comp1, p50 in comp1, $nfkb_prod in comp1, NFKB in comp1;
+  species NFKB_n in comp1, IKB_n in comp1, IKB_NFKB_n in comp1, IKB_NFKB in comp1;
+  species IKB in comp1, $Ikb_prod in comp1, pIKB in comp1, p50_n in comp1;
+  species CREB in comp1, pCREB in comp1, $ap1_prod in comp1, AP1_n in comp1;
+  species INT1 in comp1, aINT1 in comp1, $egr2_prod in comp1, EGR2 in comp1;
+  species $a20_prod in comp1, INT2 in comp1, aINT2 in comp1, $il1b_prod in comp1;
+  species IL1b in comp1, $il1r_prod in comp1, IL1R in comp1, IL1b_R in comp1;
+  species IRAK4 in comp1, IL1b_R_lyso in comp1, $irak4_prod in comp1, TRAF6 in comp1;
+  species IRF5 in comp1, aIRF5 in comp1, aTRAF6 in comp1, IL1Ra in comp1;
+  species IL1Ra_R in comp1, $il1ra_prod in comp1, pIRAK4 in comp1, GSK3b in comp1;
+  species pGSK3b in comp1;
 
   // Assignment Rules:
   IRF9T := IRF9 + IRF9_n + pSTAT1D_IRF9 + pSTAT1D_IRF9_n;
@@ -264,7 +322,7 @@ Zhao_text = """
   v257: GSK3b + pAKT1 + pAKT2 => pGSK3b + pAKT1 + pAKT2; k257*GSK3b*(pAKT1 + pAKT2)^2;
   v258: pGSK3b => GSK3b; k258*pGSK3b;
 
-  # Species initializations:
+  // Species initializations:
   deg = 0;
   V165a = 1200;
   IFNG = 468;
@@ -475,6 +533,9 @@ Zhao_text = """
   pIRAK4 = 1;
   GSK3b = 87270;
   pGSK3b = 52730;
+
+  // Compartment initializations:
+  comp1 = 1;
 
   // Variable initializations:
   k104 = 0.2086;
@@ -799,9 +860,37 @@ Zhao_text = """
   kc135 = 2;
   kd135 = 1000;
 
-  
+  // Other declarations:
+  const comp1, k104, k119, k33, k86, k87, kf39, kr40, kf22, kr22, kf102, kr102;
+  const k23, k103, k34, k82, kf24, kr24, k25, kf11, kr11, k66, kf35, k37;
+  const k111, kf27, kr5, k28, k26, k31, k73, kb73, k80, k81, kr39, kf1, kf2;
+  const kr2, kf3, kr3, k4, k12, k21, k13, kf18, kf5, k6, k7, k9, k54, ka54;
+  const kb54, k55, kf58, kr58, kf60, kr60, k74, ka74, kb74, k75, kr94, kf94;
+  const kf62, kr62, k63, k76, k65, k64, k52, ka52, k85, k48, ka48, k92, kf50;
+  const kr50, k51, k71, k49, k93, k88, k79, ka79, k90, k70, k67, k89, kf14;
+  const kr14, k15, kr124, k117, k38, ka38, kb38, k84, k56, ka56, k57, k106;
+  const k105, k120, k121, k122, k123, k72, ka72, k53, ka53, kb53, k99, k45;
+  const ka45, kc45, k98, k118, ka118, k44, k46, k97, k47, k96, k17, k95, k101;
+  const k20, ka20, k100, k127, kf125, kr125, k126, k129, kf131, k133, k134;
+  const k135, k136, k137, k138, k140, ka138, k142, k155, kf144, kr144, kf145;
+  const kr145, k148, k150, kf146, kr146, k147, kb44, k156, k157, k158, k159;
+  const k161, k160, k163, k162, k166, k165, k167, k164, ka164, k168, k169;
+  const ka169, ka159, k176, k174, kf170, kr170, k171, k173, k172, k175, k179;
+  const k180, k181, k182, k184, k183, ka183, k178, k177, k185, k188, k186;
+  const ka186, k187, k190, k189, k191, k192, k193, k195, k198, k197, ka195;
+  const kf199, kr199, kf200, kr200, k201, k202, k203, k204, kf205, kr205;
+  const k206, kf207, kr207, k208, k209, k210, k222, kf216, kr216, k217, kf220;
+  const kr220, k219, k223, k221, k224, kf215, kr215, k211, k212, k213, k214;
+  const k225, k226, ka222, k228, k227, k229, k230, kb164, kr1, k231, k232;
+  const k234, k233, ka233, kb169, k236, k235, k238, k237, ka178, ka160, kf242;
+  const kr242, k241, k247, k240, k239, k243, k245, k244, k246, k255, k256;
+  const k249, k248, k252, k251, ka248, k254, k253, kb20, ka224, kb248, kc248;
+  const k258, k257, ka230, ka240, ka254, ka239, ka246, kb254, kb118, ka44;
+  const kc44, kd44, kb239, ka119, kd73, ke73, kc73, ka73, ka46, kb46, kc46;
+  const kc239, kd46, ke44, kf44, kg44, kf73, ka251, kb251, kc251, kc72, kb72;
+  const ka17, kc53, kd53, kb45, kd45, kd72, kb160, ka135, kb135, kc135, kd135;
 
-  # Display Names:
+  // Display Names:
   IFNGR_JAK is "IFNGR/JAK";
   IFNG_R_JAK is "IFNG/R/JAK";
   pIFNG_R_JAK is "pIFNG/R/JAK";
@@ -880,5 +969,6 @@ Zhao_text = """
   IL1b_R is "IL1b/R";
   IL1b_R_lyso is "IL1b/R_lyso";
   IL1Ra_R is "IL1Ra/R";
+end
 
-"""
+model_Zhao is "model_Zhao"

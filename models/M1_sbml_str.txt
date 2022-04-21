@@ -1,0 +1,108 @@
+// Created by libAntimony v2.12.0
+model *model_Mg()
+
+  // Compartments and Species:
+  compartment comp1;
+  species $Mg_e in comp1, Mg_f in comp1, TRPM in comp1, ATP in comp1, Mg_ATP in comp1;
+  species $Mg in comp1, Mg_IM in comp1, nTRPM in comp1, $cons in comp1, $ATP_prod in comp1;
+  species $TRPM_prod in comp1, Mg_0 in comp1, $Mg_n in comp1, $Mg_f_n in comp1;
+  species Mg_f_0 in comp1, $IM in comp1, M7CK in comp1, nM7CK in comp1, $deg in comp1;
+  species $H3S10 in comp1, pH3S10 in comp1, $Mg_IM_n in comp1, $Mg_ATP_n in comp1;
+  species Mg_f_1 in comp1, pH3S10_0 in comp1;
+
+  // Assignment Rules:
+  Mg := Mg_f + Mg_ATP + Mg_IM;
+  Mg_n := Mg/Mg_0;
+  Mg_f_n := Mg_f/Mg_f_0;
+  Mg_IM_n := Mg_IM/Mg_IM_0;
+  Mg_ATP_n := Mg_ATP/Mg_ATP_0;
+  F_trpm_i := 1;
+  F_mg_i := Mg_0/Mg;
+
+  // Reactions:
+  Mg_transport: $Mg_e + TRPM => Mg_f + TRPM; k_m_i*Mg_e*(Mg_e > 0)*F_mg_i*F_trpm_i - k_m_e*Mg_f*(Mg_f > 0);
+  Mg_ATP_binding: Mg_f + ATP => Mg_ATP; k_matp_b*Mg_f^n_matp_b*(Mg_f > 0)*ATP*(ATP > 0) - k_matp_ub*Mg_ATP*(Mg_ATP > 0);
+  consumption: ATP => $cons; k_atp_c*ATP;
+  To_cytoplasm: nTRPM => TRPM; k_ntrpm_t*nTRPM^n_ntrpm_t;
+  prod_ATP: $ATP_prod + Mg_f => ATP + Mg_f; k_atp_p0 + k_atp_pm*Mg_f;
+  prod_TRPM: $TRPM_prod + Mg_ATP => nTRPM + Mg_ATP; k_ntrpm_p*TRPM_prod*(Mg_ATP/Mg_ATP_0)^n_ntrpm_p;
+  Membrane_binding: Mg_f + $IM -> Mg_IM; k_mim_b*Mg_f^n_mim_b*(Mg_f > 0)*IM*(IM > 0) - k_mim_ub*Mg_IM*(Mg_IM > 0);
+  TRPM_seg: TRPM => M7CK; k_trpm_s*TRPM;
+  M7CK_trans: M7CK -> nM7CK; k_m7ck_t1*M7CK^n_m7ck_t*(M7CK > 0) - k_m7ck_t2*nM7CK*(nM7CK > 0);
+  M7CK_deg: M7CK => $deg; k_m7ck_deg*M7CK;
+  H3S10_phos: $H3S10 + nM7CK -> pH3S10 + nM7CK; k_h3s10_p*H3S10*nM7CK^n_h3s10_p*(H3S10 > 0) - k_h3s10_up*pH3S10*(pH3S10 > 0);
+
+  // Species initializations:
+  Mg_e = 0.5;
+  Mg_f = 0.5;
+  TRPM = 1;
+  ATP = 16;
+  Mg_ATP = 9;
+  Mg_IM = 9;
+  nTRPM = 1;
+  cons = 0;
+  ATP_prod = 1;
+  TRPM_prod = 1;
+  Mg_0 = Mg_f + Mg_ATP + Mg_IM;
+  Mg_f_0 = Mg_f;
+  IM = 88.6098019188817;
+  M7CK = 1;
+  nM7CK = 1;
+  deg = 0;
+  H3S10 = 1;
+  pH3S10 = 1;
+  Mg_f_1 = 0.5;
+  pH3S10_0 = pH3S10;
+
+  // Compartment initializations:
+  comp1 = 1;
+
+  // Variable initializations:
+  Mg_IM_0 = Mg_IM;
+  Mg_ATP_0 = Mg_ATP;
+  k_m_i = 0.253776534576068;
+  k_m_e = 0.254913019137651;
+  k_atp_p0 = 9.8145812614764;
+  k_matp_ub = 0.946273074586713;
+  k_matp_b = 0.585768202994205;
+  k_atp_c = 0.62216362042029;
+  k_atp_pm = 2.33233672318613;
+  k_mim_b = 0.953161212634347;
+  k_mim_ub = 0.0392496809418786;
+  n_matp_b = 0.0211040228587016;
+  n_mim_b = 8.19693224705306;
+  k_ntrpm_p = 0.11;
+  k_ntrpm_t = 0.96;
+  k_trpm_s = 0.955;
+  k_m7ck_t1 = 0.83;
+  k_m7ck_t2 = 0.96;
+  k_m7ck_deg = 0.89;
+  k_h3s10_p = 0.0008;
+  k_h3s10_up = 0.0007;
+  k_ntrpm_d = 0.1;
+  n_ntrpm_t = 0.516;
+  n_m7ck_t = 1.9;
+  n_ntrpm_p = 12.22;
+  n_h3s10_p = 1.83;
+
+  // Other declarations:
+  var comp1, F_trpm_i, F_mg_i;
+  const Mg_IM_0, Mg_ATP_0, k_m_i, k_m_e, k_atp_p0, k_matp_ub, k_matp_b, k_atp_c;
+  const k_atp_pm, k_mim_b, k_mim_ub, n_matp_b, n_mim_b, k_ntrpm_p, k_ntrpm_t;
+  const k_trpm_s, k_m7ck_t1, k_m7ck_t2, k_m7ck_deg, k_h3s10_p, k_h3s10_up;
+  const k_ntrpm_d, n_ntrpm_t, n_m7ck_t, n_ntrpm_p, n_h3s10_p;
+
+  // Display Names:
+  Mg_transport is "Mg transport";
+  Mg_ATP_binding is "Mg/ATP binding";
+  To_cytoplasm is "To cytoplasm";
+  prod_ATP is "prod ATP";
+  prod_TRPM is "prod TRPM";
+  Membrane_binding is "Membrane binding";
+  TRPM_seg is "TRPM seg";
+  M7CK_trans is "M7CK trans";
+  M7CK_deg is "M7CK deg";
+  H3S10_phos is "H3S10 phos";
+end
+
+model_Mg is "model_Mg"

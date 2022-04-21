@@ -1,4 +1,4 @@
-t2m = 10 # relationship between each simulation time and minute
+t2m = 1 # relationship between each simulation time and minute
 
 range_3h_10mStep = list(range(int(10/t2m),3*int(60/t2m),int(10/t2m)))
 range_24h_60mStep = list(range(0,24*int(60/t2m),int(60/t2m)))
@@ -6,16 +6,77 @@ range_48h_60mStep = list(range(12*int(60/t2m),48*int(60/t2m),int(60/t2m)))
 range_12h_60mStep = list(range(3*int(60/t2m),12*int(60/t2m),int(60/t2m))) # span of 3 to 12 hs
 
 
-studies = {
-	'P1' : ['eq_mg','R05_mg_f_n','R05_mg_n','Q21_Mg'],
-	'P2' : ['Q21_nTRPM','Q21_TRPM','Q21_nM7CK','Q21_eq_trpm'],
-	'P3' : ['Q21_H3S10','Q21_eq_h3s10']
+packages = {
+	# 'P1' : ['eq_mg','R05_mg_f_n','R05_mg_n','Q21_Mg'], # mg entry and equalibrium
+	'P1' : ['eq_mg','R05_mg_f_n','R05_mg_n'], # mg entry and equalibrium
+	'P2' : ['Q21_nTRPM','Q21_TRPM','Q21_nM7CK','Q21_eq_trpm'], #mg affects TRPM 
+	'P3' : ['Q21_H3S10','Q21_eq_h3s10'], # m7ck regulates H3S10
+	'P4' : ['S12_IkBa_mg','Q21_IkBa'] # Mg regulate IkBa 
+	# 'P4' : ['Q21_IkBa']
 }
 
 
-
-observations = {
-	'studies': studies['P3'],	
+observations = {	
+	'S12_IkBa_mg': { # mg influences IkBa level
+        "IDs": ['ctr',"Mg_2dot5"],
+        "experiment_period":int(3*60/t2m),
+        "measurement_scheme": {
+            "IKB": [int(3*60/t2m)]
+        },
+        "ctr": {
+            "inputs": {
+                "Mg_e": 0.5 ,
+            },
+            "expectations": {
+                "IKB":{'mean':[1],
+                		'std':[0]} #normalized format
+            }
+        },
+        "Mg_2dot5": {
+            "inputs": {
+                "Mg_e": 2.5 ,
+            },
+            "expectations": {
+                "IKB":{'mean':[1.32],
+                		'std':[0]} #normalized format
+            }
+        }
+    },
+    'Q21_IkBa':{# the effect of different Mg ion concentrations on TRPM_n
+		# 'experiment_period':int(72*60/t2m), # minutes
+		'experiment_period':int(6*60/t2m), # minutes
+		'measurement_scheme':{
+			# 'ZZ_IKB': [int(6*60/t2m),int(72*60/t2m)]
+			'IKB': [int(6*60/t2m)]
+		},
+		'IDs': ['Mg_.08','Mg_8'],
+		'Mg_.08':{
+			'inputs':{
+						"Mg_e": 0.08 # mM
+					},
+			"expectations": {			
+				"IKB": {
+					# 'mean':[0.05,1.7], 
+					'mean':[0.05], 
+					# 'std': [0,.1]
+					'std': [0]
+				}
+			}
+		},
+		'Mg_8':{
+			'inputs':{
+						"Mg_e": 8 # mM
+					},
+			"expectations": {			
+				"IKB": {
+					# 'mean': [0.7,1.67],
+					'mean': [0.7], 
+					# 'std': [.1,.25]
+					'std': [.1]
+				}
+			}
+		}
+	},
 
 	'R05_mg_n': { # mg extrusion
         "IDs": ["Mg_02"],
@@ -346,6 +407,11 @@ observations = {
 		}
 	}
 }
+def select_obs(studies):
+	obs = {}
+	for study in studies:
+		obs[study] = observations[study]
+	return obs
 import json
 with open('observations.json','w') as file:
 	file.write(json.dumps(observations,indent=4))

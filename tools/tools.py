@@ -40,20 +40,21 @@ def edit_matlab_model(input_file,output_file): # edit matlab sbml
         file.write(content)
 
 class InvalidParams(Exception):
-    def __init__(self):
+    def __init__(self,message = ''):
         pass
 
 class Calibration_class:
-    def __init__(self,model,fixed_params,free_params):
+    def __init__(self,model,fixed_params,free_params,studies):
         self.free_params = free_params
         self.fixed_params = fixed_params
         self.model = model
+        self.studies = studies
     def cost_function(self,calib_params_values):
         calib_params = {}
         for key,value in zip(self.free_params.keys(),calib_params_values):
             calib_params[key] = value
         params = {**calib_params,**self.fixed_params}
-        error = self.model.run(params=params)
+        error = self.model.run(params=params,studies=self.studies)
 
         return error
 
@@ -66,8 +67,8 @@ class Calibration_class:
             inferred_params[key] = value
         return inferred_params,results.fun
 
-def calibrate(model,fixed_params,free_params,max_iters = 20, n_proc=1,disp=True,strategy='best1bin',tol=1e-8,callback=None):
-    calib_obj = Calibration_class(model,fixed_params,free_params)
+def calibrate(model,fixed_params,free_params,studies,max_iters = 20, n_proc=1,disp=True,strategy='best1bin',tol=1e-4,callback=None):
+    calib_obj = Calibration_class(model,fixed_params,free_params,studies)
 
     inferred_params,error = calib_obj.optimize(n_proc=n_proc,max_iters=max_iters,disp=disp,strategy=strategy,tol=tol,callback=callback)
     return inferred_params
@@ -93,68 +94,39 @@ c_2_ac['O2'] = 120400000/21 # % to absolute copy for oxygen
 ac_2_c['02'] = 21/120400000 # absolute copy to %
                             # 
                             
-###------some plots--------#####
-# def plot(y,x=None,target=''):
-#     fig = plt.figure()
-#     fig.canvas.draw()
-#     ax = fig.add_subplot(1, 1, 1)
-#     if x == None:
-#         ax.plot(y)
-#     else:
-#         ax.plot(x,y)
-#     ax.set_title(target)
-#     plt.show()
-def run_model(model,params,target_keys,duration=500):
+def run_model(model,params,target_keys,duration,study=''):
     model.reset()
 #     model = te.loadSBMLModel(dir_model)
     for key,value in params.items():
         model[key] = value
+    if study == 'S12_IkBa_mg':
+        model.integrator.variable_step_size = True
+        model.integrator.absolute_tolerance = 1e-3 
+        model.integrator.relative_tolerance = 1e-3 
+        try:
+            results = model.simulate(0,duration,selections = ['TIME']+target_keys)
+        except RuntimeError:
+            raise RuntimeError('study : {} didnt converge'.formaat(study))
+    elif study == 'Q21_IkBa':
+        jj = duration
+        while True:
+            steps = jj
+            try:
+                results = model.simulate(start = 0,end = duration,steps =steps ,selections = ['TIME']+target_keys)
+                break
+            except RuntimeError:
+                jj-=1
+            if jj < 20:
+                print('Invalid parameter set')
+                raise InvalidParams('run model didnt converge')
+    else:
+        results = model.simulate(start = 0,end = duration,steps =duration ,selections = ['TIME']+target_keys)
 
-    results = model.simulate(0,duration,duration,selections = ['TIME']+target_keys)
+
+    # print(results)
     return results
 def indexing(real_time,time_vector):
     index = next(x[0] for x in enumerate(time_vector) if x[1] >= real_time)
     return index
 
-class Calibrate_2:#repo right now
-    """
-    Target should be given in this format:
-    target = [{'target_key':{'time':[t0,t1,t2,...],
-                 'values':[v1,v2,v3,...]}},..]
-    """
-    def __init__(self,model,target,free_params,max_iteration):
-        self.model = model
-        self.target = target
-        self.free_params = free_params
-        self.max_iteration = max_iteration
-    def cost_function(self,params_values):
-        ## create the parameter set for the given parameter values
-        params = {}
-        for key,value in zip(self.free_params.keys(),params_values):
-            params[key] = value
-        errors = []
-        for target_item in self.target:
-            results_item = target_item['results']
-            inputs_item = target_item['inputs']
-            for key,value in inputs_item.items():
-                params[key] = value
-            results = run_model(model=self.model, params = params, target_keys= list(results_item.keys()))
-            tag_errors=[]
-            for tag in list(results_item.keys()):
-                n_abs_values= []
-                for i in range(len(results_item[tag]['time'])):
-                    index = indexing(results_item[tag]['time'][i],results['time'])
-                    result_i = results[tag][index] 
-                    target_i = results_item[tag]['values'][i]
-                    abs_value = abs(result_i - target_i)
-        #             mean_value = np.mean([results[tag][i], samples[tag][i]])
-                    mean_value = target_i
-                    n_abs_values.append(abs_value/mean_value)
-                tag_error = np.mean(n_abs_values)
-                tag_errors.append(tag_error)
-            errors.append(np.mean(tag_errors))
-        return np.mean(errors)
-    def optimize(self):
-        calib_obj = Calibration(free_params=self.free_params,cost_function=self.cost_function,max_iters=self.max_iteration)
-        params = calib_obj.optimize()
-        return params
+

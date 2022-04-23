@@ -206,8 +206,8 @@
       <species id="ZZ_p65" compartment="ZZ_comp1" initialConcentration="75892" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_p50" compartment="ZZ_comp1" initialConcentration="4" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_nfkb_prod" name="nfkb prod" compartment="ZZ_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="ZZ_NFKB" compartment="ZZ_comp1" initialConcentration="277" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ZZ_NFKB_n" compartment="ZZ_comp1" initialConcentration="931" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="NFKB" compartment="ZZ_comp1" initialConcentration="277" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="nNFKB" compartment="ZZ_comp1" initialConcentration="931" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_IKB_n" compartment="ZZ_comp1" initialConcentration="25" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_IKB_NFKB_n" name="IKB/NFKB_n" compartment="ZZ_comp1" initialConcentration="29" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_IKB_NFKB" name="IKB/NFKB" compartment="ZZ_comp1" initialConcentration="68307" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
@@ -245,6 +245,8 @@
       <species id="ZZ_GSK3b" compartment="ZZ_comp1" initialConcentration="87270" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_pGSK3b" compartment="ZZ_comp1" initialConcentration="52730" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="deg" compartment="default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="IL8" compartment="default_compartment" initialConcentration="10000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="M1_Mg_IM_0" value="9" constant="true"/>
@@ -596,10 +598,16 @@
       <parameter id="ZZ_kb135" value="76" constant="true"/>
       <parameter id="ZZ_kc135" value="2" constant="true"/>
       <parameter id="ZZ_kd135" value="1000" constant="true"/>
-      <parameter id="kd_ikb_d" value="0.001" constant="true"/>
-      <parameter id="n_ikb_d" value="20" constant="true"/>
-      <parameter id="kd_ikb_p" value="0.001" constant="true"/>
-      <parameter id="n_ikb_p" value="1" constant="true"/>
+      <parameter id="kd_ikb_d" value="88.948" constant="true"/>
+      <parameter id="n_ikb_d" value="23.43" constant="true"/>
+      <parameter id="kd_ikb_p" value="1.207" constant="true"/>
+      <parameter id="n_ikb_p" value="29.52" constant="true"/>
+      <parameter id="k_il8_p" value="100" constant="true"/>
+      <parameter id="kd_il8_p1" value="10" constant="true"/>
+      <parameter id="n_il8_p1" value="1" constant="true"/>
+      <parameter id="k_il8_d" value="0.1" constant="true"/>
+      <parameter id="IL8_0" value="10000" constant="false"/>
+      <parameter id="IL8_n" value="1" constant="false"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="M1_Mg_0">
@@ -630,6 +638,11 @@
       <initialAssignment symbol="M1_Mg_ATP_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> M1_Mg_ATP </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL8_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL8 </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -711,6 +724,15 @@
             <divide/>
             <ci> M1_Mg_0 </ci>
             <ci> M1_Mg </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="IL8_n">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL8 </ci>
+            <ci> IL8_0 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -1400,12 +1422,12 @@
         <listOfReactants>
           <speciesReference species="ZZ_pSTAT1D_IRF9_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CXCL10_prod" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_pSTAT1D_IRF9_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_mCXCL10" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -1422,10 +1444,10 @@
                 <cn> 0.004 </cn>
                 <apply>
                   <divide/>
-                  <ci> ZZ_NFKB_n </ci>
+                  <ci> nNFKB </ci>
                   <apply>
                     <plus/>
-                    <ci> ZZ_NFKB_n </ci>
+                    <ci> nNFKB </ci>
                     <ci> ZZ_ka17 </ci>
                   </apply>
                 </apply>
@@ -2279,7 +2301,7 @@
           <speciesReference species="ZZ_IL12_prod" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IRF1" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_aIRF5" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
@@ -2288,7 +2310,7 @@
           <speciesReference species="ZZ_IRF1" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IL12" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_aIRF5" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
@@ -2340,7 +2362,7 @@
                   <divide/>
                   <apply>
                     <times/>
-                    <ci> ZZ_NFKB_n </ci>
+                    <ci> nNFKB </ci>
                     <ci> ZZ_CEBPB </ci>
                     <ci> ZZ_AP1_n </ci>
                     <cn type="e-notation"> 1 <sep/> -7 </cn>
@@ -2349,7 +2371,7 @@
                     <plus/>
                     <apply>
                       <times/>
-                      <ci> ZZ_NFKB_n </ci>
+                      <ci> nNFKB </ci>
                       <ci> ZZ_CEBPB </ci>
                       <ci> ZZ_AP1_n </ci>
                       <cn type="e-notation"> 1 <sep/> -7 </cn>
@@ -2570,7 +2592,7 @@
           <speciesReference species="ZZ_IRF1" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IRF9T" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_HIF1a_b_n" stoichiometry="1" constant="true"/>
@@ -2578,7 +2600,7 @@
           <speciesReference species="ZZ_iNOS" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IRF9T" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -2618,10 +2640,10 @@
                 <cn> 0.02 </cn>
                 <apply>
                   <divide/>
-                  <ci> ZZ_NFKB_n </ci>
+                  <ci> nNFKB </ci>
                   <apply>
                     <plus/>
-                    <ci> ZZ_NFKB_n </ci>
+                    <ci> nNFKB </ci>
                     <ci> ZZ_kc53 </ci>
                   </apply>
                 </apply>
@@ -2647,12 +2669,12 @@
         <listOfReactants>
           <speciesReference species="ZZ_HIF1a_prod" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_m93" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_HIF1a" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_m93" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -2664,10 +2686,10 @@
                 <cn> 0.1 </cn>
                 <apply>
                   <divide/>
-                  <ci> ZZ_NFKB_n </ci>
+                  <ci> nNFKB </ci>
                   <apply>
                     <plus/>
-                    <ci> ZZ_NFKB_n </ci>
+                    <ci> nNFKB </ci>
                     <ci> ZZ_ka54 </ci>
                   </apply>
                 </apply>
@@ -3155,7 +3177,7 @@
           <speciesReference species="ZZ_pSTAT6D_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_HIF2a_b_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IL12" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pCREB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
@@ -3166,7 +3188,7 @@
           <speciesReference species="ZZ_pSTAT6D_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_HIF2a_b_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IL12" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pCREB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
@@ -3226,10 +3248,10 @@
                 <cn> 0.1 </cn>
                 <apply>
                   <divide/>
-                  <ci> ZZ_NFKB_n </ci>
+                  <ci> nNFKB </ci>
                   <apply>
                     <plus/>
-                    <ci> ZZ_NFKB_n </ci>
+                    <ci> nNFKB </ci>
                     <ci> ZZ_kd73 </ci>
                   </apply>
                 </apply>
@@ -4156,7 +4178,7 @@
           <speciesReference species="ZZ_IRF1" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IRF9T" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_aIRF5" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
@@ -4166,7 +4188,7 @@
           <speciesReference species="ZZ_IRF1" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IRF9T" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_aIRF5" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
@@ -4213,7 +4235,7 @@
                       <plus/>
                       <apply>
                         <times/>
-                        <ci> ZZ_NFKB_n </ci>
+                        <ci> nNFKB </ci>
                         <cn type="integer"> 7 </cn>
                         <apply>
                           <power/>
@@ -4242,7 +4264,7 @@
                     </apply>
                     <apply>
                       <times/>
-                      <ci> ZZ_NFKB_n </ci>
+                      <ci> nNFKB </ci>
                       <ci> ZZ_CEBPB </ci>
                       <cn type="e-notation"> 8.5 <sep/> -8 </cn>
                     </apply>
@@ -4256,7 +4278,7 @@
                       <plus/>
                       <apply>
                         <times/>
-                        <ci> ZZ_NFKB_n </ci>
+                        <ci> nNFKB </ci>
                         <cn type="integer"> 7 </cn>
                         <apply>
                           <power/>
@@ -4285,7 +4307,7 @@
                     </apply>
                     <apply>
                       <times/>
-                      <ci> ZZ_NFKB_n </ci>
+                      <ci> nNFKB </ci>
                       <ci> ZZ_CEBPB </ci>
                       <cn type="e-notation"> 8.5 <sep/> -8 </cn>
                     </apply>
@@ -5372,7 +5394,7 @@
         <listOfReactants>
           <speciesReference species="ZZ_mir155_prod" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pAKT2" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pAKT1" stoichiometry="1" constant="true"/>
@@ -5380,7 +5402,7 @@
         <listOfProducts>
           <speciesReference species="ZZ_pre_m155" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pAKT2" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pAKT1" stoichiometry="1" constant="true"/>
@@ -5424,7 +5446,7 @@
               </apply>
               <apply>
                 <plus/>
-                <ci> ZZ_NFKB_n </ci>
+                <ci> nNFKB </ci>
                 <ci> ZZ_kb164 </ci>
               </apply>
               <apply>
@@ -6479,7 +6501,7 @@
           <speciesReference species="ZZ_p50" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ZZ_NFKB" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -6494,7 +6516,7 @@
               <apply>
                 <times/>
                 <ci> ZZ_kr215 </ci>
-                <ci> ZZ_NFKB </ci>
+                <ci> NFKB </ci>
               </apply>
             </apply>
           </math>
@@ -6502,7 +6524,7 @@
       </reaction>
       <reaction id="ZZ_v218" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_IKB_n" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
@@ -6515,7 +6537,7 @@
               <apply>
                 <times/>
                 <ci> ZZ_kf216 </ci>
-                <ci> ZZ_NFKB_n </ci>
+                <ci> nNFKB </ci>
                 <ci> ZZ_IKB_n </ci>
               </apply>
               <apply>
@@ -6546,7 +6568,7 @@
       </reaction>
       <reaction id="ZZ_v216" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_NFKB" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="IKB" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
@@ -6559,7 +6581,7 @@
               <apply>
                 <times/>
                 <ci> ZZ_kf216 </ci>
-                <ci> ZZ_NFKB </ci>
+                <ci> NFKB </ci>
                 <ci> IKB </ci>
               </apply>
               <apply>
@@ -6573,17 +6595,17 @@
       </reaction>
       <reaction id="ZZ_v219" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_NFKB" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> ZZ_k219 </ci>
-              <ci> ZZ_NFKB </ci>
+              <ci> NFKB </ci>
             </apply>
           </math>
         </kineticLaw>
@@ -6616,11 +6638,11 @@
       <reaction id="ZZ_v221" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="ZZ_Ikb_prod" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="IKB" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <listOfModifiers>
           <modifierSpeciesReference species="M1_pH3S10"/>
@@ -6632,7 +6654,7 @@
               <times/>
               <ci> ZZ_k221 </ci>
               <ci> ZZ_Ikb_prod </ci>
-              <ci> ZZ_NFKB_n </ci>
+              <ci> nNFKB </ci>
               <apply>
                 <power/>
                 <apply>
@@ -6661,7 +6683,7 @@
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_pIKB" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pIKK" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
@@ -6702,7 +6724,7 @@
       </reaction>
       <reaction id="ZZ_v224" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_SOCS1" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
@@ -6716,7 +6738,7 @@
               <apply>
                 <times/>
                 <ci> ZZ_k224 </ci>
-                <ci> ZZ_NFKB_n </ci>
+                <ci> nNFKB </ci>
                 <ci> ZZ_SOCS1 </ci>
               </apply>
               <apply>
@@ -7029,12 +7051,12 @@
         <listOfReactants>
           <speciesReference species="ZZ_a20_prod" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_A20" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -7043,7 +7065,7 @@
               <ci> ZZ_k237 </ci>
               <ci> ZZ_a20_prod </ci>
               <ci> ZZ_CEBPB </ci>
-              <ci> ZZ_NFKB_n </ci>
+              <ci> nNFKB </ci>
             </apply>
           </math>
         </kineticLaw>
@@ -7068,7 +7090,7 @@
       <reaction id="ZZ_v239" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="ZZ_il1b_prod" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_aIRF5" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
@@ -7080,7 +7102,7 @@
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_IL1b" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_aIRF5" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_AP1_n" stoichiometry="1" constant="true"/>
@@ -7104,7 +7126,7 @@
                     <plus/>
                     <apply>
                       <times/>
-                      <ci> ZZ_NFKB_n </ci>
+                      <ci> nNFKB </ci>
                       <ci> ZZ_aIRF5 </ci>
                       <cn> 0.00033 </cn>
                     </apply>
@@ -7120,7 +7142,7 @@
                   <plus/>
                   <apply>
                     <times/>
-                    <ci> ZZ_NFKB_n </ci>
+                    <ci> nNFKB </ci>
                     <ci> ZZ_aIRF5 </ci>
                     <cn> 0.00033 </cn>
                   </apply>
@@ -7498,14 +7520,14 @@
       <reaction id="ZZ_v251" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="ZZ_il1ra_prod" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT6D_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_IL1Ra" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="nNFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_CEBPB" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT6D_n" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
@@ -7520,7 +7542,7 @@
                 <divide/>
                 <apply>
                   <times/>
-                  <ci> ZZ_NFKB_n </ci>
+                  <ci> nNFKB </ci>
                   <ci> ZZ_CEBPB </ci>
                   <cn> 0.0001 </cn>
                 </apply>
@@ -7528,7 +7550,7 @@
                   <plus/>
                   <apply>
                     <times/>
-                    <ci> ZZ_NFKB_n </ci>
+                    <ci> nNFKB </ci>
                     <ci> ZZ_CEBPB </ci>
                     <cn> 0.0001 </cn>
                   </apply>
@@ -7732,6 +7754,60 @@
               <times/>
               <ci> ZZ_k258 </ci>
               <ci> ZZ_pGSK3b </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J0" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8_prod" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="M1_pH3S10"/>
+          <modifierSpeciesReference species="M1_pH3S10_0"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8_p </ci>
+              <apply>
+                <power/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <plus/>
+                    <ci> M1_pH3S10 </ci>
+                    <ci> kd_il8_p1 </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <ci> M1_pH3S10_0 </ci>
+                    <ci> kd_il8_p1 </ci>
+                  </apply>
+                </apply>
+                <ci> n_il8_p1 </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J1" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8_d </ci>
+              <ci> IL8 </ci>
             </apply>
           </math>
         </kineticLaw>

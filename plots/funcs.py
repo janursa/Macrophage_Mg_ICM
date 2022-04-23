@@ -9,7 +9,9 @@ dir_output = dir_file
 import matplotlib.pyplot as plt
 import numpy as np
 from tools.tools import run_model
-from plots.graphs import graph_bar,graph_line,PSL
+from plots import plots
+from data.observations import t2m
+
 
 labels = {
 	'Mg_f':'free Mg$^{2+}$',
@@ -22,75 +24,321 @@ labels = {
 	'nM7CK': 'Nuclear M7CK',
 	'pH3S10': 'Phos H3S10',
 }
+class process_data:
+	def sort(sims,exps,target,plot_t):
+		sims_sorted = []
+		exps_sorted = []
+		for ID in exps['IDs']:
+			ID_exps = exps[ID]['expectations'][target]
+			ID_sims = sims[ID][target]
+			exps_sorted.append(ID_exps['mean'])
+			sims_sorted.append(ID_sims)
+		if plot_t == 'bar1':
+			sims_sorted = [item[0] for item in sims_sorted]
+			exps_sorted = [item[0] for item in exps_sorted]
+		
+		return sims_sorted,exps_sorted
 
-def P4_plot(model_sbml,model_macrophage,params,observations): # plotting sim vs exp measurements for P4
-	figsize = (4,4)
+	def normalize(study_tag,sims,exps):
+		sims_n = []
+		exps_n = []
+		flag_sim = False
+		flag_exp = False
+		if study_tag=='Q21_nTRPM' or study_tag=='Q21_TRPM' or study_tag=='Q21_nM7CK' or study_tag=='Q21_H3S10':
+			ctr_sim = sims[1]
+			flag_sim = True
+		elif study_tag == 'S12_IkBa_mg':
+			ctr_sim = sims[0]
+			flag_sim = True
+		elif study_tag == 'Q21_IkBa':
+			ctr_sim = sims[0]
+			ctr_exp = exps[0]
+			flag_sim = True
+			flag_exp = True
+		
+
+		if flag_sim:
+			for item in sims:
+				sims_n.append(item/ctr_sim)
+		else:
+			sims_n = sims
+
+		if flag_exp:
+			for item in exps:
+				exps_n.append(item/ctr_exp)
+		else:
+			exps_n = exps
+
+		return sims_n,exps_n
+
+
+class Specs:
+	def __init__(self,study_tag):
+		self.line_width = 3
+		self.bar_width = .2
+		self.error_bar_width = 5
+		self.colors = ['lime' , 'violet', 'yellowgreen', 'peru', 'skyblue']
+		self.legend_font_size = 15
+		self.tick_font_size = 21
+		self.title_font_size = 21 
+		self.delta = .12
+		self.R2_font_size  = 18
+		self.D = 1.2 # the length in which all Mg dosages are plotted in a certain time point
+		# self.delta = 5
+	@staticmethod
+	def determine_title(study_tag):
+		label = study_tag
+		if study_tag == 'Q21_nTRPM':
+			label = 'Nuclear TRPM'
+		elif study_tag == 'Q21_TRPM':
+			label = 'TRPM'
+		elif study_tag == 'Q21_nM7CK':
+			label = 'Nuclear M7CK'
+		elif study_tag == 'Q21_H3S10':
+			label = 'Phosphorylated H3S10'
+		elif study_tag == 'Q21_Mg_IL8':
+			label = 'IL8'
+		elif study_tag == 'Q21_eq_trpm':
+			pass
+		elif study_tag == 'R05_mg_f_n':
+			label = 'Free Mg$^{2+}$ ions'
+		elif study_tag == 'R05_mg_n':
+			label = 'Total Mg$^{2+}$ ions'
+		elif study_tag == 'Q21_Mg':
+			label = 'Free Mg$^{2+}$ ions'
+		elif study_tag == 'eq_mg_f' or study_tag == 'Q21_eq' or study_tag == 'eq_mg':
+			label = ''
+		return label
+	@staticmethod
+	def determine_xlabel(study_tag):
+		label = 'Time (h)'
+		if study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
+			label = 'Mg conc. (ng/ml)'
+		elif study_tag == 'Q21_Mg_IL8':
+			label = ''
+		return label
+		
+	@staticmethod
+	def bar_positions(sims,delta,D,plot_t):
+		if plot_t == 'bar1':
+			x_exp =[float(j) + delta for j in range(len(sims))]
+			x_sim =[float(j) - delta for j in range(len(sims))]
+			xs = [[x_exp,x_sim]]
+		elif plot_t == 'bar2':
+			IDs_n = len(sims)
+			d = D/(IDs_n+1) # the length allocation to a pair of exp-sim
+			xs = [] # the location of bars sorted by Mg count
+			for i in range(IDs_n):
+				x_exp =[(float(j)-D/2) + d*(i+1) - delta for j in range(len(sims[0]))]
+				x_sim =[(float(j)-D/2) + d*(i+1) + delta for j in range(len(sims[0]))]
+				xs.append([x_exp,x_sim])
+		return xs
+	@staticmethod
+	def determine_graph_size(study_tag):
+		graph_size = [3,3]
+		if study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
+			graph_size = [3,3]
+		elif study_tag == 'Q21_Mg_IL8':
+			graph_size = [4,3]
+		return graph_size
+		
+	@staticmethod
+	def determine_ylabel(study_tag):
+		label = 'Relative Concentration \n (To initial condition)'
+		if study_tag == 'eq_mg' or study_tag == 'eq_mg_f':
+			label = 'Concentration (mM)'
+		elif study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
+			label = 'Relative intensity \n (To control)'
+		elif study_tag == 'Q21_Mg_IL8':
+			label = 'Concentration (pg/ml)'
+		return label
+	@staticmethod
+	def determine_xlim(study_tag):
+		if study_tag == '':
+			pass
+		else:
+			raise ValueError('Define')
+		return lim
+	@staticmethod
+	def determine_ylim(study_tag):
+		if study_tag == 'eq_mg':
+			lim = [18,19]
+		elif study_tag == 'eq_mg_f':
+			lim = [0,1]
+		else:
+			raise ValueError('Define')
+		return lim
+	@staticmethod
+	def determine_xticks(ax,study_tag):
+		ticks = ax.get_xticks()
+		if study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
+			adj_ticks = [0,1,2]
+			adj_labels = ['0.08','0.8','8']
+		elif study_tag == 'Q21_Mg_IL8':
+			adj_ticks = [0,1]
+			adj_labels = ['6h','72h']
+		elif study_tag == 'Q21_Mg':
+			adj_ticks = np.array([0,1,2,3])*60/t2m	
+			adj_labels = [int(i*t2m/60) for i in adj_ticks]
+		else:
+			adj_ticks = ticks[1:-1]
+			adj_labels = [int(i*t2m/60) for i in adj_ticks]
+			
+		return adj_ticks,adj_labels
+
+	@staticmethod
+	def determine_yticks(study_tag):
+		if study_tag == 'eq_mg_f':
+			y_ticks_ad = [0,0.5,1]
+			y_ticks_label = y_ticks_ad
+		elif study_tag == 'eq_mg':
+			y_ticks_ad = [18+0.5*i for i in range(0,3)]
+			y_ticks_label = y_ticks_ad
+		else:
+			raise ValueError('define')
+			
+		return y_ticks_ad,y_ticks_label
+	@staticmethod
+	def determine_legend(ax,study_tag):
+		position = (1,1.1)
+		if study_tag == 'R05_mg_f_n':
+			position = (1.1,.7)
+		elif study_tag == 'eq_mg' or study_tag == 'eq_mg_f':
+			position = (1,1.1)
+		elif study_tag == 'R05_mg_n':
+			position = (1.1,1.1)
+		elif study_tag == 'Q21_Mg':
+			position = (1.1,.8)
+		elif study_tag == 'Q21_eq':
+			position = (1.14,.75)
+		elif study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
+			position = (0.7,1.1)
+		elif study_tag == 'Q21_Mg_IL8':
+			position = (1.14,.75)
+		ncol = 1
+		return position,ncol
+
+	
+	
+
+def run_plot_bar(ax,model,params,study_tag,target,study,plot_t,IDs=[]): 
+	sims = model.simulate_study(study_tag=study_tag,params= params,study=study)
+
+	sims,exps = process_data.sort(sims=sims,exps=study,target = target,plot_t=plot_t)
+	sims,exps = process_data.normalize(study_tag = study_tag, sims= sims, exps=exps)
+	specs = Specs(study_tag)
+	xs = specs.bar_positions(sims,specs.delta,specs.D,plot_t=plot_t)
+	for i in range(len(xs)):
+		if plot_t == 'bar1':
+			labels = ['S','E']
+			sims_ID = sims
+			exps_ID = exps
+		elif plot_t == 'bar2':
+			labels = ['S-%s'%IDs[i],'E-%s'%IDs[i]]
+			sims_ID = sims[i]
+			exps_ID = exps[i]
+		plots.tools.plot_bar(ax=ax,specs=specs,x_exp=xs[i][0],x_sim=xs[i][1],sims=sims_ID,exps=exps_ID,labels=labels, plot_i = i)
+	
+	plots.tools.ax_postprocess(ax=ax,study_tag=study_tag,specs=specs,sims=sims)
+
+def run_plot_line(ax,study_tag,model_sbml,params,target,ID,study):
+	duration = study['experiment_period']
+	inputs = study[ID]['inputs']
+	specs = Specs(study_tag)
+
+	params_copy = copy.deepcopy(params)
+	for key,value in inputs.items():
+		params_copy[key] = value
+	sims = run_model(model_sbml,params = params_copy,target_keys=['TIME',target],duration=duration)
+	
+	x = sims['time']
+	ax.plot(x,sims[target],color='black',linewidth=specs.line_width, label = 'S')
+	obs_xx = study['measurement_scheme'][target]
+	obs_yy = study[ID]['expectations'][target]['mean']
+	ax.plot(obs_xx,obs_yy,linestyle='--',color='r', linewidth=specs.line_width, label = 'E')
+	ax.legend()
+	plots.tools.ax_postprocess(ax,study_tag=study_tag,sims=sims,specs=specs)
+
+
+	
+def P5_plot(model_sbml,model_macrophage,params,observations): # plotting sim vs exp measurements for P4
+	figsize = (8,4)
 	fig = plt.figure(figsize=figsize)
 	fig.canvas.draw()
+	obs = observations
 	nn = 2
 	jj = 1
 
 	ax = fig.add_subplot(1,nn,jj)
-
-	plot_S12_IkBa_mg(ax=ax,model_sbml=model_sbml,model_macrophage=model_macrophage,params=params,observations=observations)
+	study_tag,target = 'Q21_Mg_IL8','IL8'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar2',IDs=IDs)
 	jj+=1
 
 	ax = fig.add_subplot(1,nn,jj)
-
-	plot_Q21_IkBa(ax=ax,model_sbml=model_sbml,model_macrophage=model_macrophage,params=params,observations=observations)
+	study_tag,target = 'eq_IL8','IL8_n'
+	ID = obs[study_tag]['IDs'][0]
+	run_plot_line(ax=ax,study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
 	jj+=1
 	
 	fig.tight_layout()
 
-def plot_Q21_IkBa(ax,model_sbml,model_macrophage,params,observations):
-	study_tag = 'Q21_IkBa'
+def plot_Q21_Mg_IL8(ax,model_sbml,model_macrophage,params,observations):
+	study_tag = 'Q21_Mg_IL8'
+	target = 'IL8'
 	obs = observations[study_tag]
-	target = list(observations[study_tag]['measurement_scheme'].keys())[0]
 	
 	sim_results = model_macrophage.simulate_study(study_tag = study_tag,params= params,study=observations[study_tag])
 
-	plot_obj = graph_bar(study=study_tag,observations=observations,errors={},destination = dir_output)
-	plot_obj.plot(ax = ax,simulation_results=sim_results)
+	IDs = observations[study_tag]['IDs']
+	IDs = ['0.08 mM','8 mM']
+
+	# run_plot_bar(ax=ax,model = model_macrophage,study_tag=study_tag,target=target,sims=sim_results,study=observations[study_tag],plot_t= 'bar2', IDs=IDs)
+
 
 	### figure 2###
-	tag = 'IKB'
+	target_keys = ['IL8']
 	input_tag = 'Mg_e'
 	input_values = [0.08,0.5,8] 
 	fig = plt.figure()
-	ax = fig.add_subplot(1,1,1)
-	for value in input_values:
-		params_copy = {**params,input_tag:value}
-		results = run_model(model=model_sbml,params =params_copy,duration = 180,target_keys=[tag])
-		xx = results['time']
-		ax.plot(xx, results[tag], label = '{}'.format(value))
-	ax.legend()
+	jj = 1
+	for tag in target_keys:
+		ax = fig.add_subplot(1,2,jj)
+		for value in input_values:
+			params_copy = {**params,input_tag:value}
+			results = run_model(model=model_sbml,params =params_copy,duration = 180,target_keys=[tag])
+			xx = results['time']
+			ax.plot(xx, results[tag], label = '{}: {}'.format(tag,value))
+		ax.legend()
+		jj+=1
+	fig.tight_layout()
 
-def plot_S12_IkBa_mg(ax,model_sbml,model_macrophage,params,observations):
-	study_tag = 'S12_IkBa_mg'
-	obs = observations[study_tag]
-	target = list(observations[study_tag]['measurement_scheme'].keys())[0]
+def P4_plot(model_sbml,model_macrophage,params,observations): # plotting sim vs exp measurements for P4
+	figsize = (6,4)
+	fig = plt.figure(figsize=figsize)
+	fig.canvas.draw()
+	obs = observations
+	nn = 2
+	jj = 1
+
+	ax = fig.add_subplot(1,nn,jj)
+	study_tag,target = 'S12_IkBa_mg','IKB'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+	jj+=1
+
+	ax = fig.add_subplot(1,nn,jj)
+	study_tag,target = 'Q21_IkBa','IKB'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+	jj+=1
 	
-	sim_results = model_macrophage.simulate_study(study_tag=study_tag,params= params,study=observations[study_tag])
-
-	plot_obj = graph_bar(study=study_tag,observations=observations,errors={},destination = dir_output)
-	plot_obj.plot(ax = ax,simulation_results=sim_results)
-
-	### figure 2###
-	tag = 'IKB'
-	input_tag = 'Mg_e'
-	input_values = [0.5,2.5] 
-	fig = plt.figure()
-	ax = fig.add_subplot(1,1,1)
-	for value in input_values:
-		params_copy = {**params,input_tag:value}
-		results = run_model(model=model_sbml,params =params_copy,duration = 180,target_keys=[tag])
-		xx = results['time']
-		ax.plot(xx, results[tag], label = '{}'.format(value))
-	ax.legend()
+	fig.tight_layout()
 
 def P1_3_eq_plot(model_sbml,params,observations): # equalibrium for P1 to P3
 	figsize = (12,4)
 	fig = plt.figure(figsize=figsize)
+	obs = observations
 	fig.canvas.draw()
 	nn = 3
 	jj = 1
@@ -107,44 +355,69 @@ def P1_3_eq_plot(model_sbml,params,observations): # equalibrium for P1 to P3
 
 def P1_3_qualitative_plot(model_sbml,params,observations):
 	figsize = (12,4)
+	obs = observations
 	fig = plt.figure(figsize=figsize)
 	fig.canvas.draw()
 	nn = 3
 	jj = 1
 
 	ax = fig.add_subplot(1,nn,jj)
-	plot_R05_mg_f_n(ax=ax,model_sbml=model_sbml,params=params,observations=observations)
-	
+	study_tag,target = 'R05_mg_f_n','Mg_f_n'
+	ID = obs[study_tag]['IDs'][0]
+	run_plot_line(ax=ax,study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
 	jj+=1
+	
 	ax = fig.add_subplot(1,nn,jj)
-	plot_R05_mg_n(ax=ax,model_sbml=model_sbml,params=params,observations=observations)
+	study_tag,target = 'R05_mg_n','Mg_n'
+	ID = obs[study_tag]['IDs'][0]
+	run_plot_line(ax=ax,study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+	
 	jj+=1
 
 	fig.tight_layout()
 def P1_3_plot(model_sbml,model_macrophage,params,observations): # plotting sim vs exp measurements for P1 to p3
+	fig_tag = 'P1_3'
 	figsize = (20,4)
 	fig = plt.figure(figsize=figsize)
 	fig.canvas.draw()
+	obs = observations
 	nn = 5
 	jj = 1
 
 	ax = fig.add_subplot(1,nn,jj)
-	plot_Q21_Mg(ax=ax,model_sbml=model_sbml,params=params,observations=observations)
+	study_tag,target,ID = 'Q21_Mg','Mg_f_n','Mg_8'
+	run_plot_line(ax=ax,study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
 	jj+=1
+
 	ax = fig.add_subplot(1,nn,jj)
-	plot_Q21_nTRPM(ax=ax,model_sbml = model_sbml,model_macrophage = model_macrophage ,params = params,observations=observations)
+	study_tag,target = 'Q21_nTRPM','nTRPM'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
 	jj+=1
+
 	ax = fig.add_subplot(1,nn,jj)
-	plot_Q21_TRPM(ax=ax,model_sbml = model_sbml,model_macrophage = model_macrophage ,params = params,observations=observations)
+	study_tag,target = 'Q21_TRPM','TRPM'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
 	jj+=1
+
 	ax = fig.add_subplot(1,nn,jj)
-	plot_Q21_nM7CK(ax=ax,model_sbml = model_sbml,model_macrophage = model_macrophage ,params = params,observations=observations)
+	study_tag,target = 'Q21_nM7CK','nM7CK'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
 	jj+=1
+
 	ax = fig.add_subplot(1,nn,jj)
-	plot_Q21_H3S10(ax=ax,model_sbml = model_sbml,model_macrophage = model_macrophage ,params = params,observations=observations)
+	study_tag,target = 'Q21_H3S10','pH3S10'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
 	jj+=1
 
 	fig.tight_layout()
+	plt.savefig(os.path.join(dir_output, fig_tag+'.svg'),bbox_inches='tight')
+
+
+
 
 
 
@@ -152,7 +425,7 @@ def plot_eq_mg(ax1,ax2,model_sbml,params,observations):
 	axs = [ax1,ax2]
 	study = 'eq_mg'
 	obs = observations[study]
-	target_tags = list(obs['measurement_scheme'].keys())
+	targets = list(obs['measurement_scheme'].keys())
 	extra_targets = []
 	duration = obs['experiment_period']
 	IDs = obs['IDs']
@@ -162,31 +435,33 @@ def plot_eq_mg(ax1,ax2,model_sbml,params,observations):
 	params_copy = copy.deepcopy(params)
 	for key,value in inputs.items():
 		params_copy[key] = value
-	results = run_model(model_sbml,params = params_copy,target_keys=target_tags+extra_targets,duration=duration)
+	results = run_model(model_sbml,params = params_copy,target_keys=targets+extra_targets,duration=duration)
 	ii = 0
-	for target_tag in target_tags: # one subgraph for each target_tag
-		if target_tag == 'Mg_ATP_n':
+	study1,study2 = study+'_f',study
+	specs1,specs2 = Specs(study1),Specs(study2)
+	for target in targets: # one subgraph for each target
+		if target == 'Mg_ATP_n':
 			continue
-		obs_xx = obs['measurement_scheme'][target_tag]
-		obs_yy = obs[ID]['expectations'][target_tag]['mean']
+		obs_xx = obs['measurement_scheme'][target]
+		obs_yy = obs[ID]['expectations'][target]['mean']
 		x = results['time']
-		sims = results[target_tag]
+		sims = results[target]
 		exps = obs_yy
 		axs[ii].plot(obs_xx,exps,linestyle='--',color='r', label = 'Expectation')
-		axs[ii].plot(x,sims,color='black',linewidth = PSL.line_width,label = '%s'%labels[target_tag])
+		axs[ii].plot(x,sims,color='black',linewidth = specs1.line_width,label = '%s'%labels[target])
 		axs[ii].legend()
 		ii+=1
-
-	graph_line.postprocess(ax=axs[0],study=study+'_f')
-	graph_line.postprocess(ax=axs[1],study=study)
+	plots.tools.ax_postprocess(ax=axs[0],study_tag=study1,specs=specs1,sims=results)
+	plots.tools.ax_postprocess(ax=axs[1],study_tag=study2,specs=specs2,sims=results)
 
 def plot_Q21_eq(ax,model_sbml,params,observations):
+	study_tag = 'Q21_eq'
 	study1,study2 = 'Q21_eq_trpm','Q21_eq_h3s10'
-	target_tags1 = list(observations[study1]['measurement_scheme'].keys())
+	targets1 = list(observations[study1]['measurement_scheme'].keys())
 
-	target_tags2 = list(observations[study2]['measurement_scheme'].keys())
+	targets2 = list(observations[study2]['measurement_scheme'].keys())
 
-	target_tags = target_tags1 + target_tags2
+	targets = targets1 + targets2
 
 	duration = observations[study1]['experiment_period']
 	IDs = observations[study1]['IDs']
@@ -196,22 +471,24 @@ def plot_Q21_eq(ax,model_sbml,params,observations):
 	params_copy = copy.deepcopy(params)
 	for key,value in inputs.items():
 		params_copy[key] = value
-	results = run_model(model_sbml,params = params_copy,target_keys=target_tags,duration=duration)
+	results = run_model(model_sbml,params = params_copy,target_keys=targets,duration=duration)
 
 	ii = 0
 
+	specs = Specs(study_tag)
+
 	ax.plot(results['time'],[1 for i in range(len(results['time']))],linestyle='--',color='r', label = 'Expectation')
-	for target_tag in target_tags: # one subgraph for each target_tag
+	for target in targets: # one subgraph for each target
 		x = results['time']
-		ax.plot(x,results[target_tag],linewidth=PSL.line_width, color=graph_line.colors[ii],label = '%s'%labels[target_tag])
+		ax.plot(x,results[target],linewidth=specs.line_width, color=specs.colors[ii],label = '%s'%labels[target])
 		ii+=1
 	
-	graph_line.postprocess(ax=ax,study='Q21_eq')
+	plots.tools.ax_postprocess(ax=ax,study_tag=study_tag,specs=specs,sims=results)
 
 def plot_Q21_eq_h3s10(ax,model_sbml,params,observations):
 	study = 'Q21_eq_h3s10'
 	obs = observations[study]
-	target_tags = list(obs['measurement_scheme'].keys())
+	targets = list(obs['measurement_scheme'].keys())
 	extra_targets = []
 	duration = obs['experiment_period']
 	IDs = obs['IDs']
@@ -221,250 +498,20 @@ def plot_Q21_eq_h3s10(ax,model_sbml,params,observations):
 	params_copy = copy.deepcopy(params)
 	for key,value in inputs.items():
 		params_copy[key] = value
-	results = run_model(model_sbml,params = params_copy,target_keys=target_tags+extra_targets,duration=duration)
+	results = run_model(model_sbml,params = params_copy,target_keys=targets+extra_targets,duration=duration)
 
 	ii = 0
-	for target_tag in target_tags: # one subgraph for each target_tag
-		obs_xx = obs['measurement_scheme'][target_tag]
-		obs_yy = obs[ID]['expectations'][target_tag]['mean']
+	for target in targets: # one subgraph for each target
+		obs_xx = obs['measurement_scheme'][target]
+		obs_yy = obs[ID]['expectations'][target]['mean']
 		x = results['time']
-		ax.plot(x,results[target_tag],color=graph_line.colors[ii],linewidth=PSL.line_width, label = 'S: %s'%labels[target_tag])
-		ax.plot(obs_xx,obs_yy,linestyle='--',color=graph_line.colors[ii], label = 'E: %s'%labels[target_tag])
+		ax.plot(x,results[target],color=Graph_line.colors[ii],linewidth=PSL.line_width, label = 'S: %s'%labels[target])
+		ax.plot(obs_xx,obs_yy,linestyle='--',color=Graph_line.colors[ii], label = 'E: %s'%labels[target])
 		ii+=1
 		ax.legend()
-	graph_line.postprocess(ax=ax,study=study)
+	Graph_line.postprocess(ax=ax,study=study)
 
 
-def plot_R05_mg_f_n(ax,model_sbml,params,observations):
-	study = 'R05_mg_f_n'
-	obs = observations[study]
-	target_tags = list(obs['measurement_scheme'].keys())
-	extra_plot_tags = ['Mg','Mg_ATP']
-	duration = obs['experiment_period']
-	IDs = obs['IDs']
-	ID = IDs[0] #only 1 ID
-	inputs = obs[ID]['inputs']
-
-	
-	params_copy = copy.deepcopy(params)
-	for key,value in inputs.items():
-		params_copy[key] = value
-	results = run_model(model_sbml,params = params_copy,target_keys=target_tags+extra_plot_tags,duration=duration)
-
-	target_tag = target_tags[0]
-		
-	x = results['time']
-	ax.plot(x,results[target_tag],color = 'black',linewidth=PSL.line_width,label = 'S')
-
-	obs_xx = obs['measurement_scheme'][target_tag]
-	obs_yy = obs[ID]['expectations'][target_tag]['mean']
-	ax.plot(obs_xx,obs_yy,linestyle='--',color = 'r', label = 'E')
-	ax.legend()
-	
-	graph_line.postprocess(ax=ax,study=study)
-	##-----extra plot----#
-
-def plot_Q21_nTRPM(ax,model_sbml,model_macrophage,params,observations):
-	study_tag = 'Q21_nTRPM'
-	
-	target = list(observations[study_tag]['measurement_scheme'].keys())[0]
-	##-- figure 1
-	sim_results = model_macrophage.simulate_study(params= params,study=observations[study_tag])
-
-	plot_obj = graph_bar(study=study_tag,observations=observations,errors={},destination = dir_output)
-	plot_obj.plot(ax = ax,simulation_results=sim_results)
-	# exp_target_results,sim_target_results = sort(study=study,sim_results=sim_results)
-	# # _,processed_detailed_errors_sorted = sort(study=study,sim_results= processed_detailed_errors)
-	# x_exps,x_sims = bar_positions(study=study,sim_results= sim_results)
-
-	# sims = [item[0] for item in sim_target_results[target]]
-	# ax.bar(x=x_sims,height=sims,width = PSB.bar_width, label = "S", 
-	# 		facecolor = graph.colors[0],
-	# 		 edgecolor="black", yerr =  0,
-	# 		 error_kw = dict(capsize= PSB.error_bar_width))
-	# exp_values = [exp_target_results[target][i]['mean'] for i in range(len(exp_target_results[target]))]
-	# exp_std = [exp_target_results[target][i]['std'] for i in range(len(exp_target_results[target]))]
-	# exp_values = [item[0] for item in exp_values]
-	# exp_std = [item[0] for item in exp_std]
-	# ax.bar(x=x_exps,height=exp_values,width = PSB.bar_width, label = 'E', 
-	# 			facecolor = graph.colors[1],hatch=r'\\\\',
-	# 			 edgecolor="black", yerr =  exp_std,
-	# 			 error_kw = dict(capsize= PSB.error_bar_width))
-	# x_ticks = [(i+j)/2 for i,j in zip(x_sims,x_exps)]
-	# graph.postprocess(ax=ax,study=study,graph_t='bar')
-	# processed_detailed_errors_sorted_values = [item[0] for item in processed_detailed_errors_sorted[target]]
-	# ax.bar(x=x_sim,height=sim_values,width = self.bar_width, label = "S", 
-	# 		facecolor = self.colors[0],
-	# 		 edgecolor="black", yerr =  processed_detailed_errors_sorted_values,
-	# 		 error_kw = dict(capsize= self.error_bar_width))
-	
-	# plot_obj = graph_bar(study=study,observations=observations,errors={},destination = dir_output)
-	# fig = plot_obj.plot(simulation_results=results)
-	##-- figure 2
-	if False:
-		figsize = (8,4)
-		fig2 = plt.figure(figsize=figsize)
-		ax = fig2.add_subplot(1,2,1)
-		IDs = obs['IDs']
-		target_tags = ['Mg_ATP']
-		duration = obs['experiment_period']
-		for ID in IDs:
-			inputs = obs[ID]['inputs']
-			params_copy = copy.deepcopy(params)
-			for key,value in inputs.items():
-				params_copy[key] = value
-			results = run_model(model_sbml,params = params_copy,target_keys=target_tags,duration=duration)
-			for tag in target_tags:
-				ax.plot(results['time'],results[tag], label = '%s: %s'%(ID,tag))
-		ax.legend()
-		ax = fig2.add_subplot(1,2,2)
-		IDs = obs['IDs']
-		target_tags = ['nTRPM']
-		duration = obs['experiment_period']
-		for ID in IDs:
-			inputs = obs[ID]['inputs']
-			params_copy = copy.deepcopy(params)
-			for key,value in inputs.items():
-				params_copy[key] = value
-			results = run_model(model_sbml,params = params_copy,target_keys=target_tags,duration=duration)
-			for tag in target_tags:
-				ax.plot(results['time'],results[tag], label = '%s: %s'%(ID,tag))
-		ax.legend()
-		
-	# return fig,fig2
-def plot_Q21_TRPM(ax,model_sbml,model_macrophage,params,observations):
-	study_tag = 'Q21_TRPM'
-	# figure 1
-	results = model_macrophage.simulate_study(params= params,study=observations[ study_tag])
-	plot_obj = graph_bar(study=study_tag,observations=observations,errors={},destination = dir_output)
-	fig = plot_obj.plot(ax=ax,simulation_results=results)
-	if False:
-		# figure 2
-		figsize = (4,4)
-		fig2 = plt.figure(figsize=figsize)
-		ax = fig2.add_subplot(1,1,1)
-		IDs = obs['IDs']
-		target_tags = ['TRPM']
-		duration = obs['experiment_period']
-		for ID in IDs:
-			inputs = obs[ID]['inputs']
-			params_copy = copy.deepcopy(params)
-			for key,value in inputs.items():
-				params_copy[key] = value
-			results = run_model(model_sbml,params = params_copy,target_keys=target_tags,duration=duration)
-			for tag in target_tags:
-				ax.plot(results['time'],results[tag], label = '%s: %s'%(ID,tag))
-		ax.legend()
-		
-	# return fig,fig2
-def plot_Q21_Mg(ax,model_sbml,params,observations):
-	study = 'Q21_Mg'
-	obs = observations[study]
-	target_tags = list(obs['measurement_scheme'].keys())
-	extra_plot_tags = ['Mg','Mg_ATP']
-	duration = obs['experiment_period']
-	IDs = obs['IDs']
-	ID = IDs[0] #only 1 ID
-	inputs = obs[ID]['inputs']
-
-	
-	params_copy = copy.deepcopy(params)
-	for key,value in inputs.items():
-		params_copy[key] = value
-	results = run_model(model_sbml,params = params_copy,target_keys=target_tags+extra_plot_tags,duration=duration)
-
-	target_tag = target_tags[0]
-		
-	x = results['time']
-	ax.plot(x,results[target_tag],color='black',linewidth=PSL.line_width, label = 'S')
-
-	obs_xx = obs['measurement_scheme'][target_tag]
-	obs_yy = obs[ID]['expectations'][target_tag]['mean']
-	ax.plot(obs_xx,obs_yy,linestyle='--',color='r', linewidth=PSL.line_width, label = 'E')
-	ax.legend()
-	graph_line.postprocess(ax,study)
-	
-def plot_Q21_nM7CK(ax,model_sbml,model_macrophage,params,observations):
-	study_tag = 'Q21_nM7CK'
-	# figure 1
-	results = model_macrophage.simulate_study(params= params,study=observations[study_tag])
-	plot_obj = graph_bar(study=study_tag,observations=observations,errors={},destination = dir_output)
-	fig = plot_obj.plot(ax=ax,simulation_results=results)
-	if False:
-		# figure 2
-		figsize = (6,6)
-		fig2 = plt.figure(figsize=figsize)
-		ax = fig2.add_subplot(1,1,1)
-		IDs = obs['IDs']
-		target_tags = ['nM7CK']
-		duration = obs['experiment_period']
-		for ID in IDs:
-			inputs = obs[ID]['inputs']
-			params_copy = copy.deepcopy(params)
-			for key,value in inputs.items():
-				params_copy[key] = value
-			results = run_model(model_sbml,params = params_copy,target_keys=target_tags,duration=duration)
-			for tag in target_tags:
-				ax.plot(results['time'],results[tag], label = '%s: %s'%(ID,tag))
-		ax.legend()
-		
-	# return fig,fig2
-def plot_Q21_H3S10(ax,model_sbml,model_macrophage,params,observations):
-	study_tag = 'Q21_H3S10'
-	# figure 1
-	results = model_macrophage.simulate_study(params= params,study=observations[study_tag])
-	plot_obj = graph_bar(study=study_tag,observations=observations,errors={},destination = dir_output)
-	fig = plot_obj.plot(ax=ax,simulation_results=results)
-	# figure 2
-	if False:
-		figsize = (6,6)
-		fig2 = plt.figure(figsize=figsize)
-		ax = fig2.add_subplot(1,1,1)
-		IDs = obs['IDs']
-		target_tags = ['pH3S10']
-		duration = obs['experiment_period']
-		for ID in IDs:
-			inputs = obs[ID]['inputs']
-			params_copy = copy.deepcopy(params)
-			for key,value in inputs.items():
-				params_copy[key] = value
-			results = run_model(model_sbml,params = params_copy,target_keys=target_tags,duration=duration)
-			for tag in target_tags:
-				ax.plot(results['time'],results[tag], label = '%s: %s'%(ID,tag))
-		ax.legend()
-		
-def plot_R05_mg_n(ax,model_sbml,params,observations):
-	study = 'R05_mg_n'
-	obs = observations[study]
-	target_tags = list(obs['measurement_scheme'].keys())
-	extra_plot_tags = ['Mg','Mg_ATP']
-	duration = obs['experiment_period']
-	IDs = obs['IDs']
-	ID = IDs[0] #only 1 ID
-	inputs = obs[ID]['inputs']
-	
-	params_copy = copy.deepcopy(params)
-	for key,value in inputs.items():
-		params_copy[key] = value
-	results = run_model(model_sbml,params = params_copy,target_keys=target_tags+extra_plot_tags,duration=duration)
-	ii = 0
-	target_tag = target_tags[0]
-		
-	x = results['time']
-	ax.plot(x,results[target_tag],color='black',linewidth=PSL.line_width,label = 'S')
-
-	obs_xx = obs['measurement_scheme'][target_tag]
-	obs_yy = obs[ID]['expectations'][target_tag]['mean']
-	ax.plot(obs_xx,obs_yy,linestyle='--',color='r', label = 'E')
-	ax.legend()
-	
-	graph_line.postprocess(ax=ax,study=study)
-	##-----extra plot----#
-	# ax = fig.add_subplot(1,2,2)
-	# for tag in extra_plot_tags:
-	# 	ax.plot(x,results[tag],label = 'S: %s'%tag)
-	# ax.legend()
-	# return fig
 def plot_S12_mg(Mg,observations):
 	figsize = (4,4)
 	fig = plt.figure(figsize=figsize)

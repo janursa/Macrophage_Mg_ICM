@@ -11,8 +11,9 @@ packages = {
 	'P1' : ['eq_mg','R05_mg_f_n','R05_mg_n'], # mg entry and equalibrium
 	'P2' : ['Q21_nTRPM','Q21_TRPM','Q21_nM7CK','Q21_eq_trpm'], #mg affects TRPM 
 	'P3' : ['Q21_H3S10','Q21_eq_h3s10'], # m7ck regulates H3S10
-	'P4' : ['S12_IkBa_mg','Q21_IkBa'] # Mg regulate IkBa 
-	# 'P4' : ['Q21_IkBa']
+	'P4' : ['S12_IkBa_mg','Q21_IkBa'], # Mg regulate IkBa 
+	# 'P5' : ['Q21_Mg_IL8'], # IL8 
+	'P5' : ['eq_IL8'], # IL8 
 }
 
 
@@ -147,7 +148,7 @@ observations = {
             }
         }
     },
-	"Q21_Mg": { # measurements on the intracellular Mg concentration for a given external Mg
+	'Q21_Mg': { # measurements on the intracellular Mg concentration for a given external Mg
         "exposure_time": None,
         "culture_volume": None,
         'experiment_period':int(3*60/t2m),
@@ -360,15 +361,27 @@ observations = {
 			}
 		}
 	},
-	'Q21_Mg_IL8':{# the effect of different Mg ion concentrations on IL8 and IL1b
-		'exposure_time':None, #when this is none, the cells are exposed to the stimuli the whole time
-		'culture_volume':None, #ml
-		'experiment_period':72*60, # hours
+	'eq_IL8':{# equalibrium of IL8
+		'experiment_period':24*int(60/t2m), # hours
 		'measurement_scheme':{
-			'IL8': [6*60,12*60,24*60,48*60,72*60] #hours
-			# 'IL8': [72] #hours
-			# 'IL1b':[6,12,24,48,72]
-			# 'IL1b':[24,48,72]
+			'IL8_n':  range_24h_60mStep
+		},
+		'IDs': ['Mg_0dot5'],
+		'Mg_0dot5':{
+			'inputs':{
+						"Mg_e": 0.5 # mM
+					},
+			"expectations": {			
+				"IL8_n": {
+					'mean':[1 for i in range_24h_60mStep]
+				}
+			}
+		}
+	},
+	'Q21_Mg_IL8':{# the effect of different Mg ion concentrations on IL8 and IL1b
+		'experiment_period':72*int(60/t2m), # hours
+		'measurement_scheme':{
+			'IL8': [6*int(60/t2m),72*int(60/t2m)] #hours
 		},
 		'IDs': ['Mg_.08','Mg_8'],
 		'Mg_.08':{
@@ -377,15 +390,14 @@ observations = {
 					},
 			"expectations": {			
 				"IL8": {
-					'mean':[10000,19000,26000,29500,32000], 
-					'std': [0,0,0,0,0]
-					# 'mean':[32000], 
+					'mean':[10000,32000], 
+					'std': [0,0]
 				},
-				"IL1b": {
-					'mean':[1700,2950,2600,3000,3400], 
-					'std': [200,200,450,150,300]
-					# 'mean':[3000,3400] 
-				},
+				# "IL1b": {
+				# 	'mean':[1700,2950,2600,3000,3400], 
+				# 	'std': [200,200,450,150,300]
+				# 	# 'mean':[3000,3400] 
+				# },
 			}
 		},
 		'Mg_8':{
@@ -394,15 +406,15 @@ observations = {
 					},
 			"expectations": {			
 				"IL8": {
-					'mean':[16000,21000,30000,38000,37000],
-					'std': [0,3000,0,1000,1000]
+					'mean':[16000,37000],
+					'std': [0,0]
 					# 'mean':[37000], 
 				},
-				"IL1b": {
-					'mean':[1950,1200,1000,1700,1950], 
-					'std': [750,350,0,200,250]
-					# 'mean':[1000,1700,1950] 
-				},
+				# "IL1b": {
+				# 	'mean':[1950,1200,1000,1700,1950], 
+				# 	'std': [750,350,0,200,250]
+				# 	# 'mean':[1000,1700,1950] 
+				# },
 			}	
 		}
 	}

@@ -8,8 +8,10 @@ import json
 from models.params import free_params_p, fixed_params
 from data.observations import observations,packages
 from models.models import Macrophage
-
-target_package = 'P1'
+# %load_ext autoreload
+# %autoreload
+dir_model = dirs.dir_model
+target_package = 'P5'
 free_params = free_params_p[target_package]
 studies = {}
 for study in packages[target_package]:
@@ -17,8 +19,7 @@ for study in packages[target_package]:
 print(free_params)
 print(studies.keys())
 
-# model_obj = Macrophage(dir_model=dirs.dir_model)
-model_obj = Macrophage(dir_model=dirs.dir_M1_model)
+model_obj = Macrophage(dir_model=dir_model)
 
 def callback(xk, convergence):
     params = {**fixed_params}
@@ -32,7 +33,7 @@ def callback(xk, convergence):
 class Strategies:
     best1bin = 'best1bin'
     rand1exp = 'rand1exp'
-inferred_params = calibrate(model = model_obj,fixed_params = fixed_params, free_params=free_params, studies = studies, n_proc=1,disp=True,max_iters=200,strategy=Strategies.best1bin,callback=callback)
-with open(dirs.dir_calib_output,'w') as f:
-    f.write(json.dumps(inferred_params))
+inferred_params = calibrate(model = model_obj,fixed_params = fixed_params, free_params=free_params, studies = studies, n_proc=1,disp=True,max_iters=100,strategy=Strategies.best1bin,callback=callback)
+with open(os.path.join(dirs.dir_outputs,'inferred_params_{}.json'.format(target_package)),'w') as f:
+    f.write(json.dumps(inferred_params,indent=4))
 os.system('say "Hey Matin, calibration is done, come back"')

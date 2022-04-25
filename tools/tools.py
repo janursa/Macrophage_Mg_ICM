@@ -120,10 +120,8 @@ def run_model(model,params,target_keys,duration,study=''):
                 print('Invalid parameter set')
                 raise InvalidParams('run model didnt converge')
     else:
-        results = model.simulate(start = 0,end = duration,steps =duration ,selections = ['TIME']+target_keys)
+        results = model.simulate(start = 0,end = duration,steps = int(duration/2) ,selections = ['TIME']+target_keys)
 
-
-    # print(results)
     return results
 def indexing(real_time,time_vector):
     index = next(x[0] for x in enumerate(time_vector) if x[1] >= real_time)

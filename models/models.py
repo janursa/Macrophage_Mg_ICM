@@ -123,9 +123,8 @@ class Macrophage:
         for target,target_results in study_result.items():          
           exps,sims = np.array(target_results['exp']),np.array(target_results['sim'])
           ##---- for certain studies, the simulation results should be normalized ----##
-          if study_tag == 'R05_mg_f_n' and target == 'Mg':
-            error = self.limit_cost_func(exp=exps,sim=sims)
-          elif study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
+          
+          if study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
             if max(sims)>10:
               error = max(sims)
             else:
@@ -140,6 +139,7 @@ class Macrophage:
             sims_n = np.array(sims)/sims[0]
             exps_n = np.array(exps)/exps[0]
             error = sum(abs(sims_n-exps_n))
+          
           
           else:
             try:

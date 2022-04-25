@@ -12,12 +12,77 @@ packages = {
 	'P2' : ['Q21_nTRPM','Q21_TRPM','Q21_nM7CK','Q21_eq_trpm'], #mg affects TRPM 
 	'P3' : ['Q21_H3S10','Q21_eq_h3s10'], # m7ck regulates H3S10
 	'P4' : ['S12_IkBa_mg','Q21_IkBa'], # Mg regulate IkBa 
-	# 'P5' : ['Q21_Mg_IL8'], # IL8 
-	'P5' : ['eq_IL8'], # IL8 
+	'P5' : ['eq_IL8','M18'], #   IL8 hemostasis/IL8 regulate IL4R, IFNGR   
+	#  ['M18'] #'Q21_Mg_IL8'
 }
 
 
 observations = {	
+	'M18': { # IL8 regulate IL4R, IFNGR, and IL-1b
+        # "IDs": ['ctr','0dot01','0dot1','1','10'],
+        "IDs": ['ctr','0dot01'],
+        "experiment_period":int(24*60/t2m),
+        "measurement_scheme": {
+            "nIFNGR": [int(24*60/t2m)],
+            "nIL4R": [int(24*60/t2m)],
+            # 'nIL1b': [int(24*60/t2m)],
+        },
+        "ctr": {
+            "inputs": {
+            },
+            "expectations": {
+                "nIFNGR":{'mean':[2212/2212],
+                		'std':[0]}, #normalized format
+                "nIL4R":{'mean':[6251/6251],
+                		'std':[0]},
+            }
+        },
+       	"0dot01": {
+            "inputs": {
+                "IL8": 0.01 ,
+            },
+            "expectations": {
+                "nIFNGR":{'mean':[4587/2212],
+                		'std':[0]}, #normalized format
+                "nIL4R":{'mean':[5462/6251],
+                		'std':[0]},
+            }
+        },
+        "0dot1": {
+            "inputs": {
+                "IL8": 0.1 ,
+            },
+            "expectations": {
+                "nIFNGR":{'mean':[4564/2212],
+                		'std':[0]}, #normalized format
+                "nIL4R":{'mean':[5359/6251],
+                		'std':[0]},
+            }
+        },
+       	"1": {
+            "inputs": {
+                "IL8": 1 ,
+            },
+            "expectations": {
+                "nIFNGR":{'mean':[4438/2212],
+                		'std':[0]}, #normalized format
+                "nIL4R":{'mean':[5367/6251],
+                		'std':[0]},
+            }
+        },
+       	"10": {
+            "inputs": {
+                "IL8": 10 ,
+            },
+            "expectations": {
+                "nIFNGR":{'mean':[4668/2212],
+                		'std':[0]}, #normalized format
+                "nIL4R":{'mean':[5323/6251],
+                		'std':[0]},
+            }
+        },
+        
+    },
 	'S12_IkBa_mg': { # mg influences IkBa level
         "IDs": ['ctr',"Mg_2dot5"],
         "experiment_period":int(3*60/t2m),
@@ -364,7 +429,8 @@ observations = {
 	'eq_IL8':{# equalibrium of IL8
 		'experiment_period':24*int(60/t2m), # hours
 		'measurement_scheme':{
-			'IL8_n':  range_24h_60mStep
+			'IL8_n':  range_24h_60mStep,
+			'IL8R_n':  range_24h_60mStep
 		},
 		'IDs': ['Mg_0dot5'],
 		'Mg_0dot5':{
@@ -373,6 +439,9 @@ observations = {
 					},
 			"expectations": {			
 				"IL8_n": {
+					'mean':[1 for i in range_24h_60mStep]
+				},
+				"IL8R_n": {
 					'mean':[1 for i in range_24h_60mStep]
 				}
 			}

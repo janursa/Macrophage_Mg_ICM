@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
-  <model id="__main" name="__main">
+  <model id="combined" name="combined">
     <listOfCompartments>
       <compartment sboTerm="SBO:0000410" id="default_compartment" spatialDimensions="3" size="1" constant="true"/>
       <compartment id="M1_comp1" spatialDimensions="3" size="1" constant="false"/>
@@ -78,9 +78,9 @@
       <species id="ZZ_IRF4_prod" name="IRF4 prod" compartment="ZZ_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="ZZ_IL10" compartment="ZZ_comp1" initialConcentration="900" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_JAK" compartment="ZZ_comp1" initialConcentration="99122" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ZZ_IFNGR" compartment="ZZ_comp1" initialConcentration="93" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IFNGR" compartment="ZZ_comp1" initialConcentration="93" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_IFNG_R" name="IFNG/R" compartment="ZZ_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ZZ_IL4R" compartment="ZZ_comp1" initialConcentration="16" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL4R" compartment="ZZ_comp1" initialConcentration="16" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_IL4_R" name="IL4/R" compartment="ZZ_comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_IL10_prod" name="IL10 prod" compartment="ZZ_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="ZZ_ARG1_prod" name="ARG1 prod" compartment="ZZ_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
@@ -245,8 +245,11 @@
       <species id="ZZ_GSK3b" compartment="ZZ_comp1" initialConcentration="87270" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="ZZ_pGSK3b" compartment="ZZ_comp1" initialConcentration="52730" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="deg" compartment="default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8_R" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8R_prod" compartment="default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="IL8R" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="IL8" compartment="default_compartment" initialConcentration="10000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="M1_Mg_IM_0" value="9" constant="true"/>
@@ -602,12 +605,25 @@
       <parameter id="n_ikb_d" value="23.43" constant="true"/>
       <parameter id="kd_ikb_p" value="1.207" constant="true"/>
       <parameter id="n_ikb_p" value="29.52" constant="true"/>
-      <parameter id="k_il8_p" value="100" constant="true"/>
-      <parameter id="kd_il8_p1" value="10" constant="true"/>
+      <parameter id="kd_ifngr_p1" value="1" constant="true"/>
+      <parameter id="IL8_R_0" value="1" constant="false"/>
+      <parameter id="n_ifngr_p1" value="1" constant="true"/>
+      <parameter id="k_il8r_p" value="0.1" constant="true"/>
+      <parameter id="k_il8r_d" value="0.1" constant="true"/>
+      <parameter id="k_il8_b" value="0.1" constant="true"/>
+      <parameter id="k_il8_ub" value="0.1" constant="true"/>
+      <parameter id="k_il8_p" value="0.1" constant="true"/>
+      <parameter id="kd_il8_p1" value="1" constant="true"/>
       <parameter id="n_il8_p1" value="1" constant="true"/>
       <parameter id="k_il8_d" value="0.1" constant="true"/>
-      <parameter id="IL8_0" value="10000" constant="false"/>
+      <parameter id="IL8_0" value="1" constant="false"/>
+      <parameter id="IL8R_0" value="1" constant="false"/>
+      <parameter id="IFNGR_0" value="93" constant="false"/>
+      <parameter id="IL4R_0" value="16" constant="false"/>
       <parameter id="IL8_n" value="1" constant="false"/>
+      <parameter id="IL8R_n" value="1" constant="false"/>
+      <parameter id="nIFNGR" value="1" constant="false"/>
+      <parameter id="nIL4R" value="1" constant="false"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="M1_Mg_0">
@@ -640,9 +656,29 @@
           <ci> M1_Mg_ATP </ci>
         </math>
       </initialAssignment>
+      <initialAssignment symbol="IL8_R_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL8_R </ci>
+        </math>
+      </initialAssignment>
       <initialAssignment symbol="IL8_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> IL8 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL8R_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL8R </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IFNGR_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IFNGR </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL4R_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL4R </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -733,6 +769,33 @@
             <divide/>
             <ci> IL8 </ci>
             <ci> IL8_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="IL8R_n">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL8R </ci>
+            <ci> IL8R_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIFNGR">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IFNGR </ci>
+            <ci> IFNGR_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIL4R">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL4R </ci>
+            <ci> IL4R_0 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -1793,7 +1856,7 @@
       </reaction>
       <reaction id="ZZ_v33" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_IL4R" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL4R" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_deg" stoichiometry="1" constant="true"/>
@@ -1803,7 +1866,7 @@
             <apply>
               <times/>
               <ci> ZZ_k33 </ci>
-              <ci> ZZ_IL4R </ci>
+              <ci> IL4R </ci>
             </apply>
           </math>
         </kineticLaw>
@@ -1935,7 +1998,7 @@
       </reaction>
       <reaction id="ZZ_v39" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_IFNGR" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNGR" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_JAK" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
@@ -1948,7 +2011,7 @@
               <apply>
                 <times/>
                 <ci> ZZ_kf39 </ci>
-                <ci> ZZ_IFNGR </ci>
+                <ci> IFNGR </ci>
                 <ci> ZZ_JAK </ci>
               </apply>
               <apply>
@@ -1962,7 +2025,7 @@
       </reaction>
       <reaction id="ZZ_v40" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_IL4R" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL4R" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_JAK" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
@@ -1975,7 +2038,7 @@
               <apply>
                 <times/>
                 <ci> ZZ_kf39 </ci>
-                <ci> ZZ_IL4R </ci>
+                <ci> IL4R </ci>
                 <ci> ZZ_JAK </ci>
               </apply>
               <apply>
@@ -3479,21 +3542,41 @@
           <speciesReference species="ZZ_IFNGR_prod" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ZZ_IFNGR" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNGR" stoichiometry="1" constant="true"/>
         </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="IL8_R"/>
+        </listOfModifiers>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> ZZ_k80 </ci>
               <ci> ZZ_IFNGR_prod </ci>
+              <apply>
+                <power/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <plus/>
+                    <ci> IL8_R </ci>
+                    <ci> kd_ifngr_p1 </ci>
+                  </apply>
+                  <apply>
+                    <plus/>
+                    <ci> IL8_R_0 </ci>
+                    <ci> kd_ifngr_p1 </ci>
+                  </apply>
+                </apply>
+                <ci> n_ifngr_p1 </ci>
+              </apply>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
       <reaction id="ZZ_v81" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="ZZ_IFNGR" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNGR" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_deg" stoichiometry="1" constant="true"/>
@@ -3503,7 +3586,7 @@
             <apply>
               <times/>
               <ci> ZZ_k81 </ci>
-              <ci> ZZ_IFNGR </ci>
+              <ci> IFNGR </ci>
             </apply>
           </math>
         </kineticLaw>
@@ -3514,7 +3597,7 @@
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_deg" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_IFNGR" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNGR" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -3532,7 +3615,7 @@
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="ZZ_deg" stoichiometry="1" constant="true"/>
-          <speciesReference species="ZZ_IL4R" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL4R" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -4338,7 +4421,7 @@
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="ZZ_IL4R" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL4R" stoichiometry="1" constant="true"/>
           <speciesReference species="ZZ_pSTAT3D_n" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
@@ -7760,6 +7843,63 @@
       </reaction>
       <reaction id="_J0" reversible="true" fast="false">
         <listOfReactants>
+          <speciesReference species="IL8R_prod" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <ci> k_il8r_p </ci>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J1" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8r_d </ci>
+              <ci> IL8R </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J2" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k_il8_b </ci>
+                <ci> IL8 </ci>
+                <ci> IL8R </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k_il8_ub </ci>
+                <ci> IL8_R </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J3" reversible="true" fast="false">
+        <listOfReactants>
           <speciesReference species="IL8_prod" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
@@ -7795,7 +7935,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="_J1" reversible="true" fast="false">
+      <reaction id="_J4" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="IL8" stoichiometry="1" constant="true"/>
         </listOfReactants>

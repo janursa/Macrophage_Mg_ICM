@@ -23,6 +23,9 @@ labels = {
 	'nTRPM': 'Nuclear TRPM',
 	'nM7CK': 'Nuclear M7CK',
 	'pH3S10': 'Phos H3S10',
+
+	'IL8_n': 'norm IL8',
+	'IL8R_n': 'norm IL8R'
 }
 class process_data:
 	def sort(sims,exps,target,plot_t):
@@ -83,8 +86,13 @@ class Specs:
 		self.title_font_size = 21 
 		self.delta = .12
 		self.R2_font_size  = 18
-		self.D = 1.2 # the length in which all Mg dosages are plotted in a certain time point
-		# self.delta = 5
+		self.D = 1.1 # the length in which all Mg dosages are plotted in a certain time point
+		if study_tag == 'Q21_Mg_IL8':
+			self.bar_width = .18
+			self.delta = .099
+			self.D = 1.3
+		
+		
 	@staticmethod
 	def determine_title(study_tag):
 		label = study_tag
@@ -106,6 +114,8 @@ class Specs:
 			label = 'Total Mg$^{2+}$ ions'
 		elif study_tag == 'Q21_Mg':
 			label = 'Free Mg$^{2+}$ ions'
+		elif study_tag == 'eq_IL8':
+			label = 'IL8 equalibrium'
 		elif study_tag == 'eq_mg_f' or study_tag == 'Q21_eq' or study_tag == 'eq_mg':
 			label = ''
 		return label
@@ -116,6 +126,8 @@ class Specs:
 			label = 'Mg conc. (ng/ml)'
 		elif study_tag == 'Q21_Mg_IL8':
 			label = ''
+		elif study_tag == 'M18':
+			label = 'IL8 (pg/ml)'
 		return label
 		
 	@staticmethod
@@ -144,7 +156,7 @@ class Specs:
 		
 	@staticmethod
 	def determine_ylabel(study_tag):
-		label = 'Relative Concentration \n (To initial condition)'
+		label = 'Relative Concentration \n (To initial quantity)'
 		if study_tag == 'eq_mg' or study_tag == 'eq_mg_f':
 			label = 'Concentration (mM)'
 		elif study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
@@ -165,6 +177,8 @@ class Specs:
 			lim = [18,19]
 		elif study_tag == 'eq_mg_f':
 			lim = [0,1]
+		elif study_tag == 'eq_IL8':
+			lim = [0.5,1.2]
 		else:
 			raise ValueError('Define')
 		return lim
@@ -180,6 +194,9 @@ class Specs:
 		elif study_tag == 'Q21_Mg':
 			adj_ticks = np.array([0,1,2,3])*60/t2m	
 			adj_labels = [int(i*t2m/60) for i in adj_ticks]
+		elif study_tag == 'M18':
+			adj_ticks = [0,1]
+			adj_labels = ['Ctr','0.01']
 		else:
 			adj_ticks = ticks[1:-1]
 			adj_labels = [int(i*t2m/60) for i in adj_ticks]
@@ -215,6 +232,8 @@ class Specs:
 			position = (0.7,1.1)
 		elif study_tag == 'Q21_Mg_IL8':
 			position = (1.14,.75)
+		elif study_tag == 'eq_IL8':
+			position = (1.1,.7)
 		ncol = 1
 		return position,ncol
 
@@ -259,27 +278,58 @@ def run_plot_line(ax,study_tag,model_sbml,params,target,ID,study):
 	ax.legend()
 	plots.tools.ax_postprocess(ax,study_tag=study_tag,sims=sims,specs=specs)
 
+def run_plot_line_multi_target(ax,study_tag,model_sbml,params,targets,ID,study):
+	duration = study['experiment_period']
+	inputs = study[ID]['inputs']
+	specs = Specs(study_tag)
+
+	params_copy = copy.deepcopy(params)
+	for key,value in inputs.items():
+		params_copy[key] = value
+	sims = run_model(model_sbml,params = params_copy,target_keys=['TIME']+targets,duration=duration)
+
+	x = sims['time']
+
+	obs_yy = [1 for i in range(len(x))]
+	ax.plot(x,obs_yy,linestyle='--',color='r', linewidth=specs.line_width, label = 'Expectation')
+
+	jj=0
+	for target in targets:
+		ax.plot(x,sims[target],color=specs.colors[jj],linewidth=specs.line_width, label = 'S: {}'.format(labels[target]))
+		jj+=1
+	ax.legend()
+	plots.tools.ax_postprocess(ax,study_tag=study_tag,sims=sims,specs=specs)
+
 
 	
 def P5_plot(model_sbml,model_macrophage,params,observations): # plotting sim vs exp measurements for P4
-	figsize = (8,4)
+	figsize = (17,4)
 	fig = plt.figure(figsize=figsize)
 	fig.canvas.draw()
 	obs = observations
-	nn = 2
+	nn = 4
 	jj = 1
+	fig, (ax0, ax1, ax2,ax3) = plt.subplots(1, nn, gridspec_kw={'width_ratios': [1.25, 1,1,1]},figsize=figsize)
 
-	ax = fig.add_subplot(1,nn,jj)
+
 	study_tag,target = 'Q21_Mg_IL8','IL8'
 	IDs = obs[study_tag]['IDs']
-	run_plot_bar(ax=ax,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar2',IDs=IDs)
-	jj+=1
+	run_plot_bar(ax=ax0,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar2',IDs=IDs)
 
-	ax = fig.add_subplot(1,nn,jj)
-	study_tag,target = 'eq_IL8','IL8_n'
+
+
+	study_tag,targets = 'eq_IL8',['IL8_n','IL8R_n']
 	ID = obs[study_tag]['IDs'][0]
-	run_plot_line(ax=ax,study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
-	jj+=1
+	run_plot_line_multi_target(ax=ax1,study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+
+	study_tag,target = 'M18','nIFNGR'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax2,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+
+	study_tag,target = 'M18','nIL4R'
+	IDs = obs[study_tag]['IDs']
+	run_plot_bar(ax=ax3,model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+
 	
 	fig.tight_layout()
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
-  <model id="model_Mg" name="model_Mg">
+  <model id="Mg_model" name="Mg_model">
     <listOfCompartments>
       <compartment id="comp1" spatialDimensions="3" size="1" constant="false"/>
     </listOfCompartments>
@@ -17,8 +17,8 @@
       <species id="ATP_prod" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="TRPM_prod" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="Mg_0" compartment="comp1" initialConcentration="18.5" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg_n" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="Mg_f_n" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="Mg_n" compartment="comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="Mg_f_n" compartment="comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="Mg_f_0" compartment="comp1" initialConcentration="0.5" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IM" compartment="comp1" initialConcentration="88.6098019188817" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="M7CK" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
@@ -26,13 +26,17 @@
       <species id="deg" compartment="comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="H3S10" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="pH3S10" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg_IM_n" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="Mg_ATP_n" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="Mg_IM_n" compartment="comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="Mg_ATP_n" compartment="comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="Mg_f_1" compartment="comp1" initialConcentration="0.5" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pH3S10_0" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
+      <parameter id="nMg" value="1" constant="false"/>
+      <parameter id="nMg_f" value="1" constant="false"/>
+      <parameter id="nMg_IM" value="1" constant="false"/>
       <parameter id="Mg_IM_0" value="9" constant="true"/>
+      <parameter id="nMg_ATP" value="1" constant="false"/>
       <parameter id="Mg_ATP_0" value="9" constant="true"/>
       <parameter id="F_trpm_i" value="1" constant="false"/>
       <parameter id="F_mg_i" value="1" constant="false"/>
@@ -104,7 +108,7 @@
           </apply>
         </math>
       </assignmentRule>
-      <assignmentRule variable="Mg_n">
+      <assignmentRule variable="nMg">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <divide/>
@@ -113,7 +117,7 @@
           </apply>
         </math>
       </assignmentRule>
-      <assignmentRule variable="Mg_f_n">
+      <assignmentRule variable="nMg_f">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <divide/>
@@ -122,7 +126,7 @@
           </apply>
         </math>
       </assignmentRule>
-      <assignmentRule variable="Mg_IM_n">
+      <assignmentRule variable="nMg_IM">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <divide/>
@@ -131,7 +135,7 @@
           </apply>
         </math>
       </assignmentRule>
-      <assignmentRule variable="Mg_ATP_n">
+      <assignmentRule variable="nMg_ATP">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <divide/>

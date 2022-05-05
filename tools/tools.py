@@ -4,6 +4,20 @@ from scipy.optimize import differential_evolution
 import numpy as np
 import tellurium as te
 import json
+import copy
+
+
+def assign_surrogate_names(model,selections):
+    model_script  = model.getAntimony()
+    # lines = model_script.splitlines()
+    # print('--------')
+    index = model_script.find('end')
+    # print(model_script.find('end'))
+    model_script = model_script.replace('PP_','')
+    # print(model_script[48640:])
+    # print('--------')
+    # print(model_script)
+    return te.loada(model_script)
 
 def edit_matlab_model(input_file,output_file): # edit matlab sbml
     with open(input_file,'r') as file:
@@ -43,35 +57,23 @@ class InvalidParams(Exception):
     def __init__(self,message = ''):
         pass
 
-class Calibration_class:
-    def __init__(self,model,fixed_params,free_params,studies):
-        self.free_params = free_params
-        self.fixed_params = fixed_params
-        self.model = model
-        self.studies = studies
-    def cost_function(self,calib_params_values):
-        calib_params = {}
-        for key,value in zip(self.free_params.keys(),calib_params_values):
-            calib_params[key] = value
-        params = {**calib_params,**self.fixed_params}
-        error = self.model.run(params=params,studies=self.studies)
+def calibrate(**args):
+    cost_function = args['cost_function']
+    free_params = args['free_params']
+    bounds = list(free_params.values())
+    maxiter = args['maxiter']
+    workers = args['workers']
+    callback = args['callback']
 
-        return error
+    results = differential_evolution(func = cost_function,bounds=bounds,maxiter=maxiter,workers=workers,
+        disp=True,callback=callback)
 
-    def optimize(self,n_proc,max_iters,disp,strategy,tol,callback):
-        results = differential_evolution(func = self.cost_function,bounds=list(self.free_params.values()),maxiter=max_iters,workers=n_proc,strategy=strategy,
-            disp=disp,tol=tol,callback=callback)
+    inferred_params = {}
+    for key,value in zip(free_params.keys(),results.x):
+        inferred_params[key] = value
+    return inferred_params,results.fun
 
-        inferred_params = {}
-        for key,value in zip(self.free_params.keys(),results.x):
-            inferred_params[key] = value
-        return inferred_params,results.fun
 
-def calibrate(model,fixed_params,free_params,studies,max_iters = 20, n_proc=1,disp=True,strategy='best1bin',tol=1e-4,callback=None):
-    calib_obj = Calibration_class(model,fixed_params,free_params,studies)
-
-    inferred_params,error = calib_obj.optimize(n_proc=n_proc,max_iters=max_iters,disp=disp,strategy=strategy,tol=tol,callback=callback)
-    return inferred_params
 
 ###----convert from concentration to copy number and vice versa ----#######
 mws = { #molecular weights/ Da
@@ -94,35 +96,7 @@ c_2_ac['O2'] = 120400000/21 # % to absolute copy for oxygen
 ac_2_c['02'] = 21/120400000 # absolute copy to %
                             # 
                             
-def run_model(model,params,target_keys,duration,study=''):
-    model.reset()
-#     model = te.loadSBMLModel(dir_model)
-    for key,value in params.items():
-        model[key] = value
-    if study == 'S12_IkBa_mg':
-        model.integrator.variable_step_size = True
-        model.integrator.absolute_tolerance = 1e-3 
-        model.integrator.relative_tolerance = 1e-3 
-        try:
-            results = model.simulate(0,duration,selections = ['TIME']+target_keys)
-        except RuntimeError:
-            raise RuntimeError('study : {} didnt converge'.formaat(study))
-    elif study == 'Q21_IkBa':
-        jj = duration
-        while True:
-            steps = jj
-            try:
-                results = model.simulate(start = 0,end = duration,steps =steps ,selections = ['TIME']+target_keys)
-                break
-            except RuntimeError:
-                jj-=1
-            if jj < 20:
-                print('Invalid parameter set')
-                raise InvalidParams('run model didnt converge')
-    else:
-        results = model.simulate(start = 0,end = duration,steps = int(duration/2) ,selections = ['TIME']+target_keys)
 
-    return results
 def indexing(real_time,time_vector):
     index = next(x[0] for x in enumerate(time_vector) if x[1] >= real_time)
     return index

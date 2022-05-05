@@ -1,15 +1,190 @@
 {
+    "M05_IT": {
+        "IDs": [
+            "ctr",
+            "100"
+        ],
+        "activation": true,
+        "experiment_period": 120,
+        "measurement_scheme": {
+            "nIRAK4": [
+                120
+            ],
+            "naTRAF6": [
+                120
+            ]
+        },
+        "ctr": {
+            "inputs": {},
+            "expectations": {
+                "nIRAK4": {
+                    "mean": [
+                        1
+                    ],
+                    "std": [
+                        0
+                    ]
+                },
+                "naTRAF6": {
+                    "mean": [
+                        1
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        },
+        "100": {
+            "inputs": {
+                "IL8": 100000
+            },
+            "expectations": {
+                "nIRAK4": {
+                    "mean": [
+                        3.895
+                    ],
+                    "std": [
+                        0
+                    ]
+                },
+                "naTRAF6": {
+                    "mean": [
+                        2.587
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        }
+    },
+    "M05_NFKB": {
+        "IDs": [
+            "ctr",
+            "0dot1",
+            "1",
+            "10",
+            "100",
+            "1000"
+        ],
+        "activation": true,
+        "experiment_period": 120,
+        "measurement_scheme": {
+            "nNFKB_n": [
+                120
+            ]
+        },
+        "ctr": {
+            "inputs": {},
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        1
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        },
+        "0dot1": {
+            "inputs": {
+                "IL8": 1000
+            },
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        1.1
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        },
+        "1": {
+            "inputs": {
+                "IL8": 1000
+            },
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        1.2
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        },
+        "10": {
+            "inputs": {
+                "IL8": 10000
+            },
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        2.4
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        },
+        "100": {
+            "inputs": {
+                "IL8": 100000
+            },
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        4.2
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        },
+        "1000": {
+            "inputs": {
+                "IL8": 1000000
+            },
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        4.7
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        }
+    },
     "M18": {
         "IDs": [
             "ctr",
-            "0dot01"
+            "0dot01",
+            "0dot1",
+            "1",
+            "10"
         ],
+        "activation": true,
         "experiment_period": 1440,
         "measurement_scheme": {
             "nIFNGR": [
                 1440
             ],
             "nIL4R": [
+                1440
+            ],
+            "nIL1b": [
+                1440
+            ],
+            "nIL10": [
                 1440
             ]
         },
@@ -31,12 +206,28 @@
                     "std": [
                         0
                     ]
+                },
+                "nIL1b": {
+                    "mean": [
+                        1.0
+                    ],
+                    "std": [
+                        0
+                    ]
+                },
+                "nIL10": {
+                    "mean": [
+                        1.0
+                    ],
+                    "std": [
+                        0
+                    ]
                 }
             }
         },
         "0dot01": {
             "inputs": {
-                "IL8": 0.01
+                "IL8": 10
             },
             "expectations": {
                 "nIFNGR": {
@@ -54,12 +245,28 @@
                     "std": [
                         0
                     ]
+                },
+                "nIL1b": {
+                    "mean": [
+                        1.1138461538461537
+                    ],
+                    "std": [
+                        0
+                    ]
+                },
+                "nIL10": {
+                    "mean": [
+                        1.0875394321766563
+                    ],
+                    "std": [
+                        0
+                    ]
                 }
             }
         },
         "0dot1": {
             "inputs": {
-                "IL8": 0.1
+                "IL8": 100
             },
             "expectations": {
                 "nIFNGR": {
@@ -77,12 +284,28 @@
                     "std": [
                         0
                     ]
+                },
+                "nIL1b": {
+                    "mean": [
+                        1.1953846153846153
+                    ],
+                    "std": [
+                        0
+                    ]
+                },
+                "nIL10": {
+                    "mean": [
+                        1.2752365930599368
+                    ],
+                    "std": [
+                        0
+                    ]
                 }
             }
         },
         "1": {
             "inputs": {
-                "IL8": 1
+                "IL8": 1000
             },
             "expectations": {
                 "nIFNGR": {
@@ -100,12 +323,28 @@
                     "std": [
                         0
                     ]
+                },
+                "nIL1b": {
+                    "mean": [
+                        1.2776923076923077
+                    ],
+                    "std": [
+                        0
+                    ]
+                },
+                "nIL10": {
+                    "mean": [
+                        1.1829652996845426
+                    ],
+                    "std": [
+                        0
+                    ]
                 }
             }
         },
         "10": {
             "inputs": {
-                "IL8": 10
+                "IL8": 10000
             },
             "expectations": {
                 "nIFNGR": {
@@ -123,6 +362,22 @@
                     "std": [
                         0
                     ]
+                },
+                "nIL1b": {
+                    "mean": [
+                        1.323076923076923
+                    ],
+                    "std": [
+                        0
+                    ]
+                },
+                "nIL10": {
+                    "mean": [
+                        1.001577287066246
+                    ],
+                    "std": [
+                        0
+                    ]
                 }
             }
         }
@@ -132,6 +387,7 @@
             "ctr",
             "Mg_2dot5"
         ],
+        "activation": false,
         "experiment_period": 180,
         "measurement_scheme": {
             "IKB": [
@@ -139,9 +395,7 @@
             ]
         },
         "ctr": {
-            "inputs": {
-                "Mg_e": 0.5
-            },
+            "inputs": {},
             "expectations": {
                 "IKB": {
                     "mean": [
@@ -170,10 +424,11 @@
         }
     },
     "Q21_IkBa": {
-        "experiment_period": 360,
+        "experiment_period": 4320,
+        "activation": true,
         "measurement_scheme": {
             "IKB": [
-                360
+                4320
             ]
         },
         "IDs": [
@@ -187,10 +442,12 @@
             "expectations": {
                 "IKB": {
                     "mean": [
-                        0.05
+                        0.05,
+                        1.7
                     ],
                     "std": [
-                        0
+                        0,
+                        0.1
                     ]
                 }
             }
@@ -202,10 +459,12 @@
             "expectations": {
                 "IKB": {
                     "mean": [
-                        0.7
+                        0.7,
+                        1.67
                     ],
                     "std": [
-                        0.1
+                        0.1,
+                        0.25
                     ]
                 }
             }
@@ -215,9 +474,10 @@
         "IDs": [
             "Mg_02"
         ],
+        "activation": false,
         "experiment_period": 2880,
         "measurement_scheme": {
-            "Mg_n": [
+            "nMg": [
                 0,
                 720,
                 780,
@@ -262,7 +522,7 @@
                 "Mg_e": 0.02
             },
             "expectations": {
-                "Mg_n": {
+                "nMg": {
                     "mean": [
                         1,
                         0.5,
@@ -311,8 +571,9 @@
             "Mg_2a5"
         ],
         "experiment_period": 60,
+        "activation": false,
         "measurement_scheme": {
-            "Mg_n": [
+            "nMg": [
                 0,
                 60
             ]
@@ -323,7 +584,7 @@
                 "Mg_e": 2.5
             },
             "expectations": {
-                "Mg_n": {
+                "nMg": {
                     "mean": [
                         1,
                         3.6
@@ -336,9 +597,10 @@
         "IDs": [
             "Mg_19"
         ],
+        "activation": false,
         "experiment_period": 720,
         "measurement_scheme": {
-            "Mg_f_n": [
+            "nMg_f": [
                 0,
                 180,
                 240,
@@ -356,7 +618,7 @@
                 "Mg_e": 19
             },
             "expectations": {
-                "Mg_f_n": {
+                "nMg_f": {
                     "mean": [
                         1,
                         1.4,
@@ -375,8 +637,9 @@
     },
     "eq_mg": {
         "IDs": [
-            "Mg_0dot5"
+            "ctr"
         ],
+        "activation": false,
         "experiment_period": 1440,
         "measurement_scheme": {
             "Mg_f": [
@@ -431,7 +694,7 @@
                 1320,
                 1380
             ],
-            "Mg_ATP_n": [
+            "nMg_ATP": [
                 0,
                 60,
                 120,
@@ -458,7 +721,7 @@
                 1380
             ]
         },
-        "Mg_0dot5": {
+        "ctr": {
             "inputs": {
                 "Mg_e": 0.5
             },
@@ -519,7 +782,7 @@
                         18.5
                     ]
                 },
-                "Mg_ATP_n": {
+                "nMg_ATP": {
                     "mean": [
                         1,
                         1,
@@ -551,11 +814,10 @@
         }
     },
     "Q21_Mg": {
-        "exposure_time": null,
-        "culture_volume": null,
         "experiment_period": 180,
+        "activation": false,
         "measurement_scheme": {
-            "Mg_f_n": [
+            "nMg_f": [
                 0,
                 10,
                 20,
@@ -584,7 +846,7 @@
                 "Mg_e": 8
             },
             "expectations": {
-                "Mg_f_n": {
+                "nMg_f": {
                     "mean": [
                         1,
                         1.25,
@@ -611,6 +873,7 @@
     },
     "Q21_eq_trpm": {
         "experiment_period": 1440,
+        "activation": false,
         "measurement_scheme": {
             "TRPM": [
                 0,
@@ -692,12 +955,10 @@
             ]
         },
         "IDs": [
-            "Mg_.5"
+            "ctr"
         ],
-        "Mg_.5": {
-            "inputs": {
-                "Mg_e": 0.5
-            },
+        "ctr": {
+            "inputs": {},
             "expectations": {
                 "TRPM": {
                     "mean": [
@@ -788,6 +1049,7 @@
     },
     "Q21_eq_h3s10": {
         "experiment_period": 1440,
+        "activation": false,
         "measurement_scheme": {
             "pH3S10": [
                 0,
@@ -817,12 +1079,10 @@
             ]
         },
         "IDs": [
-            "Mg_.5"
+            "ctr"
         ],
-        "Mg_.5": {
-            "inputs": {
-                "Mg_e": 0.5
-            },
+        "ctr": {
+            "inputs": {},
             "expectations": {
                 "pH3S10": {
                     "mean": [
@@ -857,6 +1117,7 @@
     },
     "Q21_nTRPM": {
         "experiment_period": 4320,
+        "activation": false,
         "measurement_scheme": {
             "nTRPM": [
                 4320
@@ -915,6 +1176,7 @@
     },
     "Q21_TRPM": {
         "experiment_period": 4320,
+        "activation": false,
         "measurement_scheme": {
             "TRPM": [
                 4320
@@ -973,6 +1235,7 @@
     },
     "Q21_nM7CK": {
         "experiment_period": 4320,
+        "activation": false,
         "measurement_scheme": {
             "nM7CK": [
                 4320
@@ -1031,6 +1294,7 @@
     },
     "Q21_H3S10": {
         "experiment_period": 4320,
+        "activation": false,
         "measurement_scheme": {
             "pH3S10": [
                 4320
@@ -1089,8 +1353,9 @@
     },
     "eq_IL8": {
         "experiment_period": 1440,
+        "activation": false,
         "measurement_scheme": {
-            "IL8_n": [
+            "nIL8": [
                 0,
                 60,
                 120,
@@ -1116,7 +1381,7 @@
                 1320,
                 1380
             ],
-            "IL8R_n": [
+            "nIL8R": [
                 0,
                 60,
                 120,
@@ -1144,14 +1409,12 @@
             ]
         },
         "IDs": [
-            "Mg_0dot5"
+            "ctr"
         ],
-        "Mg_0dot5": {
-            "inputs": {
-                "Mg_e": 0.5
-            },
+        "ctr": {
+            "inputs": {},
             "expectations": {
-                "IL8_n": {
+                "nIL8": {
                     "mean": [
                         1,
                         1,
@@ -1179,7 +1442,7 @@
                         1
                     ]
                 },
-                "IL8R_n": {
+                "nIL8R": {
                     "mean": [
                         1,
                         1,
@@ -1212,6 +1475,7 @@
     },
     "Q21_Mg_IL8": {
         "experiment_period": 4320,
+        "activation": true,
         "measurement_scheme": {
             "IL8": [
                 360,

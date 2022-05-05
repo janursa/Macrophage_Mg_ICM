@@ -218,10 +218,10 @@
       <species id="pIRAK4" compartment="comp1" initialAmount="55.3112884791249" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="GSK3b" compartment="comp1" initialAmount="47975.4264859869" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pGSK3b" compartment="comp1" initialAmount="92024.5735140134" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8_R" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8R_prod" compartment="default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="IL8R" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="IL8_R" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
@@ -229,6 +229,12 @@
       <parameter id="kd_irak_p" value="1" constant="true"/>
       <parameter id="IL8_R_0" value="0" constant="false"/>
       <parameter id="n_irak_p" value="1" constant="true"/>
+      <parameter id="F_il8_ifngr" value="2" constant="false"/>
+      <parameter id="kd_ifngr_p1" value="1" constant="true"/>
+      <parameter id="n_ifngr_p1" value="1" constant="true"/>
+      <parameter id="F_il8_il4p" value="0.5" constant="false"/>
+      <parameter id="kd_il4r_p1" value="1" constant="true"/>
+      <parameter id="n_il4r_p1" value="1" constant="true"/>
       <parameter id="nIL8" value="INF" constant="false"/>
       <parameter id="IL8_0" value="0" constant="false"/>
       <parameter id="nIL8R" value="INF" constant="false"/>
@@ -247,12 +253,6 @@
       <parameter id="aTRAF6_0" value="0" constant="false"/>
       <parameter id="nNFKB_n" value="INF" constant="false"/>
       <parameter id="NFKB_n_0" value="0" constant="false"/>
-      <parameter id="F_il8_ifngr" value="2" constant="false"/>
-      <parameter id="kd_ifngr_p1" value="1" constant="true"/>
-      <parameter id="n_ifngr_p1" value="1" constant="true"/>
-      <parameter id="F_il8_il4p" value="0.5" constant="false"/>
-      <parameter id="kd_il4r_p1" value="1" constant="true"/>
-      <parameter id="n_il4r_p1" value="1" constant="true"/>
       <parameter id="kf1" value="1.6e-07" constant="true"/>
       <parameter id="kr1" value="0.01" constant="true"/>
       <parameter id="kf2" value="3" constant="true"/>
@@ -625,6 +625,48 @@
           </apply>
         </math>
       </assignmentRule>
+      <assignmentRule variable="F_il8_ifngr">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <apply>
+              <divide/>
+              <apply>
+                <plus/>
+                <ci> IL8_R </ci>
+                <ci> kd_ifngr_p1 </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> IL8_R_0 </ci>
+                <ci> kd_ifngr_p1 </ci>
+              </apply>
+            </apply>
+            <ci> n_ifngr_p1 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="F_il8_il4p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <apply>
+              <divide/>
+              <apply>
+                <plus/>
+                <ci> IL8_R_0 </ci>
+                <ci> kd_il4r_p1 </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> IL8_R </ci>
+                <ci> kd_il4r_p1 </ci>
+              </apply>
+            </apply>
+            <ci> n_il4r_p1 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
       <assignmentRule variable="nIL8">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
@@ -703,48 +745,6 @@
             <divide/>
             <ci> NFKB_n </ci>
             <ci> NFKB_n_0 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="F_il8_ifngr">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <power/>
-            <apply>
-              <divide/>
-              <apply>
-                <plus/>
-                <ci> IL8_R </ci>
-                <ci> kd_ifngr_p1 </ci>
-              </apply>
-              <apply>
-                <plus/>
-                <ci> IL8_R_0 </ci>
-                <ci> kd_ifngr_p1 </ci>
-              </apply>
-            </apply>
-            <ci> n_ifngr_p1 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="F_il8_il4p">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <power/>
-            <apply>
-              <divide/>
-              <apply>
-                <plus/>
-                <ci> IL8_R_0 </ci>
-                <ci> kd_il4r_p1 </ci>
-              </apply>
-              <apply>
-                <plus/>
-                <ci> IL8_R </ci>
-                <ci> kd_il4r_p1 </ci>
-              </apply>
-            </apply>
-            <ci> n_il4r_p1 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -3115,9 +3115,11 @@
       <reaction id="v80" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="IFNGR_prod" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="IFNGR" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -3125,6 +3127,7 @@
               <times/>
               <ci> k80 </ci>
               <ci> IFNGR_prod </ci>
+              <ci> F_il8_ifngr </ci>
             </apply>
           </math>
         </kineticLaw>
@@ -3974,10 +3977,12 @@
         <listOfReactants>
           <speciesReference species="il4r_prod" stoichiometry="1" constant="true"/>
           <speciesReference species="pSTAT3D_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="IL4R" stoichiometry="1" constant="true"/>
           <speciesReference species="pSTAT3D_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -3998,6 +4003,7 @@
                   </apply>
                 </apply>
               </apply>
+              <ci> F_il8_il4p </ci>
             </apply>
           </math>
         </kineticLaw>

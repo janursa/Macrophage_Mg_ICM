@@ -1,6 +1,9 @@
 import os
 import sys
-main_dir = '/Users/matin/Downloads/testProjs/intracellular_M'
+from pathlib import Path
+
+dir_file = Path(__file__).resolve().parent
+main_dir = os.path.join(dir_file,'..')
 sys.path.insert(0,main_dir)
 from tools import dirs
 from tools.tools import calibrate
@@ -47,8 +50,9 @@ def cost_function(calib_params_values):
 class Strategies:
     best1bin = 'best1bin'
     rand1exp = 'rand1exp'
+if __name__ == '__main__':
+    workers = sys.argv[1]
+    inferred_params,_ = calib_obj = calibrate(cost_function=cost_function, workers=workers,maxiter=100,callback=callback,free_params=settings.free_params)
 
-inferred_params,_ = calib_obj = calibrate(cost_function=cost_function, workers=1,maxiter=100,callback=callback,free_params=settings.free_params)
-
-output(inferred_params)
+    output(inferred_params)
 os.system('say "Hey Matin, calibration is done, come back"')

@@ -13,8 +13,8 @@ packages = {
 	'P13' : ['Q21_H3S10','Q21_eq_h3s10'], 
 	'P1': ['eq_mg','R05_mg_f_n','R05_mg_n']+['Q21_nTRPM','Q21_TRPM','Q21_nM7CK','Q21_eq_trpm']+['Q21_H3S10','Q21_eq_h3s10'], # M1 model
 	
-	# 'P22' : ['M18'], #   IL8 model: IL8 influences IFNGR, IL4R, IL1b, IL10  
-	'P21' : ['eq_IL8','M05_IT','M05_NFKB','M18'],
+	'P21' : ['eq_IL8','M05_IT'],
+	# 'P21' : ['eq_IL8','M05_IT','M05_NFKB','M18'],
 
 	# 'P3' : ['S12_IkBa_mg','Q21_IkBa'], # Mg regulate IkBa 
 	#  [] #'Q21_Mg_IL8'

@@ -4,6 +4,5 @@
 # git config --global http.proxy 127.0.0.1:1080
 git add -A
 git commit  --amend -m $1
-git push --force  https://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@github.com/janursa/intracellular_M.git
-
+git push --force 
 

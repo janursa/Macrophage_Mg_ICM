@@ -382,6 +382,47 @@
             }
         }
     },
+    "S12_NFKBn_mg": {
+        "IDs": [
+            "ctr",
+            "Mg_2dot5"
+        ],
+        "activation": true,
+        "experiment_period": 180,
+        "measurement_scheme": {
+            "nNFKB_n": [
+                180
+            ]
+        },
+        "ctr": {
+            "inputs": {},
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        1
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        },
+        "Mg_2dot5": {
+            "inputs": {
+                "Mg_e": 2.5
+            },
+            "expectations": {
+                "nNFKB_n": {
+                    "mean": [
+                        0.7
+                    ],
+                    "std": [
+                        0
+                    ]
+                }
+            }
+        }
+    },
     "S12_IkBa_mg": {
         "IDs": [
             "ctr",
@@ -428,6 +469,7 @@
         "activation": true,
         "measurement_scheme": {
             "IKB": [
+                360,
                 4320
             ]
         },
@@ -1493,8 +1535,8 @@
             "expectations": {
                 "IL8": {
                     "mean": [
-                        10000,
-                        32000
+                        0.3,
+                        2.5
                     ],
                     "std": [
                         0,
@@ -1510,8 +1552,8 @@
             "expectations": {
                 "IL8": {
                     "mean": [
-                        16000,
-                        37000
+                        0.95,
+                        2.85
                     ],
                     "std": [
                         0,

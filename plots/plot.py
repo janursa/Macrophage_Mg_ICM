@@ -14,42 +14,52 @@ from models.params import fixed_params
 from tools import dirs, tools
 from models.models import Macrophage
 from plots import funcs 
+
 params = {**fixed_params}
-if True: # apply inferred params
-    target_package = 'P2'
+def reload_params(params): # apply inferred params
+    target_package = 'P12'
     with open(os.path.join(dirs.dir_outputs,'inferred_params_{}.json'.format(target_package)),'r') as file:
         inferred_params = json.load(file)
     params = {**params,**inferred_params}
+    return params
+# params = reload_params(params)
 print(params)
+# params['n_h3s10_il8_p'] = 4
 print('t2m: {} '.format(t2m))
-flags = {
-    'P1': False,
-    'P4__': False,
-    'P2': True
-}
-for key,value in flags.items():
-    if key == 'P1' and value : 
-        model_t = 'M1'
-        model_sbml = Macrophage.models[model_t]
-        macrophage_obj = Macrophage(model_t = model_t)
-        params = {}
-        print('P1_3 is plotting')
-        funcs.P1_eq_plot(model_sbml=model_sbml,params={},observations=observations)
-        plt.savefig(os.path.join(dirs.dir_outputs,'P11.png'))
-        funcs.P1_qualitative_plot (model_sbml=model_sbml,params=params,observations=observations)
-        plt.savefig(os.path.join(dirs.dir_outputs,'P12.png'))
-        fig = funcs.P1_plot (model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
-        plt.savefig(os.path.join(dirs.dir_outputs,'P13.png'))
-    elif key == 'P4' and value : 
-        dir_model = dirs.dir_model
-        model_sbml = te.loadSBMLModel(dir_model)
-        macrophage_obj = Macrophage(dir_model = dir_model)
-        print('P4 is plotting')
-        funcs.P4_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
-    elif key == 'P2' and value : 
-        model_t = 'IL8'
-        model_sbml = Macrophage.models[model_t]
-        macrophage_obj = Macrophage(model_t = model_t)
-        print('P2 is plotting')
-        funcs.P2_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
-        plt.savefig(os.path.join(dirs.dir_outputs,'P2.png'))
+#params['IL8'] = 1
+#params['IL8R'] = 100
+flags = [
+    'P1',
+#     'P2',
+#     'P3'
+]
+
+if 'P1' in flags : 
+    model_t = 'M1'
+    model_sbml = Macrophage.create_sbml_model(model_t)
+    macrophage_obj = Macrophage(model_t = model_t)
+    print('P1_3 is plotting')
+    funcs.P1_eq_plot(model_sbml=model_sbml,params=params,observations=observations)
+    # funcs.P1_qualitative_plot (model_sbml=model_sbml,params=params,observations=observations)
+    # fig = funcs.P1_plot (model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
+if 'P2' in flags: 
+    model_t = 'combined'
+    model_sbml = Macrophage.create_sbml_model(model_t)
+    macrophage_obj = Macrophage(model_t = model_t)
+    print('P2 is plotting')
+    fig2 = funcs.P21_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
+#     _dir = os.path.join(dirs.dir_outputs,'plots','P2_1.png')
+    # plt.savefig(_dir)
+    fig2 = funcs.P22_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
+#     _dir = os.path.join(dirs.dir_outputs,'plots','P2_2.png')
+    # plt.savefig(_dir)
+
+if 'P3' in flags : 
+    model_t = 'combined'
+    model_sbml = Macrophage.create_sbml_model(model_t)
+    macrophage_obj = Macrophage(model_t = model_t)
+    print('P3 is plotting')
+    fig = funcs.P31_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
+    fig = funcs.P32_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
+
+    _dir = os.path.join(dirs.dir_outputs,'plots','P3.png')

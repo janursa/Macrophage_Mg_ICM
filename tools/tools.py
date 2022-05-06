@@ -7,16 +7,10 @@ import json
 import copy
 
 
-def assign_surrogate_names(model,selections):
+def assign_surrogate_names(model,selections,prefix = 'PP_'):
     model_script  = model.getAntimony()
-    # lines = model_script.splitlines()
-    # print('--------')
     index = model_script.find('end')
-    # print(model_script.find('end'))
-    model_script = model_script.replace('PP_','')
-    # print(model_script[48640:])
-    # print('--------')
-    # print(model_script)
+    model_script = model_script.replace(prefix,'')
     return te.loada(model_script)
 
 def edit_matlab_model(input_file,output_file): # edit matlab sbml

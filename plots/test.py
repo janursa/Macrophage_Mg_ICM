@@ -10,39 +10,64 @@ from models.models import Macrophage
 from plots import funcs 
 import matplotlib
 import matplotlib.pyplot as plt
+import tellurium as te
+
 params = {**fixed_params}
 if True: # apply inferred params
-    target_package = 'P21'
+    target_package = 'P12'
     with open(os.path.join(dirs.dir_outputs,'inferred_params_{}.json'.format(target_package)),'r') as file:
         inferred_params = json.load(file)
     params = {**params,**inferred_params}
-model_sbml = Macrophage.models['IL8']
-# tags = ['IL4R_0','IL4R','nIL4R','IL8','F_il8_il4p','F_il8_ifngr','IL8_R','IFNGR','nIL1b','TNFa']
-# tags = ['IFNGR_0','IFNGR','nIFNGR']
-tags = ['IRAK4','aTRAF6','NFKB_n']
-inputs = {}
-rr1 = Macrophage.run_sbml_model(model_sbml=model_sbml,duration=1500,params={**params,**inputs},selections=['time']+tags,activation=True)
-inputs = {'IL8':100*1000}
-rr2 = Macrophage.run_sbml_model(model_sbml=model_sbml,duration=1500,params={**params,**inputs},selections=['time']+tags,activation=True)
+# params['n_h3s10_il8_p'] =5
+# inferred_params = {
+#     "kd_mg_ikb_d": 0.6372241221592411,
+#     "n_mg_ikb_d": 8.644881763454306,
+#     "kd_h3s10_il8_p": 0.02857981446166838,
+#     "n_h3s10_il8_p": 5,
+#     "kd_h3s10_ikb_p": 4.782521786248381,
+#     "n_h3s10_ikb_p": 24.29685438635782
+# }
+# params = {**params,**inferred_params}
+# params['n_h3s10_il8_p'] = 4
+model_t = 'M1'
 
-# 
-# print(tags[0],rr2[tags[0]][0:2])
-# print(tags[1],rr2[tags[1]][0:2])
-# print(tags[2],rr2[tags[2]][0:2])
-# 
-# print(rr2['F_il8_il4p'][0:-3])
+model_sbml = Macrophage.create_sbml_model(model_t)
+
+tags = ['IL8','NFKB_n','pH3S10']
+duration = 200*60
+inputs = {}
+ctr = Macrophage.run_sbml_model(model_sbml=model_sbml,duration=duration,params={**params,**inputs},selections=['time']+tags,activation=True)
+inputs = {'Mg_e':8}
+rr_8 = Macrophage.run_sbml_model(model_sbml=model_sbml,duration=duration,params={**params,**inputs},selections=['time']+tags,activation=True)
+inputs = {'Mg_e':0.08}
+rr_08 = Macrophage.run_sbml_model(model_sbml=model_sbml,duration=duration,params={**params,**inputs},selections=['time']+tags,activation=True)
+
 
 fig = plt.figure()
-ax = fig.add_subplot(1,2,1)
-ax.plot(rr1['time'],rr1['IRAK4'],label = 'ctr')
-ax.plot(rr2['time'],rr2['IRAK4'],label = '100')
-ax.set_title('IRAK4')
+ax = fig.add_subplot(1,3,1)
+tt = 0
+ax.plot(ctr['time'][tt:],ctr['IL8'][tt:],label = 'ctr')
+ax.plot(rr_8['time'][tt:],rr_8['IL8'][tt:],label = 'Mg 8')
+ax.plot(rr_08['time'][tt:],rr_08['IL8'][tt:],label = 'Mg 0.08')
+ax.set_title('IL8')
 ax.legend()
-ax = fig.add_subplot(1,2,2)
-ax.plot(rr1['time'],rr1['aTRAF6'],label = 'ctr')
-ax.plot(rr2['time'],rr2['aTRAF6'],label = '100')
-ax.set_title('aTRAF6')
+ax = fig.add_subplot(1,3,2)
+tt = 0
+ax.plot(ctr['time'][tt:],ctr['NFKB_n'][tt:],label = 'ctr')
+ax.plot(rr_8['time'][tt:],rr_8['NFKB_n'][tt:],label = 'Mg 8')
+ax.plot(rr_08['time'][tt:],rr_08['NFKB_n'][tt:],label = 'Mg 0.08')
+ax.set_title('NFKB_n')
 ax.legend()
+ax = fig.add_subplot(1,3,3)
+tt = 0
+ax.plot(ctr['time'][tt:],ctr['pH3S10'][tt:],label = 'ctr')
+ax.plot(rr_8['time'][tt:],rr_8['pH3S10'][tt:],label = 'Mg 8')
+ax.plot(rr_08['time'][tt:],rr_08['pH3S10'][tt:],label = 'Mg 0.08')
+ax.set_title('pH3S10')
+ax.legend()
+
 fig.tight_layout()
-plt.savefig('test.png')
+# _dir = os.path.join(dirs.dir_outputs,'plots','test.png')
+# fig.show()
+#plt.savefig(_dir)
 

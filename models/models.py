@@ -10,6 +10,7 @@ main_dir = os.path.join(dir_file,'..')
 sys.path.insert(0,main_dir)
 from tools import tools,dirs
 
+
 def retrieve_activation_stimuli():
     with open(dirs.dir_activation_stimuli) as ff:
       activation_s = json.load(ff)
@@ -17,15 +18,19 @@ def retrieve_activation_stimuli():
 
 
 class Macrophage:
-  models = {
-    'M1':te.loadSBMLModel(dirs.dir_M1_model),
-    'IL8': te.loadSBMLModel(dirs.dir_IL8_model),
-    'Combined_a':None
-  }
+  @staticmethod
+  def create_sbml_model(model_t):
+    if model_t == 'M1':
+      return te.loadSBMLModel(dirs.dir_M1_model)
+    elif model_t == 'IL8':
+      return te.loadSBMLModel(dirs.dir_IL8_model)
+    elif model_t == 'combined':
+      return te.loadSBMLModel(dirs.dir_model)
+
   activation_s = retrieve_activation_stimuli()
 
   def __init__(self,model_t):
-    self.model = Macrophage.models[model_t]
+    self.model = Macrophage.create_sbml_model(model_t)
 
 
     
@@ -58,6 +63,7 @@ class Macrophage:
             raise tools.InvalidParams()
           results[ID] = ID_results
 
+      
       return results
   # def cost_study(self,study,study_results):
   #     """
@@ -131,38 +137,41 @@ class Macrophage:
     error = error_upper + error_lower
     return error
   @staticmethod
-  def run_sbml_model(model_sbml,selections,duration,params={},study_tag='',activation=False):
-    model_sbml.reset()    
+  def run_sbml_model(model_sbml,selections,duration,params={},study_tag='',activation=False,steps=None):
+    """ run sbml model
+    """
+
+    model_sbml.resetToOrigin()   
     if activation == True:
       params = {**params,**Macrophage.activation_s}
     for key,value in params.items():
       model_sbml[key] = value
-    jj = duration
-    results = model_sbml.simulate(start = 0,end = duration,steps =duration ,selections = ['TIME']+selections)
-    
+    if steps == None:
+        steps = duration
+    results = model_sbml.simulate(start = 0,end = duration,steps =steps,selections = ['TIME']+selections)
     return results
   @staticmethod
   def run_sbml_model_recursive(model_sbml,selections,duration,params={},study_tag='',activation=False):
-    model_sbml.reset()    
-    if activation == True:
-      params = {**params,**Macrophage.activation_s}
-    for key,value in params.items():
-      model_sbml[key] = value
+    """ run sbml model in a recursive way by change the step size
+    """
     jj = duration
+    
     while True:
       steps = jj
       try:
-          results = model_sbml.simulate(start = 0,end = duration,steps =steps ,selections = ['TIME']+selections)
+          results = Macrophage.run_sbml_model(model_sbml=model_sbml,selections=selections,duration=duration,params=params,study_tag=study_tag,activation=activation, steps = steps)
           break
-      except RuntimeError:
+      except Exception:
           jj-=1
-      if jj < 20:
+          
+      if jj < duration/2:
           print('Invalid parameter set')
           raise tools.InvalidParams('run model didnt converge')
     
     return results
   def calculate_cost(self,results):
-
+    ff = lambda ctr,vector: [i/ctr for i in vector]
+#    print(results)
     costs = {}
     for study_tag,study_result in results.items():
       
@@ -171,21 +180,9 @@ class Macrophage:
         exps,sims = np.array(target_results['exp']),np.array(target_results['sim'])
         ##---- for certain studies, the simulation results should be normalized ----##
         
-        if study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10':
-          if max(sims)>10:
+        if (study_tag == 'Q21_nTRPM' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_nM7CK' or study_tag == 'Q21_H3S10') and max(sims)>10:
             error = max(sims)
-          else:
-            sim_8_error = abs(sims[1]/sims[2]-(1/exps[2]))/(1/exps[2])
-            mg_dot8_error =  abs(sims[1]/sims[2]-(1/exps[0]))/(1/exps[0])
-            error = (sim_8_error + mg_dot8_error)/2
-        elif study_tag == 'S12_IkBa_mg':
-          sims_n = sims[1]/sims[0]
-          exps_n = exps[1]
-          error = abs(sims_n-exps_n)/(exps_n)
-        elif study_tag == 'Q21_IkBa':
-          sims_n = np.array(sims)/sims[0]
-          exps_n = np.array(exps)/exps[0]
-          error = sum(abs(sims_n-exps_n))
+          
 
         
         else:
@@ -208,8 +205,9 @@ class Macrophage:
     target_keys = list(measurement_scheme.keys())
     params = {**params,**inputs}
     try:
-      results_raw = Macrophage.run_sbml_model(model_sbml=self.model,params = params,duration=experiment_period+1,selections=target_keys,study_tag=study_tag,activation=activation)
-      # results_raw = Macrophage.run_sbml_model_recursive(model_sbml=self.model,params = params,duration=experiment_period+1,selections=target_keys,study_tag=study_tag,activation=activation)
+      # results_raw = Macrophage.run_sbml_model(model_sbml=self.model,params = params,duration=experiment_period+1,selections=target_keys,study_tag=study_tag,activation=activation)
+
+      results_raw = Macrophage.run_sbml_model_recursive(model_sbml=self.model,params = params,duration=experiment_period+1,selections=target_keys,study_tag=study_tag,activation=activation)
     except tools.InvalidParams:
       raise tools.InvalidParams()
     results ={}
@@ -227,8 +225,8 @@ class Macrophage:
     try:
       sims = self.simulate_studies(params,studies)
     except tools.InvalidParams:
-      mean_cost = 1+random.random()
-      # mean_cost = 10
+      # mean_cost = 1+random.random()
+      mean_cost = 100
       flag = 0
     if flag == 1:
       sims_vs_exps = self.sort_sim_vs_exp(sims,studies)

@@ -1,7 +1,11 @@
 
 import tellurium as te
 import sys
-sys.path.insert(0,'/Users/matin/Downloads/testProjs/intracellular_M')
+import os
+from pathlib import Path
+dir_file = Path(__file__).resolve().parent
+main_dir = os.path.join(dir_file,'..')
+sys.path.insert(0,main_dir)
 from tools import dirs, tools
 
 IL8_model_str = """
@@ -13,6 +17,7 @@ model IL8_model()
     IL4R is PP.IL4R;
     IL1b is PP.IL1b;
     IL10 is PP.IL10;
+    TNFa is PP.TNFa;
     IRAK4 is PP.IRAK4;
     aTRAF6 is PP.aTRAF6;
     NFKB_n is PP.NFKB_n;
@@ -41,24 +46,25 @@ model IL8_model()
     
     // Variables:
     IL8_prod = 1;
-    IL8 = 1; # pg/ml
-    k_il8_p = 0.1;
-    kd_nfkb_il8_p = 1000;
-    k_il8_d = 0.1;
+
+
+IL8 = 7.408568221151385; # pg/ml
+k_il8_p = 5.970462870815936;
+kd_nfkb_il8_p = 2085.514347894692;
+k_il8_d = 0.37595294602525076;
+IL8R = 4800.422519863175;
+IL8_R = 7.689186472021902;
+k_il8_b = 0.0011844646079401944;
+k_il8_ub = 0.7266871178144181;
+k_il8r_p = 917.4566246712063;
+k_il8r_d = 0.19039877492259133;
+kd_il8_irak_p = 33.35345100816778 
     
-    IL8R = 1;
-    IL8_R = 1;
-    k_il8_b = .1;
-    k_il8_ub = .1;
-    k_il8r_p = .1;
-    k_il8r_d = .1;
     kd_il8_ifngr_p = 1; 
     n_il8_ifngr_p = 1;
     kd_il8_il4r_p = 1;
     n_il8_il4r_p = 1;
-    kd_il8_irak_p = 1;
-    n_il8_irak_p = 1;
-    
+   
     
     IL8R_0 = IL8R;
     IL8_R_0 = IL8_R;
@@ -67,6 +73,7 @@ model IL8_model()
     IL4R_0 = IL4R;
     IL1b_0 = IL1b;
     IL10_0 = IL10;
+    TNFa_0 = TNFa
     IRAK4_0 = IRAK4;
     aTRAF6_0 = aTRAF6;
     NFKB_n_0 = NFKB_n;
@@ -78,6 +85,7 @@ model IL8_model()
     at (time > 0): IL8_0 = IL8;
     at (time > 0): IL1b_0 = IL1b;
     at (time > 0): IL10_0 = IL10;
+    at (time > 0): TNFa_0 = TNFa;
     at (time > 0): IRAK4_0 = IRAK4;
     at (time > 0): aTRAF6_0 = aTRAF6; 
     at (time > 0): NFKB_n_0 = NFKB_n;
@@ -90,11 +98,12 @@ model IL8_model()
     nIL4R := IL4R/IL4R_0;
     nIL1b := IL1b/IL1b_0;
     nIL10 := IL10/IL10_0;
+    nTNFa := TNFa/TNFa_0;
     nIRAK4 := IRAK4/IRAK4_0;
     naTRAF6 := aTRAF6/aTRAF6_0;
     nNFKB_n := NFKB_n/NFKB_n_0;
     nIKB := IKB/IKB_0;
-    F_il8_irak := ((IL8_R+kd_il8_irak_p)/(IL8_R_0+kd_il8_irak_p))^n_il8_irak_p;
+    F_il8_irak := ((IL8_R+kd_il8_irak_p)/(IL8_R_0+kd_il8_irak_p));
     F_il8_ifngr := ((IL8_R+kd_il8_ifngr_p)/(IL8_R_0+kd_il8_ifngr_p))^n_il8_ifngr_p
     F_il8_il4p := ((IL8_R_0+kd_il8_il4r_p)/(IL8_R+kd_il8_il4r_p))^n_il8_il4r_p
     F_nfkb_il8_p := PP.NFKB_n/(PP.NFKB_n+kd_nfkb_il8_p);

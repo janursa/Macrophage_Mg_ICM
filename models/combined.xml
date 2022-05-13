@@ -7,20 +7,20 @@
       <compartment id="comp1" spatialDimensions="3" size="1" constant="true"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="Mg_e" compartment="M1_comp1" initialConcentration="0.5" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="Mg_f" compartment="M1_comp1" initialAmount="0.5" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_e" compartment="M1_comp1" initialAmount="0.8" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_f" compartment="M1_comp1" initialAmount="0.8" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="M1_TRPM" compartment="M1_comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ATP" compartment="M1_comp1" initialAmount="16" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg_ATP" compartment="M1_comp1" initialAmount="9" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg" compartment="M1_comp1" initialConcentration="18.5" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="Mg_IM" compartment="M1_comp1" initialAmount="9" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ATP" compartment="M1_comp1" initialAmount="4.42004922879223" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_ATP" compartment="M1_comp1" initialAmount="17.5759715060504" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg" compartment="M1_comp1" initialConcentration="18.5052903656923" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="Mg_IM" compartment="M1_comp1" initialAmount="0.129318859641869" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="M1_TRPM_n" compartment="M1_comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="M1_cons" compartment="M1_comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="M1_ATP_prod" compartment="M1_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="M1_TRPM_prod" compartment="M1_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nMg" compartment="M1_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nMg_f" compartment="M1_comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="IM" compartment="M1_comp1" initialConcentration="88.6098019188817" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="IM" compartment="M1_comp1" initialConcentration="1.01997397430206" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="M1_M7CK" compartment="M1_comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="M1_M7CK_n" compartment="M1_comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="M1_deg" compartment="M1_comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
@@ -242,17 +242,17 @@
       <species id="GSK3b" compartment="comp1" initialAmount="47975.4264859869" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pGSK3b" compartment="comp1" initialAmount="92024.5735140134" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8R_prod" compartment="default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="IL8R" compartment="default_compartment" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="IL8" compartment="default_compartment" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="IL8_R" compartment="default_compartment" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8R" compartment="default_compartment" initialAmount="4800.42251986317" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8" compartment="default_compartment" initialAmount="7.40856822115139" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8_R" compartment="default_compartment" initialAmount="7.6891864720219" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nNFKB_n" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
-      <parameter id="M1_Mg_0" value="18.5" constant="false"/>
-      <parameter id="Mg_f_0" value="0.5" constant="false"/>
-      <parameter id="M1_Mg_IM_0" value="9" constant="false"/>
-      <parameter id="M1_Mg_ATP_0" value="9" constant="false"/>
+      <parameter id="M1_Mg_0" value="18.5052903656923" constant="false"/>
+      <parameter id="Mg_f_0" value="0.8" constant="false"/>
+      <parameter id="M1_Mg_IM_0" value="0.129318859641869" constant="false"/>
+      <parameter id="Mg_ATP_0" value="17.5759715060504" constant="false"/>
       <parameter id="NFKB_n_0" value="2167.4615622559" constant="false"/>
       <parameter id="npH3S10" value="1" constant="false"/>
       <parameter id="pH3S10_0" value="1" constant="false"/>
@@ -262,18 +262,18 @@
       <parameter id="M1_TRPM_n_0" value="1" constant="false"/>
       <parameter id="nM7CK_n" value="1" constant="false"/>
       <parameter id="M1_M7CK_n_0" value="1" constant="false"/>
+      <parameter id="nATP" value="1" constant="false"/>
+      <parameter id="M1_ATP_0" value="4.42004922879223" constant="false"/>
       <parameter id="M1_F_trpm_i" value="1" constant="false"/>
-      <parameter id="M1_F_mg_i" value="1" constant="false"/>
       <parameter id="F_il8_irak" value="1" constant="false"/>
-      <parameter id="kd_il8_irak_p" value="1" constant="true"/>
-      <parameter id="IL8_R_0" value="1" constant="false"/>
-      <parameter id="n_il8_irak_p" value="1" constant="true"/>
-      <parameter id="F_nfkb_il8_p" value="0.684289775788853" constant="false"/>
-      <parameter id="kd_nfkb_il8_p" value="1000" constant="true"/>
+      <parameter id="kd_il8_irak_p" value="33.3534510081678" constant="true"/>
+      <parameter id="IL8_R_0" value="7.6891864720219" constant="false"/>
+      <parameter id="F_nfkb_il8_p" value="0.509634102813236" constant="false"/>
+      <parameter id="kd_nfkb_il8_p" value="2085.51434789469" constant="true"/>
       <parameter id="nIL8" value="1" constant="false"/>
-      <parameter id="IL8_0" value="1" constant="false"/>
+      <parameter id="IL8_0" value="7.40856822115139" constant="false"/>
       <parameter id="nIL8R" value="1" constant="false"/>
-      <parameter id="IL8R_0" value="1" constant="false"/>
+      <parameter id="IL8R_0" value="4800.42251986317" constant="false"/>
       <parameter id="nIFNGR" value="1" constant="false"/>
       <parameter id="IFNGR_0" value="84.1014595423832" constant="false"/>
       <parameter id="nIL4R" value="1" constant="false"/>
@@ -282,6 +282,8 @@
       <parameter id="IL1b_0" value="1163.48293915727" constant="false"/>
       <parameter id="nIL10" value="1" constant="false"/>
       <parameter id="IL10_0" value="51761.7679807358" constant="false"/>
+      <parameter id="nTNFa" value="1" constant="false"/>
+      <parameter id="TNFa_0" value="224269.446743408" constant="false"/>
       <parameter id="nIRAK4" value="1" constant="false"/>
       <parameter id="IRAK4_0" value="363743.012750619" constant="false"/>
       <parameter id="naTRAF6" value="1" constant="false"/>
@@ -300,40 +302,34 @@
       <parameter id="F_h3s10_ikb" value="1" constant="false"/>
       <parameter id="kd_h3s10_ikb_p" value="1.207" constant="true"/>
       <parameter id="n_h3s10_ikb_p" value="29.52" constant="true"/>
-      <parameter id="F_p3s10_il8_p" value="0.5" constant="false"/>
-      <parameter id="n_h3s10_il8_p" value="1" constant="true"/>
+      <parameter id="F_p3s10_il8_p" value="1" constant="false"/>
       <parameter id="kd_h3s10_il8_p" value="1" constant="true"/>
-      <parameter id="M1_k_m_i" value="0.253776534576068" constant="true"/>
-      <parameter id="M1_k_m_e" value="0.254913019137651" constant="true"/>
-      <parameter id="M1_k_matp_b" value="0.585768202994205" constant="true"/>
-      <parameter id="M1_n_matp_b" value="0.0211040228587016" constant="true"/>
-      <parameter id="M1_k_matp_ub" value="0.946273074586713" constant="true"/>
-      <parameter id="k_atp_c" value="0.62216362042029" constant="true"/>
-      <parameter id="M1_k_ntrpm_t" value="0.96" constant="true"/>
-      <parameter id="M1_n_ntrpm_t" value="0.516" constant="true"/>
-      <parameter id="k_atp_p0" value="9.8145812614764" constant="true"/>
-      <parameter id="k_atp_pm" value="2.33233672318613" constant="true"/>
-      <parameter id="M1_k_ntrpm_p" value="0.11" constant="true"/>
-      <parameter id="M1_n_ntrpm_p" value="12.22" constant="true"/>
-      <parameter id="M1_k_mim_b" value="0.953161212634347" constant="true"/>
-      <parameter id="M1_n_mim_b" value="8.19693224705306" constant="true"/>
-      <parameter id="M1_k_mim_ub" value="0.0392496809418786" constant="true"/>
-      <parameter id="M1_k_trpm_s" value="0.955" constant="true"/>
-      <parameter id="M1_k_m7ck_t1" value="0.83" constant="true"/>
-      <parameter id="M1_n_m7ck_t" value="1.9" constant="true"/>
-      <parameter id="M1_k_m7ck_t2" value="0.96" constant="true"/>
-      <parameter id="M1_k_m7ck_deg" value="0.89" constant="true"/>
-      <parameter id="M1_k_h3s10_p" value="3.8239" constant="true"/>
-      <parameter id="M1_k_h3s10_d" value="0.21" constant="true"/>
-      <parameter id="M1_k_h3s10_a" value="0.569" constant="true"/>
-      <parameter id="M1_n_h3s10_a" value="0.77" constant="true"/>
-      <parameter id="M1_k_h3s10_da" value="0.586" constant="true"/>
-      <parameter id="k_il8r_p" value="0.1" constant="true"/>
-      <parameter id="k_il8r_d" value="0.1" constant="true"/>
-      <parameter id="k_il8_b" value="0.1" constant="true"/>
-      <parameter id="k_il8_ub" value="0.1" constant="true"/>
-      <parameter id="k_il8_p" value="0.1" constant="true"/>
-      <parameter id="k_il8_d" value="0.1" constant="true"/>
+      <parameter id="n_h3s10_il8_p" value="1" constant="true"/>
+      <parameter id="M1_k_m_i" value="0.354118797105552" constant="true"/>
+      <parameter id="k_atp_p0" value="0.00225512480794319" constant="true"/>
+      <parameter id="k_atp_pm" value="8.49175427329044" constant="true"/>
+      <parameter id="k_atp_c" value="0.590124477903334" constant="true"/>
+      <parameter id="M1_k_matp_b" value="0.863224522888395" constant="true"/>
+      <parameter id="M1_k_matp_ub" value="0.452524825321512" constant="true"/>
+      <parameter id="M1_k_mim_b" value="0.159811152226357" constant="true"/>
+      <parameter id="M1_k_mim_ub" value="0.989738181481948" constant="true"/>
+      <parameter id="M1_k_ntrpm_p" value="0.00101113119477801" constant="true"/>
+      <parameter id="M1_n_ntrpm_p" value="2.30317231422854" constant="true"/>
+      <parameter id="M1_k_ntrpm_t" value="0.741006104083189" constant="true"/>
+      <parameter id="M1_k_trpm_s" value="0.996843754790507" constant="true"/>
+      <parameter id="M1_k_m7ck_t1" value="0.921927059966568" constant="true"/>
+      <parameter id="M1_k_m7ck_t2" value="0.712745110946727" constant="true"/>
+      <parameter id="M1_k_m7ck_deg" value="0.962377596471591" constant="true"/>
+      <parameter id="M1_k_h3s10_p" value="7.03544434879354" constant="true"/>
+      <parameter id="M1_k_h3s10_d" value="0.722169758906465" constant="true"/>
+      <parameter id="M1_k_h3s10_a" value="0.958942087690164" constant="true"/>
+      <parameter id="M1_k_h3s10_da" value="0.807474039427079" constant="true"/>
+      <parameter id="k_il8r_p" value="917.456624671206" constant="true"/>
+      <parameter id="k_il8r_d" value="0.190398774922591" constant="true"/>
+      <parameter id="k_il8_b" value="0.00118446460794019" constant="true"/>
+      <parameter id="k_il8_ub" value="0.726687117814418" constant="true"/>
+      <parameter id="k_il8_p" value="5.97046287081594" constant="true"/>
+      <parameter id="k_il8_d" value="0.375952946025251" constant="true"/>
       <parameter id="k6" value="1" constant="true"/>
       <parameter id="k7" value="0.03" constant="true"/>
       <parameter id="kr5" value="1" constant="true"/>
@@ -647,7 +643,9 @@
       <parameter id="k256" value="1" constant="true"/>
       <parameter id="k257" value="1.04e-10" constant="true"/>
       <parameter id="k258" value="0.1" constant="true"/>
-      <parameter id="M1_k_ntrpm_d" value="0.1" constant="true"/>
+      <parameter id="M1_Mg_e_0" value="0.8" constant="false"/>
+      <parameter id="M1_IM_prod" value="1" constant="true"/>
+      <parameter id="M1_n_h3s10_a" value="0.737716698597422" constant="true"/>
       <parameter id="kf1" value="1.6e-07" constant="true"/>
       <parameter id="kr1" value="0.01" constant="true"/>
       <parameter id="kf2" value="3" constant="true"/>
@@ -678,7 +676,7 @@
           <ci> Mg_IM </ci>
         </math>
       </initialAssignment>
-      <initialAssignment symbol="M1_Mg_ATP_0">
+      <initialAssignment symbol="Mg_ATP_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> Mg_ATP </ci>
         </math>
@@ -706,6 +704,11 @@
       <initialAssignment symbol="M1_M7CK_n_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> M1_M7CK_n </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="M1_ATP_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> ATP </ci>
         </math>
       </initialAssignment>
       <initialAssignment symbol="IL8_R_0">
@@ -743,6 +746,11 @@
           <ci> IL10 </ci>
         </math>
       </initialAssignment>
+      <initialAssignment symbol="TNFa_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> TNFa </ci>
+        </math>
+      </initialAssignment>
       <initialAssignment symbol="IRAK4_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> IRAK4 </ci>
@@ -756,6 +764,11 @@
       <initialAssignment symbol="IKB_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> IKB </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="M1_Mg_e_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> Mg_e </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -802,7 +815,7 @@
           <apply>
             <divide/>
             <ci> Mg_ATP </ci>
-            <ci> M1_Mg_ATP_0 </ci>
+            <ci> Mg_ATP_0 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -871,38 +884,34 @@
           </apply>
         </math>
       </assignmentRule>
+      <assignmentRule variable="nATP">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> ATP </ci>
+            <ci> M1_ATP_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
       <assignmentRule variable="M1_F_trpm_i">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <cn type="integer"> 1 </cn>
         </math>
       </assignmentRule>
-      <assignmentRule variable="M1_F_mg_i">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> M1_Mg_0 </ci>
-            <ci> Mg </ci>
-          </apply>
-        </math>
-      </assignmentRule>
       <assignmentRule variable="F_il8_irak">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <power/>
+            <divide/>
             <apply>
-              <divide/>
-              <apply>
-                <plus/>
-                <ci> IL8_R </ci>
-                <ci> kd_il8_irak_p </ci>
-              </apply>
-              <apply>
-                <plus/>
-                <ci> IL8_R_0 </ci>
-                <ci> kd_il8_irak_p </ci>
-              </apply>
+              <plus/>
+              <ci> IL8_R </ci>
+              <ci> kd_il8_irak_p </ci>
             </apply>
-            <ci> n_il8_irak_p </ci>
+            <apply>
+              <plus/>
+              <ci> IL8_R_0 </ci>
+              <ci> kd_il8_irak_p </ci>
+            </apply>
           </apply>
         </math>
       </assignmentRule>
@@ -970,6 +979,15 @@
             <divide/>
             <ci> IL10 </ci>
             <ci> IL10_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nTNFa">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> TNFa </ci>
+            <ci> TNFa_0 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -1087,66 +1105,93 @@
       <assignmentRule variable="F_p3s10_il8_p">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <divide/>
+            <power/>
             <apply>
-              <power/>
-              <ci> pH3S10 </ci>
-              <ci> n_h3s10_il8_p </ci>
-            </apply>
-            <apply>
-              <plus/>
+              <divide/>
               <apply>
-                <power/>
-                <ci> pH3S10_0 </ci>
-                <ci> n_h3s10_il8_p </ci>
+                <plus/>
+                <ci> pH3S10 </ci>
+                <ci> kd_h3s10_il8_p </ci>
               </apply>
-              <ci> kd_h3s10_il8_p </ci>
+              <apply>
+                <plus/>
+                <ci> pH3S10_0 </ci>
+                <ci> kd_h3s10_il8_p </ci>
+              </apply>
             </apply>
+            <ci> n_h3s10_il8_p </ci>
           </apply>
         </math>
       </assignmentRule>
     </listOfRules>
     <listOfReactions>
-      <reaction id="M1_Mg_transport" reversible="false" fast="false">
+      <reaction id="M1_v1" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="Mg_e" stoichiometry="1" constant="true"/>
-          <speciesReference species="M1_TRPM" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
-          <speciesReference species="M1_TRPM" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
-              <minus/>
+              <times/>
+              <ci> M1_k_m_i </ci>
               <apply>
-                <times/>
-                <ci> M1_k_m_i </ci>
+                <minus/>
                 <ci> Mg_e </ci>
-                <apply>
-                  <gt/>
-                  <ci> Mg_e </ci>
-                  <cn type="integer"> 0 </cn>
-                </apply>
-                <ci> M1_F_mg_i </ci>
-                <ci> M1_F_trpm_i </ci>
+                <ci> Mg_f </ci>
               </apply>
               <apply>
-                <times/>
-                <ci> M1_k_m_e </ci>
+                <gt/>
+                <ci> Mg_e </ci>
                 <ci> Mg_f </ci>
-                <apply>
-                  <gt/>
-                  <ci> Mg_f </ci>
-                  <cn type="integer"> 0 </cn>
-                </apply>
               </apply>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_Mg_ATP_binding" reversible="false" fast="false">
+      <reaction id="M1_v2" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="M1_ATP_prod" stoichiometry="1" constant="true"/>
+          <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+          <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <ci> k_atp_p0 </ci>
+              <apply>
+                <times/>
+                <ci> k_atp_pm </ci>
+                <ci> Mg_f </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="M1_v3" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M1_cons" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_atp_c </ci>
+              <ci> ATP </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="M1_v4" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
           <speciesReference species="ATP" stoichiometry="1" constant="true"/>
@@ -1161,11 +1206,7 @@
               <apply>
                 <times/>
                 <ci> M1_k_matp_b </ci>
-                <apply>
-                  <power/>
-                  <ci> Mg_f </ci>
-                  <ci> M1_n_matp_b </ci>
-                </apply>
+                <ci> Mg_f </ci>
                 <apply>
                   <gt/>
                   <ci> Mg_f </ci>
@@ -1192,96 +1233,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_consumption" reversible="false" fast="false">
-        <listOfReactants>
-          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="M1_cons" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> k_atp_c </ci>
-              <ci> ATP </ci>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="M1_To_cytoplasm" reversible="false" fast="false">
-        <listOfReactants>
-          <speciesReference species="M1_TRPM_n" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="M1_TRPM" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> M1_k_ntrpm_t </ci>
-              <apply>
-                <power/>
-                <ci> M1_TRPM_n </ci>
-                <ci> M1_n_ntrpm_t </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="M1_prod_ATP" reversible="false" fast="false">
-        <listOfReactants>
-          <speciesReference species="M1_ATP_prod" stoichiometry="1" constant="true"/>
-          <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="ATP" stoichiometry="1" constant="true"/>
-          <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <plus/>
-              <ci> k_atp_p0 </ci>
-              <apply>
-                <times/>
-                <ci> k_atp_pm </ci>
-                <ci> Mg_f </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="M1_prod_TRPM" reversible="false" fast="false">
-        <listOfReactants>
-          <speciesReference species="M1_TRPM_prod" stoichiometry="1" constant="true"/>
-          <speciesReference species="Mg_ATP" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="M1_TRPM_n" stoichiometry="1" constant="true"/>
-          <speciesReference species="Mg_ATP" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> M1_k_ntrpm_p </ci>
-              <ci> M1_TRPM_prod </ci>
-              <apply>
-                <power/>
-                <apply>
-                  <divide/>
-                  <ci> Mg_ATP </ci>
-                  <ci> M1_Mg_ATP_0 </ci>
-                </apply>
-                <ci> M1_n_ntrpm_p </ci>
-              </apply>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="M1_Membrane_binding" reversible="true" fast="false">
+      <reaction id="M1_v5" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
           <speciesReference species="IM" stoichiometry="1" constant="true"/>
@@ -1296,11 +1248,7 @@
               <apply>
                 <times/>
                 <ci> M1_k_mim_b </ci>
-                <apply>
-                  <power/>
-                  <ci> Mg_f </ci>
-                  <ci> M1_n_mim_b </ci>
-                </apply>
+                <ci> Mg_f </ci>
                 <apply>
                   <gt/>
                   <ci> Mg_f </ci>
@@ -1327,7 +1275,48 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_TRPM_seg" reversible="false" fast="false">
+      <reaction id="M1_v6" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="M1_TRPM_prod" stoichiometry="1" constant="true"/>
+          <speciesReference species="Mg_ATP" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M1_TRPM_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="Mg_ATP" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> M1_k_ntrpm_p </ci>
+              <ci> M1_TRPM_prod </ci>
+              <apply>
+                <power/>
+                <ci> Mg_ATP </ci>
+                <ci> M1_n_ntrpm_p </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="M1_v7" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="M1_TRPM_n" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M1_TRPM" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> M1_k_ntrpm_t </ci>
+              <ci> M1_TRPM_n </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="M1_v8" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="M1_TRPM" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -1344,7 +1333,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_M7CK_trans" reversible="true" fast="false">
+      <reaction id="M1_v9" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="M1_M7CK" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -1358,11 +1347,7 @@
               <apply>
                 <times/>
                 <ci> M1_k_m7ck_t1 </ci>
-                <apply>
-                  <power/>
-                  <ci> M1_M7CK </ci>
-                  <ci> M1_n_m7ck_t </ci>
-                </apply>
+                <ci> M1_M7CK </ci>
                 <apply>
                   <gt/>
                   <ci> M1_M7CK </ci>
@@ -1383,7 +1368,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_M7CK_deg" reversible="false" fast="false">
+      <reaction id="M1_v10" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="M1_M7CK" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -1405,7 +1390,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_H3S10_prod" reversible="true" fast="false">
+      <reaction id="M1_v11" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="M1_h3s10_prod" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -1418,7 +1403,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_H3S10_deg" reversible="true" fast="false">
+      <reaction id="M1_v12" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="M1_H3S10" stoichiometry="1" constant="true"/>
         </listOfReactants>
@@ -1435,7 +1420,7 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="M1_H3S10_activation" reversible="true" fast="false">
+      <reaction id="M1_v13" reversible="true" fast="false">
         <listOfReactants>
           <speciesReference species="M1_H3S10" stoichiometry="1" constant="true"/>
           <speciesReference species="M1_M7CK_n" stoichiometry="1" constant="true"/>
@@ -1452,11 +1437,7 @@
                 <times/>
                 <ci> M1_k_h3s10_a </ci>
                 <ci> M1_H3S10 </ci>
-                <apply>
-                  <power/>
-                  <ci> M1_M7CK_n </ci>
-                  <ci> M1_n_h3s10_a </ci>
-                </apply>
+                <ci> M1_M7CK_n </ci>
                 <apply>
                   <gt/>
                   <ci> M1_H3S10 </ci>
@@ -8223,7 +8204,7 @@
           </math>
         </trigger>
         <listOfEventAssignments>
-          <eventAssignment variable="M1_Mg_ATP_0">
+          <eventAssignment variable="Mg_ATP_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <ci> Mg_ATP </ci>
             </math>
@@ -8262,6 +8243,42 @@
           <eventAssignment variable="M1_M7CK_n_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <ci> M1_M7CK_n </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="M1__E9" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="M1_Mg_e_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> Mg_e </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="M1__E10" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="M1_ATP_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> ATP </ci>
             </math>
           </eventAssignment>
         </listOfEventAssignments>
@@ -8403,6 +8420,24 @@
           </math>
         </trigger>
         <listOfEventAssignments>
+          <eventAssignment variable="TNFa_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> TNFa </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="_E8" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
           <eventAssignment variable="IRAK4_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <ci> IRAK4 </ci>
@@ -8410,7 +8445,7 @@
           </eventAssignment>
         </listOfEventAssignments>
       </event>
-      <event id="_E8" useValuesFromTriggerTime="true">
+      <event id="_E9" useValuesFromTriggerTime="true">
         <trigger initialValue="true" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -8428,7 +8463,7 @@
           </eventAssignment>
         </listOfEventAssignments>
       </event>
-      <event id="_E9" useValuesFromTriggerTime="true">
+      <event id="_E10" useValuesFromTriggerTime="true">
         <trigger initialValue="true" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -8446,7 +8481,7 @@
           </eventAssignment>
         </listOfEventAssignments>
       </event>
-      <event id="_E10" useValuesFromTriggerTime="true">
+      <event id="_E11" useValuesFromTriggerTime="true">
         <trigger initialValue="true" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>

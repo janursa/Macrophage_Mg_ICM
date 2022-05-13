@@ -7,6 +7,11 @@ import json
 import copy
 
 
+def normalize(study_tag,target,sims,exps):
+    ff = lambda ctr,vector: [i/ctr for i in vector]
+    n_sims = ff(sims[0],sims)
+    return n_sims,exps
+
 def assign_surrogate_names(model,selections,prefix = 'PP_'):
     model_script  = model.getAntimony()
     index = model_script.find('end')

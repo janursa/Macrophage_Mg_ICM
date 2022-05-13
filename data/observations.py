@@ -1,3 +1,4 @@
+
 t2m = 1 # relationship between each simulation time and minute
 
 range_3h_10mStep = list(range(int(10/t2m),3*int(60/t2m),int(10/t2m)))
@@ -7,26 +8,361 @@ range_12h_60mStep = list(range(3*int(60/t2m),12*int(60/t2m),int(60/t2m))) # span
 
 
 packages = {
-	'P11' : ['eq_mg','R05_nMg_f','R05_mg_n','Q21_Mg'], # mg entry and equalibrium
-	'P12' : ['Q21_TRPMn','Q21_TRPM','Q21_M7CKn','Q21_eq_trpm'],
-
-	'P13' : ['Q21_H3S10','Q21_eq_h3s10'], 
-	'P1': ['eq_mg','R05_nMg_f','R05_mg_n']+['Q21_TRPMn','Q21_TRPM','Q21_M7CKn','Q21_eq_trpm']+['eq_mg','R05_nMg_f','R05_mg_n','Q21_Mg'], # M1 model
-	
+	'P11' : ['eq_mg','R05_nMg_f','Q21_Mg'], # mg entry and equalibrium
+	'P12' : ['Q21_M1','Q21_eq_trpm','Q21_eq_h3s10'],
+	'P1': [],
+	# R05_mg_n (mg extrusion)
 	'P21' : ['eq_IL8','M05_IT'],
 	#'M18','M05_NFKBn'
 
-	'P3' : ['S12_IKBa_mg','S12_NFKBn_mg','Q21_NFKBn_72h','Q21_Mg_IL8'], # Mg regulate
+	'P31' : ['S12_IKBa_mg','S12_NFKBn_mg','Z19_IKB_NFKB','Q21_Mg_IL8','Q21_14d'], # Mg regulate
+    'P32': [],
     #Q21_Mg_IL1b
+    #Q21_NFKBn_72h is not quantitative
+    #B20_NFKBn
+    ##F18_cytokines
+    ##Z19_IL10
+    #S12_LPS
+    'LPS':['S12_LPS']
 
 }
 
 
-observations = {	
+observations = {
+    'S12_LPS': { # mg influences NFkB level
+        'IDs': ['LPS'],
+        'activation': False,
+        'duration':int(8*60/t2m),
+        'measurement_scheme': {
+            'nIKB': [int(ii*60/t2m) for ii in [0,1,2,8]]
+        },
+        'LPS': {
+            'inputs': {
+             'LPS': 50
+            },
+            'expectations': {
+                'nIKB':{'mean':[1,15,8,4],
+                        'std':[0,0,0,0],
+                        'pvalue':['ns','ns','ns','ns']} #normalized format
+            }
+        },
+    },
+    'B20_TNFa': { # Mg regulate NFKB
+        'IDs': ['ctr','Mg'],
+        'activation': True,
+        'duration':int(72*60/t2m),
+        'measurement_scheme': {
+            'nTNFa': [int(72*60/t2m)],
+        },
+        'ctr': {
+            'inputs': {
+            },
+            'expectations': {
+                'nTNFa':{'mean':[150/150],
+                        'std':[abs(250 - 100)/1.35/150],
+                        'pvalue':[None]
+                        }, #normalized format
+            }
+        },
+        'Mg': {
+            'inputs': {
+                'Mg_e': 5
+            },
+            'expectations': {
+                'nTNFa':{'mean':[80/150],
+                        'std':[abs(120 - 75)/1.35/150],
+                        'pvalue':[0.01]
+                        }, #normalized format
+            }
+        }
+    },
+    'B20_NFKBn': { # Mg regulate NFKB
+        'IDs': ['ctr','Mg'],
+        'activation': True,
+        'duration':int(24*60/t2m),
+        'measurement_scheme': {
+            'nNFKB_n': [int(24*60/t2m)],
+        },
+        'ctr': {
+            'inputs': {
+            },
+            'expectations': {
+                'nNFKB_n':{'mean':[1],
+                        'std':[0.8],
+                        'pvalue':[None]
+                        }, #normalized format
+            }
+        },
+        'Mg': {
+            'inputs': {
+                'Mg_e': 5
+            },
+            'expectations': {
+                'nNFKB_n':{'mean':[0.6],
+                        'std':[0.4],
+                        'pvalue':[0.01]
+                        }, #normalized format
+            }
+        }
+    },
+    'F18_cytokines':{
+        'duration':int(72*60/t2m), # minutes
+            'activation':True,
+            'measurement_scheme':{
+                'nIL10': [int(72*60/t2m)],
+                'nTNFa': [int(72*60/t2m)],
+                'nIL1b': [int(72*60/t2m)],
+            },
+            'IDs': ['ctr','Mg_5'],
+            'ctr':{
+                'inputs':{
+                        },
+                'expectations': {
+                    'nIL10': {
+                        'mean':[17/17],
+                        'std': [5/17],
+                        'pvalue':[None]
+                    },
+                    'nTNFa': {
+                        'mean':[16000/16000],
+                        'std': [1000/16000],
+                        'pvalue':[None]
+                    },
+                    'nIL1b': {
+                        'mean':[125/125],
+                        'std': [10/125],
+                        'pvalue':[None]
+                    }
+                }
+            },
+            'Mg_5':{
+                'inputs':{
+                            'Mg_e': 8 # mM
+                        },
+                'expectations': {
+                    'nIL10': {
+                        'mean':[25/17],
+                        'std': [4/17],
+                        'pvalue':[None]
+                    },
+                    'nTNFa': {
+                        'mean':[10000/16000],
+                        'std': [800/16000],
+                        'pvalue':[None]
+                    },
+                    'nIL1b': {
+                        'mean':[85/125],
+                        'std': [5/125],
+                        'pvalue':[0.01]
+                    }
+                }
+            }
+            
+    },
+    'Q21_cytokines_72h':{
+        'duration':int(72*60/t2m), # minutes
+            'activation':True,
+            'cellType':'BMM',
+            'measurement_scheme':{
+                'nIL10': [int(72*60/t2m)],
+                'nTNFa': [int(72*60/t2m)],
+                'nIL1b': [int(72*60/t2m)],
+            },
+            'IDs': ['ctr','Mg_8'],
+            'ctr':{
+                'inputs':{
+                        },
+                'expectations': {
+                    'nIL10': {
+                        'mean':[1],
+                        'std': [0.05],
+                        'pvalue':[None]
+                    },
+                    'nTNFa': {
+                        'mean':[1],
+                        'std': [0.1],
+                        'pvalue':[None]
+                    },
+                    'nIL1b': {
+                        'mean':[1],
+                        'std': [0.05],
+                        'pvalue':[None]
+                    }
+                }
+            },
+            'Mg_8':{
+                'inputs':{
+                            'Mg_e': 8 # mM
+                        },
+                'expectations': {
+                    'nIL10': {
+                        'mean':[2.5],
+                        'std': [0.3],
+                        'pvalue':[0.01]
+                    },
+                    'nTNFa': {
+                        'mean':[0.35],
+                        'std': [0.05],
+                        'pvalue':[0.01]
+                    },
+                    'nIL1b': {
+                        'mean':[.2],
+                        'std': [0.04],
+                        'pvalue':[0.01]
+                    }
+                }
+            }
+        
+    },
+    'Z19_IL10':{
+    'duration':int(6*60/t2m), # minutes
+        'activation':True,
+        'measurement_scheme':{
+            'nIL10': [int(6*60/t2m)],
+        },
+        'IDs': ['ctr','Mg_4','Mg_20'],
+        'ctr':{
+            'inputs':{
+                    },
+            'expectations': {
+                'nIL10': {
+                    'mean':[2.8/2.8],
+                    'std': [.2/2.5],
+                    'pvalue':[None]
+                }
+            }
+        },
+        'Mg_4':{
+            'inputs':{
+                        'Mg_e': 4 # mM
+                    },
+            'expectations': {
+                'nIL10': {
+                    'mean': [4.9/2.8],
+                    'std': [.3/2.8],
+                    'pvalue':[0.01]
+                }
+            }
+        },
+        'Mg_20':{
+            'inputs':{
+                        'Mg_e': 20 # mM
+                    },
+            'expectations': {
+                'nIL10': {
+                    'mean': [3.7/2.8],
+                    'std': [.2/2.8],
+                    'pvalue':[0.01]
+                }
+            }
+        }
+    },
+    'Z19_IKB_NFKB':{
+        'duration':int(6*60/t2m), # minutes
+            'activation':True,
+            'measurement_scheme':{
+                'nIKB': [int(6*60/t2m)],
+                'nNFKB_n': [int(6*60/t2m)]
+            },
+            'IDs': ['ctr','Mg_4','Mg_20'],
+            'ctr':{
+                'inputs':{
+                        },
+                'expectations': {
+                    'nIKB': {
+                        'mean':[0.4/0.4],
+                        'std': [0.03],
+                        'pvalue':[None]
+                    },
+                    'nNFKB_n': {
+                        'mean':[0.2/0.2],
+                        'std': [0.03],
+                        'pvalue':[None]
+                    }
+                }
+            },
+            'Mg_4':{
+                'inputs':{
+                            'Mg_e': 4 # mM
+                        },
+                'expectations': {
+                    'nIKB': {
+                        'mean': [0.8/0.4],
+                        'std': [0.05],
+                        'pvalue':[0.01]
+                    },
+                    'nNFKB_n': {
+                        'mean':[0.18/0.2],
+                        'std': [0.05],
+                        'pvalue':[None]
+                    }
+                }
+            },
+            'Mg_20':{
+                'inputs':{
+                            'Mg_e': 20 # mM
+                        },
+                'expectations': {
+                    'nIKB': {
+                        'mean': [0.55/0.4],
+                        'std': [0.04],
+                        'pvalue':[0.01]
+                    },
+                    'nNFKB_n': {
+                        'mean':[0.19/0.2],
+                        'std': [0.08],
+                        'pvalue':[None]
+                    }
+                }
+            }
+        },
+    
+    'Q21_14d':{
+        'duration':int(14*24*60/t2m), # minutes
+        'activation':True,
+        'measurement_scheme':{
+            'nIKB': [int(14*24*60/t2m)],
+            'nNFKB_n': [int(14*24*60/t2m)]
+        },
+        'IDs': ['ctr','Mg_8'],
+        'ctr':{
+            'inputs':{
+                    },
+            'expectations': {
+                'nIKB': {
+                    'mean':[1],
+                    'std': [0],
+                    'pvalue':[None]
+                },
+                'nNFKB_n': {
+                    'mean':[1],
+                    'std': [0],
+                    'pvalue':[None]
+                }
+            }
+        },
+        'Mg_8':{
+            'inputs':{
+                        'Mg_e': 8 # mM
+                    },
+            'expectations': {
+                'nIKB': {
+                    'mean': [1.25],
+                    'std': [0.2],
+                    'pvalue':[0.01]
+                },
+                'nNFKB_n': {
+                    'mean':[1.45],
+                    'std': [0.05],
+                    'pvalue':[0.01]
+                }
+            }
+        }
+    },
 	'M05_IT': { # IL8 regulate IRAK4 and TRAF6
         'IDs': ['ctr','100'],
         'activation': True,
-        'experiment_period':int(2*60/t2m),
+        'duration':int(2*60/t2m),
         'measurement_scheme': {
             'nIRAK4': [int(2*60/t2m)],
             'naTRAF6': [int(2*60/t2m)],
@@ -36,10 +372,12 @@ observations = {
             },
             'expectations': {
                 'nIRAK4':{'mean':[1],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':[None]
                 		}, #normalized format
                 'naTRAF6':{'mean':[1],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':[None]
                 		}, #normalized format
             }
         },
@@ -49,10 +387,12 @@ observations = {
             },
             'expectations': {
                 'nIRAK4':{'mean':[3.895],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':['ns']
                 		}, #normalized format
                 'naTRAF6':{'mean':[2.587],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':['ns']
                 		}, #normalized format
             }
         },
@@ -61,7 +401,7 @@ observations = {
     'M05_NFKBn': { # IL8 regulate NFKB
         'IDs': ['ctr','0dot1','1','10','100','1000'],
         'activation': True,
-        'experiment_period':int(2*60/t2m),
+        'duration':int(2*60/t2m),
         'measurement_scheme': {
             'nNFKB_n': [int(2*60/t2m)],
         },
@@ -70,7 +410,8 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[1],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':[None]
                 		}, #normalized format
             }
         },
@@ -80,7 +421,8 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[1.1],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':['ns']
                 		}, #normalized format
             }
         },
@@ -90,7 +432,8 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[1.2],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':['ns']
                 		}, #normalized format
             }
         },
@@ -100,7 +443,8 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[2.4],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':['ns']
                 		}, #normalized format
             }
         },
@@ -110,7 +454,8 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[4.2],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':['ns']
                 		}, #normalized format
             }
         },
@@ -120,7 +465,8 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[4.7],
-                		'std':[0]
+                		'std':[0],
+                        'pvalue':['ns']
                 		}, #normalized format
             }
         },
@@ -129,25 +475,34 @@ observations = {
         'IDs': ['ctr','0dot01','0dot1','1','10'],
         # 'IDs': ['ctr','10'],
         'activation': True,
-        'experiment_period':int(24*60/t2m),
+        'duration':int(24*60/t2m),
         'measurement_scheme': {
             'nIFNGR': [int(24*60/t2m)],
             'nIL4R': [int(24*60/t2m)],
             'nIL1b': [int(24*60/t2m)],
             'nIL10': [int(24*60/t2m)],
+            'nTNFa': [int(24*60/t2m)],
+            'nIL1b': [int(24*60/t2m)],
         },
         'ctr': {
             'inputs': {
             },
             'expectations': {
                 'nIFNGR':{'mean':[2212/2212],
-                		'std':[0]}, #normalized format
+                		'std':[abs(1913 - 3145)/1.35/2212],
+                        'pvalue':[None]}, #normalized format
                 'nIL4R':{'mean':[6251/6251],
-                		'std':[0]},
+                		'std':[abs(4517-8834)/1.35/6251],
+                        'pvalue':[0.01]},
                 'nIL1b':{'mean':[390.0/390.0],
-                		'std':[0]},
-                'nIL10':{'mean':[126.8/126.8],
-                		'std':[0]},
+                		'std':[269/390.0],
+                        'pvalue':[None]},
+                'nIL10':{'mean':[126/126],
+                		'std':[abs(95.9-152.9)/1.35/126],
+                        'pvalue':[None]},
+                'nTNFa':{'mean':[1114.3/1114.3],
+                    'std':[abs(722.2-1586.4)/1.35/1114],
+                    'pvalue':[None]}
             }
         },
        	'0dot01': {
@@ -156,13 +511,20 @@ observations = {
             },
             'expectations': {
                 'nIFNGR':{'mean':[4587/2212],
-                		'std':[0]}, #normalized format
+                		'std':[abs(3452-4625)/1.35/2212],
+                        'pvalue':[0.01]}, #normalized format
                 'nIL4R':{'mean':[5462/6251],
-                		'std':[0]},
+                		'std':[abs(3181-7475)/1.35/6251],
+                        'pvalue':[0.01]},
                 'nIL1b':{'mean':[434.4/390.0],
-                		'std':[0]},
+                		'std':[354/390.0],
+                        'pvalue':[None]},
                 'nIL10':{'mean':[137.9/126.8],
-                		'std':[0]},
+                		'std':[abs(103.1-195.0)/1.35/126],
+                        'pvalue':[None]},
+                'nTNFa':{'mean':[1223.3/1114.3],
+                        'std':[abs(555.0-1636.0)/1.35/1114],
+                    'pvalue':[None]}
             }
         },
         '0dot1': {
@@ -171,13 +533,21 @@ observations = {
             },
             'expectations': {
                 'nIFNGR':{'mean':[4564/2212],
-                		'std':[0]}, #normalized format
+                		'std':[abs(3785-4595)/1.35/2212],
+                        'pvalue':[0.01]}, #normalized format
                 'nIL4R':{'mean':[5359/6251],
-                		'std':[0]},
+                		'std':[abs(3206-7697)/1.35/6251],
+                        'pvalue':[0.01]},
                 'nIL1b':{'mean':[466.2/390.0],
-                		'std':[0]},
+                		'std':[321/390.0],
+                        'pvalue':[None]},
                 'nIL10':{'mean':[161.7/126.8],
-                		'std':[0]},
+                		'std':[abs(96.8-182.0)/1.35/126],
+                        'pvalue':[None]},
+                'nTNFa':{'mean':[1199.9/1114.3],
+                    'std':[abs(806.6-1666.4)/1.35/1114],
+                    'pvalue':[None]}
+                
             }
         },
        	'1': {
@@ -186,13 +556,20 @@ observations = {
             },
             'expectations': {
                 'nIFNGR':{'mean':[4438/2212],
-                		'std':[0]}, #normalized format
+                		'std':[abs(3248-4578)/1.35/2212],
+                        'pvalue':[0.01]}, #normalized format
                 'nIL4R':{'mean':[5367/6251],
-                		'std':[0]},
+                		'std':[abs(3136-7625)/1.35/6251],
+                        'pvalue':[0.01]},
                 'nIL1b':{'mean':[498.3/390.0],
-                		'std':[0]},
+                		'std':[274/390.0],
+                        'pvalue':[None]},
                 'nIL10':{'mean':[150/126.8],
-                		'std':[0]},
+                		'std':[abs(91.1-166.4)/1.35/126],
+                        'pvalue':[None]},
+                'nTNFa':{'mean':[1138.9/1114.3],
+                        'std':[abs(780.3-1723.7)/1.35/1114],
+                        'pvalue':[None]}
             }
         },
        	'10': {
@@ -201,13 +578,20 @@ observations = {
             },
             'expectations': {
                 'nIFNGR':{'mean':[4668/2212],
-                		'std':[0]}, #normalized format
+                		'std':[abs(3589-4685)/1.35/2212],
+                        'pvalue':[0.01]}, #normalized format
                 'nIL4R':{'mean':[5323/6251],
-                		'std':[0]},
+                		'std':[abs(3155-7715)/1.35/6251],
+                        'pvalue':[0.01]},
                 'nIL1b':{'mean':[516/390.0],
-                		'std':[0]},
+                		'std':[258/390.0],
+                        'pvalue':[0.01]},
                 'nIL10':{'mean':[127/126.8],
-                		'std':[0]},
+                		'std':[abs(90.2-151.7)/1.35/126],
+                        'pvalue':[None]},
+                'nTNFa':{'mean':[1136.1/1114.3],
+                        'std':[abs(665.5-1346.7)/1.35/1114],
+                        'pvalue':[None]}
             }
         },
         
@@ -215,7 +599,7 @@ observations = {
     'S12_NFKBn_mg': { # mg influences NFkB level
         'IDs': ['ctr','Mg_2dot5'],
         'activation': True,
-        'experiment_period':int(3*60/t2m),
+        'duration':int(3*60/t2m),
         'measurement_scheme': {
             'nNFKB_n': [int(3*60/t2m)]
         },
@@ -224,7 +608,8 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[1],
-                		'std':[0]} #normalized format
+                		'std':[0],
+                        'pvalue':[None]} #normalized format
             }
         },
         'Mg_2dot5': {
@@ -233,14 +618,15 @@ observations = {
             },
             'expectations': {
                 'nNFKB_n':{'mean':[0.7],
-                		'std':[0]} #normalized format
+                		'std':[0],
+                        'pvalue':['ns']} #normalized format
             }
         },
     },
 	'S12_IKBa_mg': { # mg influences IkBa level
         'IDs': ['ctr','Mg_2dot5'],
         'activation': False,
-        'experiment_period':int(3*60/t2m),
+        'duration':int(3*60/t2m),
         'measurement_scheme': {
             'nIKB': [int(3*60/t2m)]
         },
@@ -249,7 +635,8 @@ observations = {
             },
             'expectations': {
                 'nIKB':{'mean':[1],
-                		'std':[0]} #normalized format
+                		'std':[0],
+                        'pvalue':[None]} #normalized format
             }
         },
         'Mg_2dot5': {
@@ -258,12 +645,13 @@ observations = {
             },
             'expectations': {
                 'nIKB':{'mean':[1.32],
-                		'std':[0]} #normalized format
+                		'std':[0],
+                        'pvalue':['ns']} #normalized format
             }
         }
     },
     'Q21_IkBa':{# the effect of different Mg ion concentrations on IKB
-		'experiment_period':int(72*60/t2m), # minutes
+		'duration':int(72*60/t2m), # minutes
 		'activation':True,
 		'measurement_scheme':{
 			'IKB': [int(6*60/t2m),int(72*60/t2m)]
@@ -293,7 +681,7 @@ observations = {
 		}
 	},
     'Q21_IkBa_6h':{# the effect of different Mg ion concentrations on IKB
-        'experiment_period':int(6*60/t2m), # minutes
+        'duration':int(6*60/t2m), # minutes
         'activation':True,
         'measurement_scheme':{
             'IKB': [int(6*60/t2m)]
@@ -323,7 +711,7 @@ observations = {
         }
     },
     'Q21_IkBa_72h':{# the effect of different Mg ion concentrations on IKB
-        'experiment_period':int(72*60/t2m), # minutes
+        'duration':int(72*60/t2m), # minutes
         'activation':True,
         'measurement_scheme':{
             'IKB': [int(72*60/t2m)]
@@ -353,7 +741,7 @@ observations = {
         }
     },
     'Q21_NFKBn_72h':{# the effect of different Mg ion concentrations on NFKB after 72h
-        'experiment_period':int(72*60/t2m), # minutes
+        'duration':int(72*60/t2m), # minutes
         'activation':True,
         'measurement_scheme':{
             'nNFKB_n': [int(72*60/t2m)]
@@ -386,7 +774,7 @@ observations = {
 	'R05_mg_n': { # mg extrusion
         'IDs': ['Mg_02'],
         'activation':False,
-        'experiment_period':int(48*60/t2m),
+        'duration':int(48*60/t2m),
         'measurement_scheme': {
             'nMg': [0]+range_48h_60mStep
         },
@@ -401,7 +789,7 @@ observations = {
     },
     'S12_mg': { # total mg goes almost 4 times for 2.5 mM
         'IDs': ['Mg_2a5'],
-        'experiment_period':1*60,
+        'duration':1*60,
         'activation': False,
         'measurement_scheme': {
             'nMg': [0,1*60]
@@ -419,7 +807,7 @@ observations = {
     'R05_nMg_f': { # normalized free mg for an increase in extracellular mg
         'IDs': ['Mg_19'],
         'activation':False,
-        'experiment_period':int(12*60/t2m),
+        'duration':int(12*60/t2m),
         'measurement_scheme': {
             'nMg_f': [0]+range_12h_60mStep,
             # 'Mg': [0]+range_12h_60mStep
@@ -437,7 +825,7 @@ observations = {
 	'eq_mg': { # mg should stay in its equalibrium when there is no stimuli
         'IDs': ['ctr'],
         'activation': False,
-        'experiment_period':int(24*60/t2m),
+        'duration':int(24*60/t2m),
         'measurement_scheme': {
             'Mg_f': range_24h_60mStep,
             'Mg': range_24h_60mStep,
@@ -456,7 +844,7 @@ observations = {
         }
     },
 	'Q21_Mg': { # measurements on the intracellular Mg concentration for a given external Mg
-        'experiment_period':int(3*60/t2m),
+        'duration':int(3*60/t2m),
         'activation': False,
         'measurement_scheme': {
             'nMg_f': [0]+range_3h_10mStep # keep the stable concentration until 3 hours
@@ -474,7 +862,7 @@ observations = {
         }
     },
     'Q21_eq_trpm':{# equalibrium in trpm related block
-		'experiment_period':int(24*60/t2m), # minutes
+		'duration':int(24*60/t2m), # minutes
 		'activation':False,
 		'measurement_scheme':{
 			'nTRPM': range_24h_60mStep,
@@ -493,7 +881,7 @@ observations = {
 		}
 	},
 	'Q21_eq_h3s10':{# equalibrium in h3s10 in related block
-		'experiment_period':int(24*60/t2m), # minutes
+		'duration':int(24*60/t2m), # minutes
 		'activation':False,
 		'measurement_scheme':{
 			'npH3S10': range_24h_60mStep,
@@ -507,22 +895,48 @@ observations = {
 			}
 		}
 	},
-	'Q21_TRPMn':{# the effect of different Mg ion concentrations on TRPM_n
-		'experiment_period':int(72*60/t2m), # minutes
+	'Q21_M1':{# the effect of different Mg ion concentrations on TRPM_n and the subsequent impact on H3P10
+		'duration':int(72*60/t2m), # minutes
 		'activation':False,
 		'measurement_scheme':{
-			'nTRPM_n': [int(72*60/t2m)]
+			'nTRPM_n': [int(72*60/t2m)],
+            'nTRPM': [int(72*60/t2m)],
+            'nM7CK_n': [int(72*60/t2m)],
+            'npH3S10': [int(72*60/t2m)],
+            'nATP':[int(72*60/t2m)]
+
 		},
-        'IDs': ['Mg_.8','Mg_8'],
-		'Mg_.8':{
+        'IDs': ['ctr','Mg_8'],
+		'ctr':{
 			'inputs':{
-						'Mg_e': 0.8 # mM
+						
 					},
 			'expectations': {
 				'nTRPM_n': {
 					'mean':[1], 
-					'std': [.01]
-				}
+					'std': [.01],
+                    'pvalue':[None]
+				},
+                'nTRPM': {
+                    'mean':[1], 
+                    'std': [0],
+                    'pvalue':[None]
+                },
+                'nM7CK_n': {
+                    'mean':[1], 
+                    'std': [0],
+                    'pvalue':[None]
+                },
+                'npH3S10': {
+                    'mean':[1], 
+                    'std': [0],
+                    'pvalue':[None]
+                },
+                'nATP': {
+                    'mean':[600/600], 
+                    'std': [20/600],
+                    'pvalue':[None]
+                }
 			}
 		},
 		'Mg_8':{
@@ -532,115 +946,35 @@ observations = {
 			'expectations': {
 				'nTRPM_n': {
 					'mean': [2.5], 
-					'std': [0.7]
-				}
+					'std': [0.7],
+                    'pvalue':[0.01]
+				},
+                'nTRPM': {
+                    'mean': [1.6], 
+                    'std': [0.3],
+                    'pvalue':[0.01]
+                },
+                'nM7CK_n': {
+                    'mean': [2.45],
+                    'std': [0.6],
+                    'pvalue':[0.01]
+                },
+                'npH3S10': {
+                    'mean': [2.3], 
+                    'std': [0.7],
+                    'pvalue':[0.01]
+                },
+                'nATP': {
+                    'mean':[750/600], 
+                    'std': [40/600],
+                    'pvalue':[0.01]
+                }
 			}
 		}
 	},
-	'Q21_TRPM':{# the effect of different Mg ion concentrations on TRPM
-		'experiment_period':int(72*60/t2m), # minutes
-		'activation': False,
-		'measurement_scheme':{
-			'nTRPM': [int(72*60/t2m)]
-		},
-        'IDs': ['Mg_.8','Mg_8'],
-		'Mg_.8':{
-			'inputs':{
-						'Mg_e': 0.8 # mM
-					},
-			'expectations': {
-				'nTRPM': {
-					'mean':[1], 
-					'std': [0]
-				}
-			}
-		},
-		'Mg_8':{
-			'inputs':{
-						'Mg_e': 8 # mM
-					},
-			'expectations': {
-				'nTRPM': {
-					'mean': [1.6], 
-					'std': [0.3]
-				}
-			}
-		}
-	},
-	'Q21_M7CKn':{# the effect of different Mg ion concentrations on M7CKs_n
-		'experiment_period':int(72*60/t2m), # minutes
-		'activation': False,
-		'measurement_scheme':{
-			'nM7CK_n': [int(72*60/t2m)]
-		},
-        'IDs': ['Mg_.8','Mg_8'],
-		'Mg_.8':{
-			'inputs':{
-						'Mg_e': 0.8 # mM
-					},
-			'expectations': {
-				'nM7CK_n': {
-					'mean':[1], 
-					'std': [0]
-				}
-			}
-		},
-		'Mg_8':{
-			'inputs':{
-						'Mg_e': 8 # mM
-					},
-			'expectations': {
-				'nM7CK_n': {
-					'mean': [2.45],
-					'std': [0.6]
-				}
-			}
-		}
-	},
-	'Q21_H3S10':{# the effect of different Mg ion concentrations on M7CKs_n
-		'experiment_period':int(72*60/t2m), # minutes
-		'activation': False,
-		'measurement_scheme':{
-			'npH3S10': [int(72*60/t2m)]
-		},
-#		'IDs': ['Mg_.08','Mg_.8','Mg_8'],
-        'IDs': ['Mg_.8','Mg_8'],
-		'Mg_.08':{
-			'inputs':{
-						'Mg_e': 0.08 # mM
-					},
-			'expectations': {
-				'npH3S10': {
-					'mean':[0.35], 
-					'std': [0.17]
-				}
-			}
-		},
-		'Mg_.8':{
-			'inputs':{
-						'Mg_e': 0.8 # mM
-					},
-			'expectations': {
-				'npH3S10': {
-					'mean':[1], 
-					'std': [0]
-				}
-			}
-		},
-		'Mg_8':{
-			'inputs':{
-						'Mg_e': 8 # mM
-					},
-			'expectations': {
-				'npH3S10': {
-					'mean': [2.3], 
-					'std': [0.7]
-				}
-			}
-		}
-	},
+	
 	'eq_IL8':{# equalibrium of IL8
-		'experiment_period':24*int(60/t2m), # hours
+		'duration':24*int(60/t2m), # hours
 		'activation': False,
 		'measurement_scheme':{
 			'nIL8':  range_24h_60mStep,
@@ -663,7 +997,7 @@ observations = {
 	},
 	
  'Q21_Mg_IL8':{# the effect of different Mg ion concentrations on IL8
-        'experiment_period':72*int(60/t2m), # hours
+        'duration':72*int(60/t2m), # hours
         'activation': True,
         'cellType': 'THP1',
         'measurement_scheme':{
@@ -677,7 +1011,8 @@ observations = {
             'expectations': {
                 'nIL8': {
                     'mean':[1],
-                    'std': [.05]
+                    'std': [.05],
+                    'pvalue':[None]
                 },
             }
         },
@@ -688,13 +1023,14 @@ observations = {
             'expectations': {
                 'nIL8': {
                     'mean':[2.7],
-                    'std': [0.7]
+                    'std': [0.7],
+                    'pvalue':[0.01]
                 },
             }
         }
     },
     'Q21_Mg_IL1b':{# the effect of different Mg ion concentrations on IL8
-        'experiment_period':72*int(60/t2m), # hours
+        'duration':72*int(60/t2m), # hours
         'activation': True,
         'cellType': 'THP1',
         'measurement_scheme':{

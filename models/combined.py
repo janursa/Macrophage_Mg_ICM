@@ -1,6 +1,10 @@
 import tellurium as te
 import sys
-sys.path.insert(0,'/Users/matin/Downloads/testProjs/intracellular_M')
+import os
+from pathlib import Path
+dir_file = Path(__file__).resolve().parent
+main_dir = os.path.join(dir_file,'..')
+sys.path.insert(0,main_dir)
 from tools import dirs, tools
 combined_model_str = """
 import "M1_sbml.xml";
@@ -25,12 +29,15 @@ model combined()
     nMg is M1.nMg;
     npH3S10 is M1.npH3S10;
     ATP is M1.ATP;
+    nATP is M1.nATP;
     Mg_ATP is M1.Mg_ATP;
     k_atp_p0 is M1.k_atp_p0;
     k_atp_pm is M1.k_atp_pm;
     k_atp_c is M1.k_atp_c;
     IM is M1.IM;
     Mg_IM is M1.Mg_IM;
+    Mg_ATP_0 is M1.Mg_ATP_0;
+    
     
     // adjustments to previous model:
     ### Mg downregulate IKB degradation ###
@@ -58,8 +65,8 @@ model combined()
     // assignements
     F_mg_ikb_d := ((Mg_f_0+kd_mg_ikb_d)/(Mg_f+kd_mg_ikb_d))^n_mg_ikb_d;
     F_h3s10_ikb := ((pH3S10+kd_h3s10_ikb_p)/(pH3S10_0+kd_h3s10_ikb_p))^n_h3s10_ikb_p
-    # F_p3s10_il8_p := ((M1.pH3S10+kd_h3s10_il8_p)/(M1.pH3S10_0+kd_h3s10_il8_p))^n_h3s10_il8_p;
-    F_p3s10_il8_p := M1.pH3S10^n_h3s10_il8_p/(M1.pH3S10_0^n_h3s10_il8_p+kd_h3s10_il8_p);
+    F_p3s10_il8_p := ((M1.pH3S10+kd_h3s10_il8_p)/(M1.pH3S10_0+kd_h3s10_il8_p))^n_h3s10_il8_p;
+    # F_p3s10_il8_p := M1.pH3S10^n_h3s10_il8_p/(M1.pH3S10_0^n_h3s10_il8_p+kd_h3s10_il8_p);
 end
 """
 

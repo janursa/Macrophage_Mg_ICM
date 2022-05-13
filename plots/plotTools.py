@@ -8,34 +8,39 @@ dir_file = Path(__file__).resolve().parent
 main_dir = os.path.join(dir_file,'..')
 from data.observations import observations,t2m
 from models.models import Macrophage
+from tools import tools
 
-#plt.rc('text', usetex=True )
-#plt.rc('font', family='Arial', weight='normal', size=14)
-#plt.rcParams['mathtext.fontset'] = 'stix'
-
-#plt.rcParams["font.family"] = "serif"
-#plt.style.use('seaborn-deep')
-#plt.style.use('Agg')
-
-#plt.rcParams["font.serif"] = ["Arial"] + plt.rcParams["font.serif"]
-
+plt.rcParams["font.family"] = "serif"
+plt.rcParams["font.serif"] = ["Arial"] + plt.rcParams["font.serif"]
 
 font_type = 'Arial'
 
 labels = {
-        'Mg_f':'free $Mg^{2+}$',
-        'nMg_f':'free Mg$^{2+}$',
-        'Mg':'total Mg$^{2+}$',
-        'nMg':'total Mg$^{2+}$',
-        'nMg_ATP': 'Mg.ATP',
-
+        'Mg_f':r'free $\mathdefault{Mg^{2+}}$',
+        'nMg_f':r'free $\mathdefault{Mg^{2+}}$',
+        'Mg':r'total $\mathdefault{Mg^{2+}}$',
+        'nMg':r'total $\mathdefault{Mg^{2+}}$',
+        'nMg_ATP': r'$\mathdefault{Mg.ATP}$',
+        'nATP': r'$\mathdefault{ATP}$',
+        
+        'nIKB': 'Cytosolic IkBa',
+        'nNFKB_n': 'Nuclear NFkB',
         'nTRPM': 'Cytosolic TRPM',
         'nTRPM_n': 'Nuclear TRPM',
         'nM7CK_n': 'Nuclear M7CK',
-        'npH3S10': 'Phos H3S10',
+        'npH3S10': 'Activated H3S10',
 
-        'nIL8': 'norm IL8',
-        'nIL8R': 'norm IL8R'
+        'IL8': 'IL8',
+        'IL8R': 'IL8R',
+        'nIL8': 'IL8',
+        'nIL10': 'IL10',
+        'nTNFa': 'TNFa',
+        'nIL1b': 'IL1b',
+        'nIFNGR': r'IFN-Y receptor',
+        'nIL4R': r'IL4 receptor',
+        
+        'nIRAK4':'Cytosolic IRAK',
+        'naTRAF6':'Activated cytosolic TRAF6'
     }
 
 class Specs:
@@ -50,6 +55,7 @@ class Specs:
         self.delta = .12
         self.R2_font_size  = 18
         self.D = 1.1 # the length in which all Mg dosages are plotted in a certain time point
+        self.pvalue_size = 21
         if  study_tag == 'M05_NFKBn' or study_tag == 'M18':
             self.bar_width = .3
             self.delta = .17
@@ -57,58 +63,29 @@ class Specs:
         
         
     @staticmethod
-    def determine_title(study_tag,target=''):
-        label = study_tag+':'+target
-        if study_tag == 'Q21_TRPMn':
-            label = 'Nuclear TRPM (72h)'
-        elif study_tag == 'Q21_TRPM':
-            label = 'Cytosolic TRPM (72h)'
-        elif study_tag == 'Q21_M7CKn':
-            label = 'Nuclear M7CK (72h)'
-        elif study_tag == 'Q21_H3S10':
-            label = 'Activated H3S10 (72h)'
-        elif study_tag == 'Q21_eq_trpm':
-            pass
-        elif study_tag == 'R05_nMg_f':
-            label = 'Free Mg$^{2+}$ ions'
-        elif study_tag == 'R05_mg_n':
-            label = 'Total Mg$^{2+}$ ions'
-        elif study_tag == 'Q21_Mg':
-            label = 'Free Mg$^{2+}$ ions'
-        elif study_tag == 'eq_IL8':
-            label = 'IL8 equalibrium'
-        elif study_tag == 'Q21_eq' or study_tag == 'eq_mg':
+    def determine_title(study_tag,target='',duration=None):
+        prefix = study_tag.split('_')[0]
+        if study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag == 'eq_IL8':
+            # label = '(A) Equalibrium \n (no stimulus)'
             label = ''
-        elif study_tag == 'M05_IT':
-            if target == 'nIRAK4':
-                label = 'IRAK (2h)'
-            elif target == 'naTRAF6':
-                label = 'Activated TRAF6 (2h)'
-        elif study_tag == 'M05_NFKBn':
-            label = 'Nuclear NFKB (2h)'
-        elif study_tag == 'S12_IKBa_mg':
-            label = 'Cytosolic IkBa (3h)'
-        elif study_tag == 'S12_NFKBn_mg':
-            label = 'Nuclear NFkB (3h)'
-        elif study_tag == 'Q21_NFKBn_72h':
-            label = 'Nuclear NFkB (72h)'
-        elif study_tag == 'Q21_Mg_IL8':
-            label = 'IL8 (72h)'
-        elif study_tag == 'M18':
-            if target == 'nIL1b':
-                label = 'IL1b (24h)'
-            elif target == 'nIL10':
-                label = 'IL10 (24h)'
+        elif study_tag == 'R05_nMg_f' or study_tag == 'Q21_Mg':
+            label = prefix+': '+labels[target]
+        
+        elif study_tag == 'Q21_14d':
+            label = prefix+': '+labels[target]+' (%s'%(int(duration/60/24))+'d)'
+        else:
+            label = prefix+': '+labels[target]+' (%s'%(int(duration/60))+'h)'
         return label
     @staticmethod
     def determine_xlabel(study_tag):
         label = 'Time (h)'
-        if study_tag == 'Q21_TRPMn' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_M7CKn' or study_tag == 'Q21_H3S10'  or study_tag == 'S12_IKBa_mg' or study_tag == 'S12_NFKBn_mg' or study_tag == 'Q21_IkBa_6h' or study_tag == 'Q21_IkBa_72h' or study_tag == 'Q21_NFKBn_72h' or study_tag == 'Q21_Mg_IL8' or study_tag == 'Q21_Mg_IL8':
+        if study_tag == 'Q21_M1'  or study_tag == 'S12_IKBa_mg' or study_tag == 'S12_NFKBn_mg' or study_tag == 'Q21_IkBa_6h' or study_tag == 'Q21_IkBa_72h' or study_tag == 'Q21_NFKBn_72h' or study_tag == 'Q21_Mg_IL8' or study_tag == 'Q21_Mg_IL8' or study_tag == 'Q21_14d' or study_tag == 'Z19_IKB_NFKB' or study_tag == 'Z19_IL10' or study_tag == 'Q21_cytokines_72h' or study_tag == 'F18_cytokines' or study_tag == 'B20_NFKBn' or study_tag == 'B20_TNFa' :
             label = 'Mg2+ ions (mM)'
         elif  study_tag == 'Q21_IkBa':
             label = ''
         elif study_tag == 'M18' or study_tag == 'M05_IT' or study_tag == 'M05_NFKBn':
             label = 'IL8 (ng/ml)'
+        
         return label
         
     @staticmethod
@@ -126,18 +103,11 @@ class Specs:
                 x_sim =[(float(j)-D/2) + d*(i+1) - delta for j in range(len(sims[0]))]
                 xs.append([x_exp,x_sim])
         return xs
-    @staticmethod
-    def determine_graph_size(study_tag):
-        graph_size = [3,3]
-        if study_tag == 'Q21_TRPMn' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_M7CKn' or study_tag == 'Q21_H3S10':
-            graph_size = [3,3]
-        raise ValueError('this should be depricated')
-        return graph_size
         
     @staticmethod
     def determine_ylabel(study_tag):
         label = 'Relative quantity \n (To control)'
-        if study_tag =='eq_IL8' or study_tag =='Q21_Mg' or study_tag == 'eq_mg' or study_tag == 'Q21_eq_trpm':
+        if study_tag =='eq_IL8' or study_tag =='Q21_Mg' or study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag =='R05_nMg_f':
             label = 'Relative quantity \n (To initial value)'
         elif study_tag =='Q21_IkBa' or study_tag =='Q21_IkBa_6h' or study_tag =='Q21_IkBa_72h' :
             label = "% Input"
@@ -151,26 +121,28 @@ class Specs:
             raise ValueError('Define')
         return lim
     @staticmethod
-    def determine_ylim(study_tag,target):
-        
-
-        if study_tag == 'M18':
-            if target == 'nIL1b':
-                lim = [0.5,1.7]
-            elif target == 'nIL10':
-                lim = [0.5,2.2]
+    def determine_ylim(study_tag,target,max_y):
+        offset = .5
+        if study_tag == 'eq_mg':
+            lim = [0,1.35]
+        elif study_tag == 'Q21_eq':
+            lim = [-.1,1.5]
         else:
-            raise ValueError('Define')
+            if max_y == None:
+                raise ValueError('Define')
+            lim = [0,max_y+offset]
+        
+        
         return lim
     @staticmethod
     def determine_xticks(ax,study_tag):
         ticks = ax.get_xticks()
-        if study_tag == 'Q21_TRPMn' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_M7CKn' or study_tag == 'Q21_H3S10':
+        if study_tag == 'Q21_M1' or study_tag == 'Q21_14d' or study_tag == 'Q21_cytokines_72h' or study_tag == 'Q21_Mg_IL8':
             adj_ticks = [0,1]
-            adj_labels = ['ctr (0.8)','8']
+            adj_labels = ['ctr','8']
         elif study_tag == 'S12_IKBa_mg' or  study_tag == 'S12_NFKBn_mg':
             adj_ticks = [0,1]
-            adj_labels = ['ctr (0.8)','2.5']
+            adj_labels = ['ctr','2.5']
         elif study_tag == 'Q21_IkBa':
             adj_ticks = [0,1]
             adj_labels = ['6h','72h']
@@ -189,9 +161,12 @@ class Specs:
         elif study_tag == 'Q21_IkBa_6h' or study_tag == 'Q21_IkBa_72h':
             adj_ticks = [0,1]
             adj_labels = ['0.08','8']
-        elif study_tag == 'Q21_NFKBn_72h' or study_tag == 'Q21_Mg_IL8':
+        elif study_tag == 'Z19_IKB_NFKB' or study_tag == 'Z19_IL10':
+            adj_ticks = [0,1,2]
+            adj_labels = ['ctr','4','20']
+        elif study_tag == 'F18_cytokines' or study_tag == 'B20_NFKBn' or study_tag == 'B20_TNFa':
             adj_ticks = [0,1]
-            adj_labels = ['ctr (0.8)','8']
+            adj_labels = ['ctr','5']
         else:
             adj_ticks = ticks[1:-1]
             adj_labels = [int(i*t2m/60) for i in adj_ticks]
@@ -212,14 +187,16 @@ class Specs:
     def determine_legend(ax,study_tag):
         position = (.6,1.1)
         if study_tag == 'R05_nMg_f':
-            position = (1.1,.7)
+            position = (1.1,1)
         elif study_tag == 'R05_mg_n':
             position = (1.1,1.1)
         elif study_tag == 'Q21_Mg':
-            position = (1.1,.8)
-        elif study_tag == 'Q21_eq' or study_tag == 'eq_mg':
-            position = (1.1,.7)
-        elif study_tag == 'Q21_TRPMn' or study_tag == 'Q21_TRPM' or study_tag == 'Q21_M7CKn' or study_tag == 'Q21_H3S10':
+            position = (1.1,1)
+        elif study_tag == 'Q21_eq':
+            position = (1.1,.65)
+        elif study_tag == 'eq_mg':
+            position = (1.05,.7)
+        elif study_tag == 'Q21_M1' or study_tag == 'Q21_cytokines_72h':
             position = (0.7,1.1)
         elif study_tag == 'eq_IL8':
             position = (1.1,.7)
@@ -238,32 +215,64 @@ class process_data:
     def sort(sims,exps,target,plot_t):
         sims_sorted = []
         exps_sorted = []
+        exps_std_sorted = []
+        pvalues = []
         for ID in exps['IDs']:
             ID_exps = exps[ID]['expectations'][target]
             ID_sims = sims[ID][target]
             exps_sorted.append(ID_exps['mean'])
+            exps_std_sorted.append(ID_exps['std'])
+            pvalues.append(ID_exps['pvalue'])
             sims_sorted.append(ID_sims)
         if plot_t == 'bar1':
             sims_sorted = [item[0] for item in sims_sorted]
             exps_sorted = [item[0] for item in exps_sorted]
+            exps_std_sorted = [item[0] for item in exps_std_sorted]
+            pvalues = [item[0] for item in pvalues]
         
-        return sims_sorted,exps_sorted
+        return sims_sorted,exps_sorted,exps_std_sorted,pvalues
 
 
-    def normalize(study_tag,sims,exps):
-        sims_n = sims
-        exps_n = exps
-
-        ff = lambda ctr,vector: [i/ctr for i in vector]
-
-        return sims_n,exps_n
 
 
 
 class plotTools:
-    
     @staticmethod
-    def plot_bar(ax,specs,x_exp,x_sim,sims,exps,labels,plot_i):
+    def barplot_annotate_stars(ax,significance, center, height, specs):
+
+        # * is p < 0.05
+        # ** is p < 0.005
+        # *** is p < 0.0005
+        if significance == None:
+            return
+        if type(significance) == str:
+            text = significance
+        else:
+            text = ''
+            p = .05
+    
+            while significance < p:
+                text += '*'
+                p /= 10.
+
+        kwargs = dict(ha='center', va='center')
+        kwargs['fontsize'] = specs.pvalue_size
+        mid = (center, height)
+
+        ax.text(*mid, text, **kwargs)
+        
+        
+    @staticmethod
+    def draw_p_values(ax,pvalues,x_exp,exps,exps_std,specs):
+        offset = .1
+        for i in range(len(pvalues)):
+            x = x_exp[i]
+            y = exps[i]+exps_std[i]+offset
+            pvalue = pvalues[i]
+            plotTools.barplot_annotate_stars(ax=ax,significance = pvalue,
+                        center = x, height = y, specs = specs)
+    @staticmethod
+    def plot_bar(ax,specs,x_exp,x_sim,sims,exps,exps_std,labels,plot_i):
         ax.bar(x=x_sim,height=sims,width = specs.bar_width, label = labels[0],
                 facecolor = specs.colors[plot_i*2],
                  edgecolor="black", yerr =  0,
@@ -271,8 +280,9 @@ class plotTools:
 
         ax.bar(x=x_exp,height=exps,width = specs.bar_width, label = labels[1],
                 facecolor = specs.colors[plot_i*2+1],hatch=r'\\\\',
-                 edgecolor="black", yerr =  0,
+                 edgecolor="black", yerr =  exps_std,
                  error_kw = dict(capsize= specs.error_bar_width))
+        
     # def plot_1(self,ax,x_exp,x_sim,sims,exps):
     #   ax.bar(x=x_sim,height=sims,width = self.specs.bar_width, label = "S",
     #           facecolor = self.specs.colors[0],
@@ -285,7 +295,7 @@ class plotTools:
     #            error_kw = dict(capsize= self.specs.error_bar_width))
     
     @staticmethod
-    def ax_postprocess(ax,study_tag,sims,specs,target=''):
+    def ax_postprocess(ax,study_tag,sims,specs,duration,target='',max_y=None):
         x_ticks = [i for i in range(len(sims))]
         try:
             y_ticks_ad,y_ticks_label = specs.determine_yticks(study_tag=study_tag)
@@ -298,8 +308,6 @@ class plotTools:
         x_ticks_ad,x_ticks_labels_adj = specs.determine_xticks(ax=ax,study_tag=study_tag)
         ax.set_xticks(ticks = x_ticks_ad)
         ax.set_xticklabels(x_ticks_labels_adj)
-        
-        
 
         try:
             ax.set_xlim(specs.determine_xlim(study_tag,target))
@@ -307,7 +315,7 @@ class plotTools:
             pass
 
         try:
-            ax.set_ylim(specs.determine_ylim(study_tag,target))
+            ax.set_ylim(specs.determine_ylim(study_tag,target,max_y))
         except ValueError:
             pass
 
@@ -319,7 +327,7 @@ class plotTools:
             label.set_fontsize(specs.tick_font_size)
         ax.set_ylabel(specs.determine_ylabel(study_tag=study_tag),fontdict ={'family':font_type,'size':specs.title_font_size})
         ax.set_xlabel(specs.determine_xlabel(study_tag=study_tag),fontdict ={'family':font_type,'size':specs.title_font_size})
-        ax.set_title(specs.determine_title(study_tag=study_tag,target=target),fontdict ={'family':font_type,'size':specs.title_font_size})
+        ax.set_title(specs.determine_title(study_tag=study_tag,duration=duration,target=target),fontdict ={'family':font_type,'size':specs.title_font_size})
         
 
     @staticmethod
@@ -328,30 +336,40 @@ class plotTools:
         """
         sims = model.simulate_study(study_tag=study_tag,params= params,study=study)
 #        print('--',study_tag,target,sims)
-        sims,exps = process_data.sort(sims=sims,exps=study,target = target,plot_t=plot_t)
-        sims,exps = process_data.normalize(study_tag = study_tag, sims= sims, exps=exps)
+        sims,exps,exps_std,pvalues = process_data.sort(sims=sims,exps=study,target = target,plot_t=plot_t)
+        sims,exps = tools.normalize(study_tag = study_tag,target=target, sims= sims, exps=exps)
         specs = Specs(study_tag)
         xs = specs.bar_positions(sims,specs.delta,specs.D,plot_t=plot_t)
-        
+        max_y = 0 # to determine ylim
         for i in range(len(xs)):
             if plot_t == 'bar1':
                 labels = ['S','E']
                 sims_ID = sims
                 exps_ID = exps
+                exps_std_ID = exps_std
             elif plot_t == 'bar2':
                 labels = ['S-%s'%IDs[i],'E-%s'%IDs[i]]
                 sims_ID = sims[i]
                 exps_ID = exps[i]
-            plotTools.plot_bar(ax=ax,specs=specs,x_exp=xs[i][0],x_sim=xs[i][1],sims=sims_ID,exps=exps_ID,labels=labels, plot_i = i)
-        
-        plotTools.ax_postprocess(ax=ax,study_tag=study_tag,specs=specs,sims=sims,target=target)
+                exps_std_ID = exps_std[i]
+            plotTools.plot_bar(ax=ax,specs=specs,x_exp=xs[i][0],x_sim=xs[i][1],sims=sims_ID,exps=exps_ID,exps_std=exps_std_ID,labels=labels, plot_i = i)
+            plotTools.draw_p_values(ax=ax,specs=specs,x_exp=xs[i][0], exps=exps_ID,exps_std=exps_std_ID,pvalues=pvalues)
+            
+            exp_y = max(np.array(exps_ID) + np.array(exps_std_ID)) # to find out the maximum space required for the y range
+            sim_y = max(sims_ID)
+            
+            if exp_y>max_y:
+                max_y = exp_y
+            if sim_y>max_y:
+                max_y = sim_y
+        duration = study['duration']
+        plotTools.ax_postprocess(ax=ax,study_tag=study_tag,specs=specs,sims=sims,duration=duration,target=target,max_y=max_y)
 
     @staticmethod
     def run_plot_line(ax,study_tag,model_sbml,params,target,ID,study):
-        duration = study['experiment_period']
+        duration = study['duration']
         inputs = study[ID]['inputs']
         specs = Specs(study_tag)
-
         params_copy = copy.deepcopy(params)
         for key,value in inputs.items():
             params_copy[key] = value
@@ -364,11 +382,11 @@ class plotTools:
         obs_yy = study[ID]['expectations'][target]['mean']
         ax.scatter(obs_xx,obs_yy,color='r', linewidth=specs.line_width, label = 'E')
         ax.legend()
-        plotTools.ax_postprocess(ax,study_tag=study_tag,sims=sims,specs=specs)
+        plotTools.ax_postprocess(ax,study_tag=study_tag,sims=sims,duration=duration,specs=specs,target=target)
 
     @staticmethod
     def run_plot_line_multi_target(ax,study_tag,model_sbml,params,targets,ID,study):
-        duration = study['experiment_period']
+        duration = study['duration']
         inputs = study[ID]['inputs']
         specs = Specs(study_tag)
 
@@ -376,17 +394,23 @@ class plotTools:
         for key,value in inputs.items():
             params_copy[key] = value
         
-        sims = Macrophage.run_sbml_model(model_sbml = model_sbml,params = params_copy,selections=['TIME']+targets,duration=duration)
-        i_0 = 1
-        x = sims['time'][i_0:]
+        sims_raw = Macrophage.run_sbml_model(model_sbml = model_sbml,params = params_copy,selections=['TIME']+targets,duration=duration)
+        sims = {}
+        for target in targets:
+            sims[target] = sims_raw[target]
+        if study_tag == 'eq_IL8':
+            sims['IL8R'] = np.array(sims_raw['IL8R'])/model_sbml['IL8R_0']
+            sims['IL8'] = np.array(sims_raw['IL8'])/model_sbml['IL8_0']
+        i_0 = 0
+        x = sims_raw['time'][i_0:]
 
-        obs_yy = [1 for i in range(len(x))]
-        ax.plot(x,obs_yy,linestyle='--',color='r', linewidth=specs.line_width, label = 'Expectation')
+#        obs_yy = [1 for i in range(len(x))]
+#        ax.plot(x,obs_yy,linestyle='--',color='r', linewidth=specs.line_width, label = 'Expectation')
         jj=0
         for target in targets:
             ax.plot(x,sims[target][i_0:],color=specs.colors[jj],linewidth=specs.line_width, label = 'S: {}'.format(labels[target]))
             jj+=1
         ax.legend()
-        plotTools.ax_postprocess(ax,study_tag=study_tag,sims=sims,specs=specs)
+        plotTools.ax_postprocess(ax,study_tag=study_tag,sims=sims,duration=duration,specs=specs)
 
 

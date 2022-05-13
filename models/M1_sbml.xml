@@ -5,20 +5,20 @@
       <compartment id="comp1" spatialDimensions="3" size="1" constant="true"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="Mg_e" compartment="comp1" initialConcentration="0.8" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="Mg_e" compartment="comp1" initialAmount="0.8" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="Mg_f" compartment="comp1" initialAmount="0.8" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="TRPM" compartment="comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="ATP" compartment="comp1" initialAmount="24.348" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg_ATP" compartment="comp1" initialAmount="9.01347999879346" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="Mg" compartment="comp1" initialConcentration="12.6235462540719" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="Mg_IM" compartment="comp1" initialAmount="2.81006625527844" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="ATP" compartment="comp1" initialAmount="4.42004922879223" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg_ATP" compartment="comp1" initialAmount="17.5759715060504" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="Mg" compartment="comp1" initialConcentration="18.5052903656923" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="Mg_IM" compartment="comp1" initialAmount="0.129318859641869" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="TRPM_n" compartment="comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="cons" compartment="comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="ATP_prod" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="TRPM_prod" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nMg" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="nMg_f" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="IM" compartment="comp1" initialConcentration="88.6098019188817" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="IM" compartment="comp1" initialConcentration="1.01997397430206" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
       <species id="M7CK" compartment="comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="M7CK_n" compartment="comp1" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="deg" compartment="comp1" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
@@ -29,10 +29,10 @@
       <species id="h3s10_prod" compartment="comp1" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
-      <parameter id="Mg_0" value="12.6235462540719" constant="false"/>
+      <parameter id="Mg_0" value="18.5052903656923" constant="false"/>
       <parameter id="Mg_f_0" value="0.8" constant="false"/>
-      <parameter id="Mg_IM_0" value="2.81006625527844" constant="false"/>
-      <parameter id="Mg_ATP_0" value="9.01347999879346" constant="false"/>
+      <parameter id="Mg_IM_0" value="0.129318859641869" constant="false"/>
+      <parameter id="Mg_ATP_0" value="17.5759715060504" constant="false"/>
       <parameter id="npH3S10" value="1" constant="false"/>
       <parameter id="pH3S10_0" value="1" constant="false"/>
       <parameter id="nTRPM" value="1" constant="false"/>
@@ -41,36 +41,31 @@
       <parameter id="TRPM_n_0" value="1" constant="false"/>
       <parameter id="nM7CK_n" value="1" constant="false"/>
       <parameter id="M7CK_n_0" value="1" constant="false"/>
+      <parameter id="nATP" value="1" constant="false"/>
+      <parameter id="ATP_0" value="4.42004922879223" constant="false"/>
       <parameter id="F_trpm_i" value="1" constant="false"/>
-      <parameter id="F_mg_i" value="1" constant="false"/>
-      <parameter id="kd_mg_i" value="0.240836073205038" constant="true"/>
-      <parameter id="n_mg_i" value="1" constant="true"/>
-      <parameter id="k_m_i" value="0.977104353671044" constant="true"/>
-      <parameter id="k_m_e" value="0.673017185034599" constant="true"/>
-      <parameter id="k_atp_p0" value="9.8145812614764" constant="true"/>
-      <parameter id="k_atp_pm" value="1.13" constant="true"/>
-      <parameter id="k_atp_c" value="0.62216362042029" constant="true"/>
-      <parameter id="k_matp_b" value="0.505507533028323" constant="true"/>
-      <parameter id="n_matp_b" value="0.106070327688073" constant="true"/>
-      <parameter id="k_matp_ub" value="0.946413218219196" constant="true"/>
-      <parameter id="k_mim_b" value="0.450179040444211" constant="true"/>
-      <parameter id="n_mim_b" value="9.9705394990721" constant="true"/>
-      <parameter id="k_mim_ub" value="0.479558321478773" constant="true"/>
-      <parameter id="k_ntrpm_p" value="0.66649773321471" constant="true"/>
-      <parameter id="n_ntrpm_p" value="1" constant="true"/>
-      <parameter id="k_ntrpm_t" value="0.759902668231393" constant="true"/>
-      <parameter id="n_ntrpm_t" value="1" constant="true"/>
-      <parameter id="k_trpm_s" value="0.757800475122427" constant="true"/>
-      <parameter id="k_m7ck_t1" value="0.563811915877404" constant="true"/>
-      <parameter id="n_m7ck_t" value="1" constant="true"/>
-      <parameter id="k_m7ck_t2" value="0.454229336462285" constant="true"/>
-      <parameter id="k_m7ck_deg" value="0.850062531302619" constant="true"/>
+      <parameter id="k_m_i" value="0.354118797105552" constant="true"/>
+      <parameter id="k_atp_p0" value="0.00225512480794319" constant="true"/>
+      <parameter id="k_atp_pm" value="8.49175427329044" constant="true"/>
+      <parameter id="k_atp_c" value="0.590124477903334" constant="true"/>
+      <parameter id="k_matp_b" value="0.863224522888395" constant="true"/>
+      <parameter id="k_matp_ub" value="0.452524825321512" constant="true"/>
+      <parameter id="k_mim_b" value="0.159811152226357" constant="true"/>
+      <parameter id="k_mim_ub" value="0.989738181481948" constant="true"/>
+      <parameter id="k_ntrpm_p" value="0.00101113119477801" constant="true"/>
+      <parameter id="n_ntrpm_p" value="2.30317231422854" constant="true"/>
+      <parameter id="k_ntrpm_t" value="0.741006104083189" constant="true"/>
+      <parameter id="k_trpm_s" value="0.996843754790507" constant="true"/>
+      <parameter id="k_m7ck_t1" value="0.921927059966568" constant="true"/>
+      <parameter id="k_m7ck_t2" value="0.712745110946727" constant="true"/>
+      <parameter id="k_m7ck_deg" value="0.962377596471591" constant="true"/>
       <parameter id="k_h3s10_p" value="7.03544434879354" constant="true"/>
       <parameter id="k_h3s10_d" value="0.722169758906465" constant="true"/>
       <parameter id="k_h3s10_a" value="0.958942087690164" constant="true"/>
-      <parameter id="n_h3s10_a" value="1" constant="true"/>
       <parameter id="k_h3s10_da" value="0.807474039427079" constant="true"/>
       <parameter id="IM_prod" value="1" constant="true"/>
+      <parameter id="Mg_e_0" value="0.8" constant="false"/>
+      <parameter id="n_h3s10_a" value="0.737716698597422" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="Mg_0">
@@ -116,6 +111,16 @@
       <initialAssignment symbol="M7CK_n_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> M7CK_n </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="ATP_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> ATP </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="Mg_e_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> Mg_e </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -202,30 +207,18 @@
           </apply>
         </math>
       </assignmentRule>
+      <assignmentRule variable="nATP">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> ATP </ci>
+            <ci> ATP_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
       <assignmentRule variable="F_trpm_i">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <cn type="integer"> 1 </cn>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="F_mg_i">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <power/>
-            <apply>
-              <divide/>
-              <apply>
-                <plus/>
-                <ci> Mg_0 </ci>
-                <ci> kd_mg_i </ci>
-              </apply>
-              <apply>
-                <plus/>
-                <ci> Mg </ci>
-                <ci> kd_mg_i </ci>
-              </apply>
-            </apply>
-            <ci> n_mg_i </ci>
-          </apply>
         </math>
       </assignmentRule>
     </listOfRules>
@@ -233,37 +226,24 @@
       <reaction id="v1" reversible="false" fast="false">
         <listOfReactants>
           <speciesReference species="Mg_e" stoichiometry="1" constant="true"/>
-          <speciesReference species="TRPM" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="Mg_f" stoichiometry="1" constant="true"/>
-          <speciesReference species="TRPM" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
-              <minus/>
+              <times/>
+              <ci> k_m_i </ci>
               <apply>
-                <times/>
-                <ci> k_m_i </ci>
+                <minus/>
                 <ci> Mg_e </ci>
-                <apply>
-                  <gt/>
-                  <ci> Mg_e </ci>
-                  <cn type="integer"> 0 </cn>
-                </apply>
-                <ci> F_mg_i </ci>
-                <ci> F_trpm_i </ci>
+                <ci> Mg_f </ci>
               </apply>
               <apply>
-                <times/>
-                <ci> k_m_e </ci>
+                <gt/>
+                <ci> Mg_e </ci>
                 <ci> Mg_f </ci>
-                <apply>
-                  <gt/>
-                  <ci> Mg_f </ci>
-                  <cn type="integer"> 0 </cn>
-                </apply>
               </apply>
             </apply>
           </math>
@@ -324,11 +304,7 @@
               <apply>
                 <times/>
                 <ci> k_matp_b </ci>
-                <apply>
-                  <power/>
-                  <ci> Mg_f </ci>
-                  <ci> n_matp_b </ci>
-                </apply>
+                <ci> Mg_f </ci>
                 <apply>
                   <gt/>
                   <ci> Mg_f </ci>
@@ -370,11 +346,7 @@
               <apply>
                 <times/>
                 <ci> k_mim_b </ci>
-                <apply>
-                  <power/>
-                  <ci> Mg_f </ci>
-                  <ci> n_mim_b </ci>
-                </apply>
+                <ci> Mg_f </ci>
                 <apply>
                   <gt/>
                   <ci> Mg_f </ci>
@@ -437,11 +409,7 @@
             <apply>
               <times/>
               <ci> k_ntrpm_t </ci>
-              <apply>
-                <power/>
-                <ci> TRPM_n </ci>
-                <ci> n_ntrpm_t </ci>
-              </apply>
+              <ci> TRPM_n </ci>
             </apply>
           </math>
         </kineticLaw>
@@ -477,11 +445,7 @@
               <apply>
                 <times/>
                 <ci> k_m7ck_t1 </ci>
-                <apply>
-                  <power/>
-                  <ci> M7CK </ci>
-                  <ci> n_m7ck_t </ci>
-                </apply>
+                <ci> M7CK </ci>
                 <apply>
                   <gt/>
                   <ci> M7CK </ci>
@@ -571,11 +535,7 @@
                 <times/>
                 <ci> k_h3s10_a </ci>
                 <ci> H3S10 </ci>
-                <apply>
-                  <power/>
-                  <ci> M7CK_n </ci>
-                  <ci> n_h3s10_a </ci>
-                </apply>
+                <ci> M7CK_n </ci>
                 <apply>
                   <gt/>
                   <ci> H3S10 </ci>
@@ -761,6 +721,42 @@
           <eventAssignment variable="M7CK_n_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <ci> M7CK_n </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="_E9" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="Mg_e_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> Mg_e </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="_E10" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="ATP_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> ATP </ci>
             </math>
           </eventAssignment>
         </listOfEventAssignments>

@@ -167,7 +167,11 @@ class Specs:
         elif study_tag == 'F18_cytokines' or study_tag == 'B20_NFKBn' or study_tag == 'B20_TNFa':
             adj_ticks = [0,1]
             adj_labels = ['ctr','5']
+        elif study_tag == 'S12_LPS':
+            adj_ticks = [int(ii*60) for ii in [0,1,2,8]]
+            adj_labels = [0,1,2,8]
         else:
+            # pass
             adj_ticks = ticks[1:-1]
             adj_labels = [int(i*t2m/60) for i in adj_ticks]
             
@@ -308,6 +312,8 @@ class plotTools:
         x_ticks_ad,x_ticks_labels_adj = specs.determine_xticks(ax=ax,study_tag=study_tag)
         ax.set_xticks(ticks = x_ticks_ad)
         ax.set_xticklabels(x_ticks_labels_adj)
+        
+        
 
         try:
             ax.set_xlim(specs.determine_xlim(study_tag,target))

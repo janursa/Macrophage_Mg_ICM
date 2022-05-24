@@ -15,8 +15,8 @@ from models.models import Macrophage
 # %autoreload
 
 class settings:
-    model_t = 'LPS'
-    target_package = 'LPS'
+    model_t = 'IL8'
+    target_package = 'IL8'
     free_params = free_params_p[target_package]
     studies = select_obs(packages[target_package])
 print(settings.free_params)

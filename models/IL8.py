@@ -9,9 +9,9 @@ sys.path.insert(0,main_dir)
 from tools import dirs, tools
 
 IL8_model_str = """
-import "Zhao_sbml.xml";
+import "LPS_sbml.xml";
 model IL8_model()
-    PP: model_Zhao();
+    PP: LPS_model();
     compartment comp1;
     IFNGR is PP.IFNGR;
     IL4R is PP.IL4R;
@@ -29,7 +29,8 @@ model IL8_model()
     k221 is PP.k221;
     // adjustments to zhao's model:
     ### IL8 upregulates IRAK recruitment/production ###
-    PP.v246: $PP.irak4_prod + PP.m93 => PP.IRAK4 + PP.m93; PP.k246*PP.irak4_prod*(1 - PP.m93/(PP.m93 + PP.ka246))* F_il8_irak;
+    PP.v246: $PP.irak4_prod + PP.m93 + PP.LPS + IL8 => PP.IRAK4 + PP.m93 + PP.LPS + IL8; PP.k246*PP.irak4_prod*(1 - PP.m93/(PP.m93 + PP.ka246))* PP.F_LPS_irak + F_il8_irak;
+    # PP.v246: $PP.irak4_prod + PP.m93 => PP.IRAK4 + PP.m93; PP.k246*PP.irak4_prod*(1 - PP.m93/(PP.m93 + PP.ka246))* F_il8_irak;
     ### IL8 upregulates IFNGR production ###
     #PP.v80: $PP.IFNGR_prod + IL8_R => PP.IFNGR + IL8_R; PP.k80*PP.IFNGR_prod*F_il8_ifngr ;
     ### IL8 downregulates IL4R production ###

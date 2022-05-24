@@ -29,6 +29,8 @@ class Macrophage:
       return te.loadSBMLModel(dirs.dir_model)
     elif model_t == 'LPS':
         return te.loadSBMLModel(dirs.dir_LPS_model)
+    elif model_t == 'Zhao':
+        return te.loadSBMLModel(dirs.dir_Zhao_model)
 
   activation_s = retrieve_activation_stimuli()
 

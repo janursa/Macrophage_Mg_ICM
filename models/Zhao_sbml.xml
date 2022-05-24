@@ -2,433 +2,429 @@
 <sbml xmlns="http://www.sbml.org/sbml/level2/version4" level="2" version="4">
   <annotation>
     <SimBiology xmlns="http://www.mathworks.com">
-      <Version Major="5" Minor="6" Point="0"/>
+      <Version Major="5" Minor="8" Point="0"/>
     </SimBiology>
   </annotation>
-  <model id="model_Zhao" name="model_Zhao">
+  <model id="pad_mac" name="pad mac">
     <listOfCompartments>
-      <compartment id="comp1" name="comp1" size="1" constant="true"/>
+      <compartment id="unnamed" name="unnamed" size="1" constant="true"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="deg" name="deg" compartment="comp1" initialAmount="1786807664308.98" boundaryCondition="false" constant="false"/>
-      <species id="V165a" name="V165a" compartment="comp1" initialAmount="103352.715724874" boundaryCondition="false" constant="false">
+      <species id="deg" name="deg" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="V165a" name="V165a" compartment="unnamed" initialConcentration="1200" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">resting total vegfa (~50-100 pg/ml or ~1500-3000 molecule/cell) from PMID: 20952691,  12773701</body>
         </notes>
       </species>
-      <species id="IFNG" name="IFNG" compartment="comp1" initialAmount="353.189097272612" boundaryCondition="false" constant="false"/>
-      <species id="IFNGR_JAK" name="IFNGR/JAK" compartment="comp1" initialAmount="15890.0596956903" boundaryCondition="false" constant="false"/>
-      <species id="IFNG_R_JAK" name="IFNG/R/JAK" compartment="comp1" initialAmount="0.00479457538721533" boundaryCondition="false" constant="false"/>
-      <species id="pIFNG_R_JAK" name="pIFNG/R/JAK" compartment="comp1" initialAmount="0.00159966882463698" boundaryCondition="false" constant="false"/>
-      <species id="STAT1" name="STAT1" compartment="comp1" initialAmount="793795.781167338" boundaryCondition="false" constant="false">
+      <species id="IFNG" name="IFNG" compartment="unnamed" initialConcentration="468" boundaryCondition="false" constant="false"/>
+      <species id="IFNGR_JAK" name="IFNGR/JAK" compartment="unnamed" initialConcentration="17784" boundaryCondition="false" constant="false"/>
+      <species id="IFNG_R_JAK" name="IFNG/R/JAK" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="pIFNG_R_JAK" name="pIFNG/R/JAK" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="STAT1" name="STAT1" compartment="unnamed" initialConcentration="552129" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml"> based on epd, similar to stat3 (stat1 number from PMID: 17640695)  (liver dataset report ~1000000)
 </body>
         </notes>
       </species>
-      <species id="pIFNG_R_JAK_STAT1" name="pIFNG/R/JAK/STAT1" compartment="comp1" initialAmount="7.61921671824645" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT1" name="pSTAT1" compartment="comp1" initialAmount="1.30201096567496" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT1D" name="pSTAT1D" compartment="comp1" initialAmount="0.0816225334306133" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT1D_n" name="pSTAT1D_n" compartment="comp1" initialAmount="0.0347744549751582" boundaryCondition="false" constant="false"/>
-      <species id="STAT1D_n" name="STAT1D_n" compartment="comp1" initialAmount="0.0880450593728965" boundaryCondition="false" constant="false"/>
-      <species id="STAT1_n" name="STAT1_n" compartment="comp1" initialAmount="152.757263228164" boundaryCondition="false" constant="false"/>
-      <species id="SOCS1_prod" name="SOCS1 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="SOCS1" name="SOCS1" compartment="comp1" initialAmount="63671.0459586866" boundaryCondition="false" constant="false">
+      <species id="pIFNG_R_JAK_STAT1" name="pIFNG/R/JAK/STAT1" compartment="unnamed" initialConcentration="78" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT1" name="pSTAT1" compartment="unnamed" initialConcentration="28" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT1D" name="pSTAT1D" compartment="unnamed" initialConcentration="36" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT1D_n" name="pSTAT1D_n" compartment="unnamed" initialConcentration="58" boundaryCondition="false" constant="false"/>
+      <species id="STAT1D_n" name="STAT1D_n" compartment="unnamed" initialConcentration="36" boundaryCondition="false" constant="false"/>
+      <species id="STAT1_n" name="STAT1_n" compartment="unnamed" initialConcentration="1557" boundaryCondition="false" constant="false"/>
+      <species id="SOCS1_prod" name="SOCS1 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="SOCS1" name="SOCS1" compartment="unnamed" initialConcentration="5425" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from epd (2500-4000)
 </body>
         </notes>
       </species>
-      <species id="IFNG_R_JAK_SOCS1" name="IFNG/R/JAK/SOCS1" compartment="comp1" initialAmount="7.40089152961058" boundaryCondition="false" constant="false"/>
-      <species id="IFNG_R_lyso" name="IFNG/R_lyso" compartment="comp1" initialAmount="0.449972692452098" boundaryCondition="false" constant="false"/>
-      <species id="SOCS1_JAK" name="SOCS1/JAK" compartment="comp1" initialAmount="8.37334282734678" boundaryCondition="false" constant="false"/>
-      <species id="IRF9" name="IRF9" compartment="comp1" initialAmount="6553.3750926181" boundaryCondition="false" constant="false">
+      <species id="IFNG_R_JAK_SOCS1" name="IFNG/R/JAK/SOCS1" compartment="unnamed" initialConcentration="10" boundaryCondition="false" constant="false"/>
+      <species id="IFNG_R_lyso" name="IFNG/R_lyso" compartment="unnamed" initialConcentration="1" boundaryCondition="false" constant="false"/>
+      <species id="SOCS1_JAK" name="SOCS1/JAK" compartment="unnamed" initialConcentration="4" boundaryCondition="false" constant="false"/>
+      <species id="IRF9" name="IRF9" compartment="unnamed" initialConcentration="1589" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset</body>
         </notes>
       </species>
-      <species id="IRF9_n" name="IRF9_n" compartment="comp1" initialAmount="65925.1836851695" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT1D_IRF9" name="pSTAT1D/IRF9" compartment="comp1" initialAmount="0.0632356214830313" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT1D_IRF9_n" name="pSTAT1D/IRF9_n" compartment="comp1" initialAmount="0.217439101296281" boundaryCondition="false" constant="false"/>
-      <species id="CXCL10_prod" name="CXCL10 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="SOCS3" name="SOCS3" compartment="comp1" initialAmount="27468.8962607769" boundaryCondition="false" constant="false"/>
-      <species id="IFNG_R_JAK_SOCS3" name="IFNG/R/JAK/SOCS3" compartment="comp1" initialAmount="1.59684177407293" boundaryCondition="false" constant="false"/>
-      <species id="SOCS3_JAK" name="SOCS3/JAK" compartment="comp1" initialAmount="4.84945160722666" boundaryCondition="false" constant="false"/>
-      <species id="SOCS3_prod" name="SOCS3 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true">
+      <species id="IRF9_n" name="IRF9_n" compartment="unnamed" initialConcentration="15960" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT1D_IRF9" name="pSTAT1D/IRF9" compartment="unnamed" initialConcentration="7" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT1D_IRF9_n" name="pSTAT1D/IRF9_n" compartment="unnamed" initialConcentration="87" boundaryCondition="false" constant="false"/>
+      <species id="CXCL10_prod" name="CXCL10 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="SOCS3" name="SOCS3" compartment="unnamed" initialConcentration="2830" boundaryCondition="false" constant="false"/>
+      <species id="IFNG_R_JAK_SOCS3" name="IFNG/R/JAK/SOCS3" compartment="unnamed" initialConcentration="3" boundaryCondition="false" constant="false"/>
+      <species id="SOCS3_JAK" name="SOCS3/JAK" compartment="unnamed" initialConcentration="8" boundaryCondition="false" constant="false"/>
+      <species id="SOCS3_prod" name="SOCS3 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">socs3 is produced in similar amount compared to socs1 by IL-6 mediated TFs
 </body>
         </notes>
       </species>
-      <species id="IL4" name="IL4" compartment="comp1" initialAmount="20.0552959806904" boundaryCondition="false" constant="false"/>
-      <species id="IL4R_JAK" name="IL4R/JAK" compartment="comp1" initialAmount="4036.25484450746" boundaryCondition="false" constant="false"/>
-      <species id="IL4_R_JAK" name="IL4/R/JAK" compartment="comp1" initialAmount="0.00120972012951389" boundaryCondition="false" constant="false"/>
-      <species id="pIL4_R_JAK" name="pIL4/R/JAK" compartment="comp1" initialAmount="0.00241899901232566" boundaryCondition="false" constant="false"/>
-      <species id="STAT6" name="STAT6" compartment="comp1" initialAmount="59994.7006802365" boundaryCondition="false" constant="false">
+      <species id="IL4" name="IL4" compartment="unnamed" initialConcentration="26" boundaryCondition="false" constant="false"/>
+      <species id="IL4R_JAK" name="IL4R/JAK" compartment="unnamed" initialConcentration="3068" boundaryCondition="false" constant="false"/>
+      <species id="IL4_R_JAK" name="IL4/R/JAK" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="pIL4_R_JAK" name="pIL4/R/JAK" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="STAT6" name="STAT6" compartment="unnamed" initialConcentration="59952" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml"> based on epd, and macrophage to t cell volume ratio (5-7 times larger).  (liver dataset report~100000)</body>
         </notes>
       </species>
-      <species id="pIL4_R_JAK_STAT6" name="pIL4/R/JAK/STAT6" compartment="comp1" initialAmount="0.000372219186895083" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT6" name="pSTAT6" compartment="comp1" initialAmount="0.287214138378817" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT6D" name="pSTAT6D" compartment="comp1" initialAmount="0.000117839112438117" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT6D_n" name="pSTAT6D_n" compartment="comp1" initialAmount="0.00474937378977395" boundaryCondition="false" constant="false">
+      <species id="pIL4_R_JAK_STAT6" name="pIL4/R/JAK/STAT6" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT6" name="pSTAT6" compartment="unnamed" initialConcentration="14" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT6D" name="pSTAT6D" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT6D_n" name="pSTAT6D_n" compartment="unnamed" initialConcentration="12" boundaryCondition="false" constant="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
       </species>
-      <species id="STAT6D_n" name="STAT6D_n" compartment="comp1" initialAmount="4.74973913150017e-05" boundaryCondition="false" constant="false"/>
-      <species id="STAT6_n" name="STAT6_n" compartment="comp1" initialAmount="0.00190398538894385" boundaryCondition="false" constant="false"/>
-      <species id="IL4_R_JAK_SOCS1_i" name="IL4/R/JAK/SOCS1_i" compartment="comp1" initialAmount="0.000462453856533073" boundaryCondition="false" constant="false"/>
-      <species id="IL4_R_lyso" name="IL4/R_lyso" compartment="comp1" initialAmount="0.161780431195927" boundaryCondition="false" constant="false"/>
-      <species id="IL4_R_JAK_SOCS3_i" name="IL4/R/JAK/SOCS3_i" compartment="comp1" initialAmount="9.97623666692649e-06" boundaryCondition="false" constant="false"/>
-      <species id="PTEN" name="PTEN" compartment="comp1" initialAmount="78503.5973392197" boundaryCondition="false" constant="false">
+      <species id="STAT6D_n" name="STAT6D_n" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="STAT6_n" name="STAT6_n" compartment="unnamed" initialConcentration="5" boundaryCondition="false" constant="false"/>
+      <species id="IL4_R_JAK_SOCS1_i" name="IL4/R/JAK/SOCS1_i" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="IL4_R_lyso" name="IL4/R_lyso" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="IL4_R_JAK_SOCS3_i" name="IL4/R/JAK/SOCS3_i" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="PTEN" name="PTEN" compartment="unnamed" initialConcentration="75355" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset</body>
         </notes>
       </species>
-      <species id="IRF4" name="IRF4" compartment="comp1" initialAmount="6498.42988508255" boundaryCondition="false" constant="false">
+      <species id="IRF4" name="IRF4" compartment="unnamed" initialConcentration="18703" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset</body>
         </notes>
       </species>
-      <species id="IRF4_prod" name="IRF4 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IL10" name="IL10" compartment="comp1" initialAmount="51761.7679807358" boundaryCondition="false" constant="false">
+      <species id="IRF4_prod" name="IRF4 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IL10" name="IL10" compartment="unnamed" initialConcentration="900" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">il-10 secretion/concentration from resting macrophages (about 5-50 pg/ml, take 20 pg/ml ~571 molecules/cell), see excel for more refs</body>
         </notes>
       </species>
-      <species id="JAK" name="JAK" compartment="comp1" initialAmount="97929.1902266935" boundaryCondition="false" constant="false"/>
-      <species id="IFNGR" name="IFNGR" compartment="comp1" initialAmount="84.1014595423832" boundaryCondition="false" constant="false"/>
-      <species id="IFNG_R" name="IFNG/R" compartment="comp1" initialAmount="0.689167887252771" boundaryCondition="false" constant="false"/>
-      <species id="IL4R" name="IL4R" compartment="comp1" initialAmount="21.9942028028821" boundaryCondition="false" constant="false"/>
-      <species id="IL4_R" name="IL4/R" compartment="comp1" initialAmount="1.01849639844417e-05" boundaryCondition="false" constant="false"/>
-      <species id="IL10_prod" name="IL10 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="ARG1_prod" name="ARG1 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="ARG1" name="ARG1" compartment="comp1" initialAmount="40450.8247317225" boundaryCondition="false" constant="false">
+      <species id="JAK" name="JAK" compartment="unnamed" initialConcentration="99122" boundaryCondition="false" constant="false"/>
+      <species id="IFNGR" name="IFNGR" compartment="unnamed" initialConcentration="93" boundaryCondition="false" constant="false"/>
+      <species id="IFNG_R" name="IFNG/R" compartment="unnamed" initialConcentration="1" boundaryCondition="false" constant="false"/>
+      <species id="IL4R" name="IL4R" compartment="unnamed" initialConcentration="16" boundaryCondition="false" constant="false"/>
+      <species id="IL4_R" name="IL4/R" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="IL10_prod" name="IL10 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="ARG1_prod" name="ARG1 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="ARG1" name="ARG1" compartment="unnamed" initialConcentration="1450000" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~900000 from liver dataset</body>
         </notes>
       </species>
-      <species id="IL12_prod" name="IL12 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="CXCL9_prod" name="CXCL9 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="miR3473_prod" name="miR3473 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="m3473b" name="m3473b" compartment="comp1" initialAmount="7827.88776197152" boundaryCondition="false" constant="false"/>
-      <species id="mPTEN" name="mPTEN" compartment="comp1" initialAmount="0.650376215666902" boundaryCondition="false" constant="false"/>
-      <species id="m3473b_mPTEN" name="m3473b/mPTEN" compartment="comp1" initialAmount="3.18190580371187" boundaryCondition="false" constant="false"/>
-      <species id="IRF1_prod" name="IRF1 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="iNOS_prod" name="iNOS prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="iNOS" name="iNOS" compartment="comp1" initialAmount="776.661075006544" boundaryCondition="false" constant="false"/>
-      <species id="m93" name="m93" compartment="comp1" initialAmount="380.397644819372" boundaryCondition="false" constant="false"/>
-      <species id="HIF1a" name="HIF1a" compartment="comp1" initialAmount="2377.66815311443" boundaryCondition="false" constant="false"/>
-      <species id="HIF2a" name="HIF2a" compartment="comp1" initialAmount="512.07924038947" boundaryCondition="false" constant="false"/>
-      <species id="HIF1a_prod" name="HIF1a prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="HIF2a_prod" name="HIF2a prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="PPARG_prod" name="PPARG prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="PPARG" name="PPARG" compartment="comp1" initialAmount="526.449634807826" boundaryCondition="false" constant="false">
+      <species id="IL12_prod" name="IL12 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="CXCL9_prod" name="CXCL9 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="miR3473_prod" name="miR3473 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="m3473b" name="m3473b" compartment="unnamed" initialConcentration="477" boundaryCondition="false" constant="false"/>
+      <species id="mPTEN" name="mPTEN" compartment="unnamed" initialConcentration="10" boundaryCondition="false" constant="false"/>
+      <species id="m3473b_mPTEN" name="m3473b/mPTEN" compartment="unnamed" initialConcentration="3" boundaryCondition="false" constant="false"/>
+      <species id="IRF1_prod" name="IRF1 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="iNOS_prod" name="iNOS prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="iNOS" name="iNOS" compartment="unnamed" initialConcentration="880" boundaryCondition="false" constant="false"/>
+      <species id="m93" name="m93" compartment="unnamed" initialConcentration="1437" boundaryCondition="false" constant="false"/>
+      <species id="HIF1a" name="HIF1a" compartment="unnamed" initialConcentration="1192" boundaryCondition="false" constant="false"/>
+      <species id="HIF2a" name="HIF2a" compartment="unnamed" initialConcentration="752" boundaryCondition="false" constant="false"/>
+      <species id="HIF1a_prod" name="HIF1a prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="HIF2a_prod" name="HIF2a prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="PPARG_prod" name="PPARG prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="PPARG" name="PPARG" compartment="unnamed" initialConcentration="1227" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">total pparg ~2500 (23584187 )</body>
         </notes>
       </species>
-      <species id="aPPARG" name="aPPARG" compartment="comp1" initialAmount="654.822248236112" boundaryCondition="false" constant="false"/>
-      <species id="HIF1b_n" name="HIF1b_n" compartment="comp1" initialAmount="14800.223526015" boundaryCondition="false" constant="false"/>
-      <species id="HIF2a_n" name="HIF2a_n" compartment="comp1" initialAmount="141.596495990557" boundaryCondition="false" constant="false"/>
-      <species id="HIF1a_n" name="HIF1a_n" compartment="comp1" initialAmount="671.417192939194" boundaryCondition="false" constant="false"/>
-      <species id="HIF2a_b_n" name="HIF2a/b_n" compartment="comp1" initialAmount="34.8469690451846" boundaryCondition="false" constant="false"/>
-      <species id="HIF1a_b_n" name="HIF1a/b_n" compartment="comp1" initialAmount="166.929504939833" boundaryCondition="false" constant="false"/>
-      <species id="IRF1" name="IRF1" compartment="comp1" initialAmount="114.798488789571" boundaryCondition="false" constant="false">
+      <species id="aPPARG" name="aPPARG" compartment="unnamed" initialConcentration="873" boundaryCondition="false" constant="false"/>
+      <species id="HIF1b_n" name="HIF1b_n" compartment="unnamed" initialConcentration="14868" boundaryCondition="false" constant="false"/>
+      <species id="HIF2a_n" name="HIF2a_n" compartment="unnamed" initialConcentration="209" boundaryCondition="false" constant="false"/>
+      <species id="HIF1a_n" name="HIF1a_n" compartment="unnamed" initialConcentration="331" boundaryCondition="false" constant="false"/>
+      <species id="HIF2a_b_n" name="HIF2a/b_n" compartment="unnamed" initialConcentration="52" boundaryCondition="false" constant="false"/>
+      <species id="HIF1a_b_n" name="HIF1a/b_n" compartment="unnamed" initialConcentration="82" boundaryCondition="false" constant="false"/>
+      <species id="IRF1" name="IRF1" compartment="unnamed" initialConcentration="997" boundaryCondition="false" constant="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
       </species>
-      <species id="PHD" name="PHD" compartment="comp1" initialAmount="13510.9215783464" boundaryCondition="false" constant="false"/>
-      <species id="O2" name="O2" compartment="comp1" initialConcentration="120400000" boundaryCondition="true" constant="true"/>
-      <species id="O2_aPHD" name="O2/aPHD" compartment="comp1" initialAmount="1530.14754304872" boundaryCondition="false" constant="false"/>
-      <species id="HIF1a_OH" name="HIF1a_OH" compartment="comp1" initialAmount="76.8269205436137" boundaryCondition="false" constant="false"/>
-      <species id="HIF2a_OH" name="HIF2a_OH" compartment="comp1" initialAmount="6.21752530350483" boundaryCondition="false" constant="false"/>
-      <species id="TNFa" name="TNFa" compartment="comp1" initialAmount="224269.446743408" boundaryCondition="false" constant="false">
+      <species id="PHD" name="PHD" compartment="unnamed" initialConcentration="12376" boundaryCondition="false" constant="false"/>
+      <species id="O2" name="O2" compartment="unnamed" initialConcentration="120400000" boundaryCondition="true" constant="true"/>
+      <species id="O2_aPHD" name="O2/aPHD" compartment="unnamed" initialConcentration="1405" boundaryCondition="false" constant="false"/>
+      <species id="HIF1a_OH" name="HIF1a_OH" compartment="unnamed" initialConcentration="35" boundaryCondition="false" constant="false"/>
+      <species id="HIF2a_OH" name="HIF2a_OH" compartment="unnamed" initialConcentration="8" boundaryCondition="false" constant="false"/>
+      <species id="TNFa" name="TNFa" compartment="unnamed" initialConcentration="384" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">assume tnfa exist predominantly in trimer form (and elisa measures trimer concentration)
 resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (26857615, 21636855,)</body>
         </notes>
       </species>
-      <species id="CXCL9" name="CXCL9" compartment="comp1" initialAmount="10.8877044164666" boundaryCondition="false" constant="false"/>
-      <species id="mIRF9" name="mIRF9" compartment="comp1" initialAmount="18.6009003167639" boundaryCondition="false" constant="false"/>
-      <species id="m93_mIRF9" name="m93/mIRF9" compartment="comp1" initialAmount="4.42272494795155" boundaryCondition="false" constant="false"/>
-      <species id="IRF9_prod" name="IRF9 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="PTEN_prod" name="PTEN prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="VEGF_prod" name="VEGF_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IFNG_prod" name="IFNG_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IL12" name="IL12" compartment="comp1" initialAmount="95.0891833407214" boundaryCondition="false" constant="false"/>
-      <species id="PHD_prod" name="PHD prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="miR93_prod" name="miR93 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IFNGR_prod" name="IFNGR prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="jak_prod" name="jak prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="aPHD" name="aPHD" compartment="comp1" initialAmount="19284.44266929" boundaryCondition="false" constant="false"/>
-      <species id="mCXCL10" name="mCXCL10" compartment="comp1" initialAmount="6.69912279429681e-05" boundaryCondition="false" constant="false"/>
-      <species id="pIL4_R_JAK_i" name="pIL4/R/JAK_i" compartment="comp1" initialAmount="1.11676319124857e-06" boundaryCondition="false" constant="false"/>
-      <species id="IL4_prod" name="IL4 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IL4_R_JAK_SOCS1" name="IL4/R/JAK/SOCS1" compartment="comp1" initialAmount="2.0539851975537" boundaryCondition="false" constant="false"/>
-      <species id="IL4_R_JAK_SOCS3" name="IL4/R/JAK/SOCS3" compartment="comp1" initialAmount="0.0443185997166947" boundaryCondition="false" constant="false"/>
-      <species id="TNFa_prod" name="TNFa prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="il4r_prod" name="il4r_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IRG1_prod" name="IRG1 prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IRG1" name="IRG1" compartment="comp1" initialAmount="30389.1583442616" boundaryCondition="false" constant="false">
+      <species id="CXCL9" name="CXCL9" compartment="unnamed" initialConcentration="30" boundaryCondition="false" constant="false"/>
+      <species id="mIRF9" name="mIRF9" compartment="unnamed" initialConcentration="5" boundaryCondition="false" constant="false"/>
+      <species id="m93_mIRF9" name="m93/mIRF9" compartment="unnamed" initialConcentration="5" boundaryCondition="false" constant="false"/>
+      <species id="IRF9_prod" name="IRF9 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="PTEN_prod" name="PTEN prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="VEGF_prod" name="VEGF_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IFNG_prod" name="IFNG_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IL12" name="IL12" compartment="unnamed" initialConcentration="151" boundaryCondition="false" constant="false"/>
+      <species id="PHD_prod" name="PHD prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="miR93_prod" name="miR93 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IFNGR_prod" name="IFNGR prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="jak_prod" name="jak prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="aPHD" name="aPHD" compartment="unnamed" initialConcentration="17680" boundaryCondition="false" constant="false"/>
+      <species id="mCXCL10" name="mCXCL10" compartment="unnamed" initialConcentration="2" boundaryCondition="false" constant="false"/>
+      <species id="pIL4_R_JAK_i" name="pIL4/R/JAK_i" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="IL4_prod" name="IL4 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IL4_R_JAK_SOCS1" name="IL4/R/JAK/SOCS1" compartment="unnamed" initialConcentration="2" boundaryCondition="false" constant="false"/>
+      <species id="IL4_R_JAK_SOCS3" name="IL4/R/JAK/SOCS3" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="TNFa_prod" name="TNFa prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="il4r_prod" name="il4r_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IRG1_prod" name="IRG1 prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IRG1" name="IRG1" compartment="unnamed" initialConcentration="2450" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~3500 per cell (from liver dataset 25470552)</body>
         </notes>
       </species>
-      <species id="Itaconate" name="Itaconate" compartment="comp1" initialAmount="11666252424.6565" boundaryCondition="false" constant="false"/>
-      <species id="Itaconate_prod" name="Itaconate prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IRF9T" name="IRF9T" compartment="comp1" initialConcentration="72478.8394525104" boundaryCondition="true" constant="false"/>
-      <species id="STAT3" name="STAT3" compartment="comp1" initialAmount="249446.266609348" boundaryCondition="false" constant="false">
+      <species id="Itaconate" name="Itaconate" compartment="unnamed" initialConcentration="65000000" boundaryCondition="false" constant="false"/>
+      <species id="Itaconate_prod" name="Itaconate prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IRF9T" name="IRF9T" compartment="unnamed" initialConcentration="17649" boundaryCondition="true" constant="false"/>
+      <species id="STAT3" name="STAT3" compartment="unnamed" initialConcentration="249039" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">liver dataset
 </body>
         </notes>
       </species>
-      <species id="pSTAT3" name="pSTAT3" compartment="comp1" initialAmount="23.0804636158215" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT3D" name="pSTAT3D" compartment="comp1" initialAmount="26.6377154499543" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT3D_n" name="pSTAT3D_n" compartment="comp1" initialAmount="88.8436981416412" boundaryCondition="false" constant="false"/>
-      <species id="STAT3D_n" name="STAT3D_n" compartment="comp1" initialAmount="26.6577178401465" boundaryCondition="false" constant="false"/>
-      <species id="STAT3_n" name="STAT3_n" compartment="comp1" initialAmount="68.3910534829674" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT1_3" name="pSTAT1/3" compartment="comp1" initialAmount="15.02725621306" boundaryCondition="false" constant="false"/>
-      <species id="pSTAT1_3_n" name="pSTAT1/3_n" compartment="comp1" initialAmount="150.628544017608" boundaryCondition="false" constant="false"/>
-      <species id="PI3K" name="PI3K" compartment="comp1" initialAmount="3639.69458484115" boundaryCondition="false" constant="false">
+      <species id="pSTAT3" name="pSTAT3" compartment="unnamed" initialConcentration="6" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT3D" name="pSTAT3D" compartment="unnamed" initialConcentration="2" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT3D_n" name="pSTAT3D_n" compartment="unnamed" initialConcentration="5" boundaryCondition="false" constant="false"/>
+      <species id="STAT3D_n" name="STAT3D_n" compartment="unnamed" initialConcentration="2" boundaryCondition="false" constant="false"/>
+      <species id="STAT3_n" name="STAT3_n" compartment="unnamed" initialConcentration="81" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT1_3" name="pSTAT1/3" compartment="unnamed" initialConcentration="78" boundaryCondition="false" constant="false"/>
+      <species id="pSTAT1_3_n" name="pSTAT1/3_n" compartment="unnamed" initialConcentration="775" boundaryCondition="false" constant="false"/>
+      <species id="PI3K" name="PI3K" compartment="unnamed" initialConcentration="3828" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">liver dataset
 </body>
         </notes>
       </species>
-      <species id="pPI3K" name="pPI3K" compartment="comp1" initialAmount="361.305415158848" boundaryCondition="false" constant="false"/>
-      <species id="AKT1" name="AKT1" compartment="comp1" initialAmount="117761.174110584" boundaryCondition="false" constant="false">
+      <species id="pPI3K" name="pPI3K" compartment="unnamed" initialConcentration="173" boundaryCondition="false" constant="false"/>
+      <species id="AKT1" name="AKT1" compartment="unnamed" initialConcentration="131577" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">liver dataset
 </body>
         </notes>
       </species>
-      <species id="AKT2" name="AKT2" compartment="comp1" initialAmount="39254.2480830345" boundaryCondition="false" constant="false">
+      <species id="AKT2" name="AKT2" compartment="unnamed" initialConcentration="43860" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">liver dataset
 </body>
         </notes>
       </species>
-      <species id="pAKT1" name="pAKT1" compartment="comp1" initialAmount="32239.825889417" boundaryCondition="false" constant="false"/>
-      <species id="pAKT2" name="pAKT2" compartment="comp1" initialAmount="10746.7519169654" boundaryCondition="false" constant="false"/>
-      <species id="IL10R_prod" name="IL10R_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IL10R" name="IL10R" compartment="comp1" initialAmount="5.70869330270156" boundaryCondition="false" constant="false">
+      <species id="pAKT1" name="pAKT1" compartment="unnamed" initialConcentration="18424" boundaryCondition="false" constant="false"/>
+      <species id="pAKT2" name="pAKT2" compartment="unnamed" initialConcentration="6141" boundaryCondition="false" constant="false"/>
+      <species id="IL10R_prod" name="IL10R_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IL10R" name="IL10R" compartment="unnamed" initialConcentration="4" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liverdataset and epd
 </body>
         </notes>
       </species>
-      <species id="IL10R_JAK" name="IL10R/JAK" compartment="comp1" initialAmount="172.260810152251" boundaryCondition="false" constant="false"/>
-      <species id="IL10_R_JAK" name="IL10/R/JAK" compartment="comp1" initialAmount="0.0132249636652651" boundaryCondition="false" constant="false"/>
-      <species id="pIL10_R_JAK" name="pIL10/R/JAK" compartment="comp1" initialAmount="0.274721575856285" boundaryCondition="false" constant="false"/>
-      <species id="pIL10_R_JAK_STAT3" name="pIL10/R/JAK/STAT3" compartment="comp1" initialAmount="7.21369909696385" boundaryCondition="false" constant="false"/>
-      <species id="IL10_R_lyso" name="IL10/R_lyso" compartment="comp1" initialAmount="1.88338602608756" boundaryCondition="false" constant="false"/>
-      <species id="IL10_R_JAK_SOCS1" name="IL10/R/JAK/SOCS1" compartment="comp1" initialAmount="20.435730426308" boundaryCondition="false" constant="false"/>
-      <species id="IL10_R" name="IL10/R" compartment="comp1" initialAmount="2.44823432349981" boundaryCondition="false" constant="false"/>
-      <species id="pAKT_t" name="pAKT_t" compartment="comp1" initialConcentration="42986.5778063824" boundaryCondition="true" constant="false"/>
-      <species id="mIL10" name="mIL10" compartment="comp1" initialAmount="171.436396019412" boundaryCondition="false" constant="false"/>
-      <species id="STAT1_prod" name="STAT1_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="miR146b_prod" name="miR146b prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="m146b" name="m146b" compartment="comp1" initialAmount="101.175791246434" boundaryCondition="false" constant="false">
+      <species id="IL10R_JAK" name="IL10R/JAK" compartment="unnamed" initialConcentration="759" boundaryCondition="false" constant="false"/>
+      <species id="IL10_R_JAK" name="IL10/R/JAK" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="pIL10_R_JAK" name="pIL10/R/JAK" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="pIL10_R_JAK_STAT3" name="pIL10/R/JAK/STAT3" compartment="unnamed" initialConcentration="6" boundaryCondition="false" constant="false"/>
+      <species id="IL10_R_lyso" name="IL10/R_lyso" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="IL10_R_JAK_SOCS1" name="IL10/R/JAK/SOCS1" compartment="unnamed" initialConcentration="1" boundaryCondition="false" constant="false"/>
+      <species id="IL10_R" name="IL10/R" compartment="unnamed" initialConcentration="4" boundaryCondition="false" constant="false"/>
+      <species id="pAKT_t" name="pAKT_t" compartment="unnamed" initialConcentration="24566" boundaryCondition="true" constant="false"/>
+      <species id="mIL10" name="mIL10" compartment="unnamed" initialConcentration="1" boundaryCondition="false" constant="false"/>
+      <species id="STAT1_prod" name="STAT1_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="miR146b_prod" name="miR146b prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="m146b" name="m146b" compartment="unnamed" initialConcentration="131" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">abundance ~10-1000 from 25505246</body>
         </notes>
       </species>
-      <species id="pre_m146b" name="pre-m146b" compartment="comp1" initialAmount="99.9550100990869" boundaryCondition="false" constant="false"/>
-      <species id="mir155_prod" name="mir155_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="pre_m155" name="pre-m155" compartment="comp1" initialAmount="1487.15937198475" boundaryCondition="false" constant="false"/>
-      <species id="m155" name="m155" compartment="comp1" initialAmount="1358.15557739395" boundaryCondition="false" constant="false">
+      <species id="pre_m146b" name="pre-m146b" compartment="unnamed" initialConcentration="66" boundaryCondition="false" constant="false"/>
+      <species id="mir155_prod" name="mir155_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="pre_m155" name="pre-m155" compartment="unnamed" initialConcentration="845" boundaryCondition="false" constant="false"/>
+      <species id="m155" name="m155" compartment="unnamed" initialConcentration="844" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~1000  estimated from (18158130)</body>
         </notes>
       </species>
-      <species id="cebpb_prod" name="cebpb_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="CEBPB" name="CEBPB" compartment="comp1" initialAmount="117175.08645023" boundaryCondition="false" constant="false">
+      <species id="cebpb_prod" name="cebpb_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="CEBPB" name="CEBPB" compartment="unnamed" initialConcentration="98868" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~100000, from liver dataset (25470552)
 </body>
         </notes>
       </species>
-      <species id="TNFR" name="TNFR" compartment="comp1" initialAmount="37.131588654008" boundaryCondition="false" constant="false">
+      <species id="TNFR" name="TNFR" compartment="unnamed" initialConcentration="1405" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~1500 from 2170559 (calculated based on trimeric tnfa as ligands)</body>
         </notes>
       </species>
-      <species id="TNFa_R" name="TNFa/R" compartment="comp1" initialAmount="116.998804626464" boundaryCondition="false" constant="false"/>
-      <species id="TNFa_R_lyso" name="TNFa/R_lyso" compartment="comp1" initialAmount="5.84994367923884" boundaryCondition="false" constant="false"/>
-      <species id="RIP1" name="RIP1" compartment="comp1" initialAmount="7706.91590405841" boundaryCondition="false" constant="false">
+      <species id="TNFa_R" name="TNFa/R" compartment="unnamed" initialConcentration="8" boundaryCondition="false" constant="false"/>
+      <species id="TNFa_R_lyso" name="TNFa/R_lyso" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="RIP1" name="RIP1" compartment="unnamed" initialConcentration="134379" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liverdataset</body>
         </notes>
       </species>
-      <species id="aRIP1" name="aRIP1" compartment="comp1" initialAmount="703.715034146327" boundaryCondition="false" constant="false"/>
-      <species id="rip_prod" name="rip_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="A20" name="A20" compartment="comp1" initialAmount="5787.68175146157" boundaryCondition="false" constant="false">
+      <species id="aRIP1" name="aRIP1" compartment="unnamed" initialConcentration="886" boundaryCondition="false" constant="false"/>
+      <species id="rip_prod" name="rip_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="A20" name="A20" compartment="unnamed" initialConcentration="3000" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~3000 from  liverdataset
 </body>
         </notes>
       </species>
-      <species id="tnfr_prod" name="tnfr_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="TAK1" name="TAK1" compartment="comp1" initialAmount="14773.5089101441" boundaryCondition="false" constant="false">
+      <species id="tnfr_prod" name="tnfr_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="TAK1" name="TAK1" compartment="unnamed" initialConcentration="14869" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset
 </body>
         </notes>
       </species>
-      <species id="pTAK1" name="pTAK1" compartment="comp1" initialAmount="227.491089855726" boundaryCondition="false" constant="false"/>
-      <species id="p38" name="p38" compartment="comp1" initialAmount="658156.895781099" boundaryCondition="false" constant="false">
+      <species id="pTAK1" name="pTAK1" compartment="unnamed" initialConcentration="132" boundaryCondition="false" constant="false"/>
+      <species id="p38" name="p38" compartment="unnamed" initialConcentration="675778" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liverdataset
 </body>
         </notes>
       </species>
-      <species id="pp38" name="pp38" compartment="comp1" initialAmount="17432.1169324196" boundaryCondition="false" constant="false"/>
-      <species id="pp38_n" name="pp38_n" compartment="comp1" initialAmount="24412.9872864854" boundaryCondition="false" constant="false"/>
-      <species id="JNK" name="JNK" compartment="comp1" initialAmount="14170.6958306458" boundaryCondition="false" constant="false">
+      <species id="pp38" name="pp38" compartment="unnamed" initialConcentration="10093" boundaryCondition="false" constant="false"/>
+      <species id="pp38_n" name="pp38_n" compartment="unnamed" initialConcentration="14131" boundaryCondition="false" constant="false"/>
+      <species id="JNK" name="JNK" compartment="unnamed" initialConcentration="14521" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liverdataset
 </body>
         </notes>
       </species>
-      <species id="pJNK" name="pJNK" compartment="comp1" initialAmount="249.295534352679" boundaryCondition="false" constant="false"/>
-      <species id="IKK" name="IKK" compartment="comp1" initialAmount="89928.3064415588" boundaryCondition="false" constant="false">
+      <species id="pJNK" name="pJNK" compartment="unnamed" initialConcentration="144" boundaryCondition="false" constant="false"/>
+      <species id="IKK" name="IKK" compartment="unnamed" initialConcentration="100324" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">resting level ~120000 (liver dataset)
 </body>
         </notes>
       </species>
-      <species id="pIKK" name="pIKK" compartment="comp1" initialAmount="232.800167950413" boundaryCondition="false" constant="false"/>
-      <species id="ikk_prod" name="ikk_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="pJNK_n" name="pJNK_n" compartment="comp1" initialAmount="582.008635001357" boundaryCondition="false" constant="false"/>
-      <species id="ERK" name="ERK" compartment="comp1" initialAmount="1997208.61825685" boundaryCondition="false" constant="false">
+      <species id="pIKK" name="pIKK" compartment="unnamed" initialConcentration="87" boundaryCondition="false" constant="false"/>
+      <species id="ikk_prod" name="ikk_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="pJNK_n" name="pJNK_n" compartment="unnamed" initialConcentration="337" boundaryCondition="false" constant="false"/>
+      <species id="ERK" name="ERK" compartment="unnamed" initialConcentration="2000000" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset (erk1+erk2)
 </body>
         </notes>
       </species>
-      <species id="pERK" name="pERK" compartment="comp1" initialAmount="1324.22525969857" boundaryCondition="false" constant="false"/>
-      <species id="pERK_n" name="pERK_n" compartment="comp1" initialAmount="4643.15648343671" boundaryCondition="false" constant="false"/>
-      <species id="VEGFR1" name="VEGFR1" compartment="comp1" initialAmount="111.926102336492" boundaryCondition="false" constant="false">
+      <species id="pERK" name="pERK" compartment="unnamed" initialConcentration="706" boundaryCondition="false" constant="false"/>
+      <species id="pERK_n" name="pERK_n" compartment="unnamed" initialConcentration="2470" boundaryCondition="false" constant="false"/>
+      <species id="VEGFR1" name="VEGFR1" compartment="unnamed" initialConcentration="5200" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">estimated from  29263797 and liver dataset
 </body>
         </notes>
       </species>
-      <species id="V165a_R1" name="V165a/R1" compartment="comp1" initialAmount="14.3688545280709" boundaryCondition="false" constant="false"/>
-      <species id="pV165a_R1" name="pV165a/R1" compartment="comp1" initialAmount="5.74705627116071" boundaryCondition="false" constant="false"/>
-      <species id="V165_R1_lyso" name="V165/R1_lyso" compartment="comp1" initialAmount="18.7316006455014" boundaryCondition="false" constant="false"/>
-      <species id="V165b" name="V165b" compartment="comp1" initialAmount="15575.329945404" boundaryCondition="false" constant="false"/>
-      <species id="V165b_R1" name="V165b/R1" compartment="comp1" initialAmount="16.6032744244871" boundaryCondition="false" constant="false"/>
-      <species id="pV165a_R1_STAT3" name="pV165a/R1/STAT3" compartment="comp1" initialAmount="19.1141113631331" boundaryCondition="false" constant="false"/>
-      <species id="R1_prod" name="R1_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="p65" name="p65" compartment="comp1" initialAmount="41705.2844739864" boundaryCondition="false" constant="false">
+      <species id="V165a_R1" name="V165a/R1" compartment="unnamed" initialConcentration="8" boundaryCondition="false" constant="false"/>
+      <species id="pV165a_R1" name="pV165a/R1" compartment="unnamed" initialConcentration="3" boundaryCondition="false" constant="false"/>
+      <species id="V165_R1_lyso" name="V165/R1_lyso" compartment="unnamed" initialConcentration="18" boundaryCondition="false" constant="false"/>
+      <species id="V165b" name="V165b" compartment="unnamed" initialConcentration="400" boundaryCondition="false" constant="false"/>
+      <species id="V165b_R1" name="V165b/R1" compartment="unnamed" initialConcentration="20" boundaryCondition="false" constant="false"/>
+      <species id="pV165a_R1_STAT3" name="pV165a/R1/STAT3" compartment="unnamed" initialConcentration="11" boundaryCondition="false" constant="false"/>
+      <species id="R1_prod" name="R1_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="p65" name="p65" compartment="unnamed" initialConcentration="75892" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset
 </body>
         </notes>
       </species>
-      <species id="p50" name="p50" compartment="comp1" initialAmount="15.1241026565348" boundaryCondition="false" constant="false">
+      <species id="p50" name="p50" compartment="unnamed" initialConcentration="4" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset</body>
         </notes>
       </species>
-      <species id="nfkb_prod" name="nfkb prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="NFKB" name="NFKB" compartment="comp1" initialAmount="609.624303237107" boundaryCondition="false" constant="false"/>
-      <species id="NFKB_n" name="NFKB_n" compartment="comp1" initialAmount="2167.4615622559" boundaryCondition="false" constant="false"/>
-      <species id="IKB_n" name="IKB_n" compartment="comp1" initialAmount="18.8423453785239" boundaryCondition="false" constant="false"/>
-      <species id="IKB_NFKB_n" name="IKB/NFKB_n" compartment="comp1" initialAmount="51.0620843132658" boundaryCondition="false" constant="false"/>
-      <species id="IKB_NFKB" name="IKB/NFKB" compartment="comp1" initialAmount="67383.3461078267" boundaryCondition="false" constant="false"/>
-      <species id="IKB" name="IKB" compartment="comp1" initialAmount="559.135102750521" boundaryCondition="false" constant="false"/>
-      <species id="Ikb_prod" name="Ikb prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="pIKB" name="pIKB" compartment="comp1" initialAmount="376.632192185051" boundaryCondition="false" constant="false"/>
-      <species id="p50_n" name="p50_n" compartment="comp1" initialAmount="210.317095390722" boundaryCondition="false" constant="false"/>
-      <species id="CREB" name="CREB" compartment="comp1" initialAmount="66869.510998969" boundaryCondition="false" constant="false">
+      <species id="nfkb_prod" name="nfkb prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="NFKB" name="NFKB" compartment="unnamed" initialConcentration="277" boundaryCondition="false" constant="false"/>
+      <species id="NFKB_n" name="NFKB_n" compartment="unnamed" initialConcentration="931" boundaryCondition="false" constant="false"/>
+      <species id="IKB_n" name="IKB_n" compartment="unnamed" initialConcentration="25" boundaryCondition="false" constant="false"/>
+      <species id="IKB_NFKB_n" name="IKB/NFKB_n" compartment="unnamed" initialConcentration="29" boundaryCondition="false" constant="false"/>
+      <species id="IKB_NFKB" name="IKB/NFKB" compartment="unnamed" initialConcentration="68307" boundaryCondition="false" constant="false"/>
+      <species id="IKB" name="IKB" compartment="unnamed" initialConcentration="435" boundaryCondition="false" constant="false"/>
+      <species id="Ikb_prod" name="Ikb prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="pIKB" name="pIKB" compartment="unnamed" initialConcentration="143" boundaryCondition="false" constant="false"/>
+      <species id="p50_n" name="p50_n" compartment="unnamed" initialConcentration="50" boundaryCondition="false" constant="false"/>
+      <species id="CREB" name="CREB" compartment="unnamed" initialConcentration="75239" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liverdataset
 </body>
         </notes>
       </species>
-      <species id="pCREB" name="pCREB" compartment="comp1" initialAmount="13130.4890010314" boundaryCondition="false" constant="false"/>
-      <species id="ap1_prod" name="ap1_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="AP1_n" name="AP1_n" compartment="comp1" initialAmount="2087.62648966686" boundaryCondition="false" constant="false">
+      <species id="pCREB" name="pCREB" compartment="unnamed" initialConcentration="4761" boundaryCondition="false" constant="false"/>
+      <species id="ap1_prod" name="ap1_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="AP1_n" name="AP1_n" compartment="unnamed" initialConcentration="864" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liverdataset (based on jun level)
 </body>
         </notes>
       </species>
-      <species id="INT1" name="INT1" compartment="comp1" initialAmount="999.506982460471" boundaryCondition="false" constant="false">
+      <species id="INT1" name="INT1" compartment="unnamed" initialConcentration="995" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">default level 1000
 </body>
         </notes>
       </species>
-      <species id="aINT1" name="aINT1" compartment="comp1" initialAmount="0.493017539531331" boundaryCondition="false" constant="false"/>
-      <species id="egr2_prod" name="egr2_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="EGR2" name="EGR2" compartment="comp1" initialAmount="21.2825490096602" boundaryCondition="false" constant="false">
+      <species id="aINT1" name="aINT1" compartment="unnamed" initialConcentration="5" boundaryCondition="false" constant="false"/>
+      <species id="egr2_prod" name="egr2_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="EGR2" name="EGR2" compartment="unnamed" initialConcentration="7100" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~7000 from epd peptracker
 
 </body>
         </notes>
       </species>
-      <species id="a20_prod" name="a20_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="INT2" name="INT2" compartment="comp1" initialAmount="993.301975561118" boundaryCondition="false" constant="false"/>
-      <species id="aINT2" name="aINT2" compartment="comp1" initialAmount="6.69802443888262" boundaryCondition="false" constant="false"/>
-      <species id="il1b_prod" name="il1b_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IL1b" name="IL1b" compartment="comp1" initialAmount="1163.48293915727" boundaryCondition="false" constant="false">
+      <species id="a20_prod" name="a20_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="INT2" name="INT2" compartment="unnamed" initialConcentration="995" boundaryCondition="false" constant="false"/>
+      <species id="aINT2" name="aINT2" compartment="unnamed" initialConcentration="5" boundaryCondition="false" constant="false"/>
+      <species id="il1b_prod" name="il1b_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IL1b" name="IL1b" compartment="unnamed" initialConcentration="845" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">For il-1b, resting is about 25 pg/ml (from 28298525, 25320279 ) = ~875 molecules/cell</body>
         </notes>
       </species>
-      <species id="il1r_prod" name="il1r_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="IL1R" name="IL1R" compartment="comp1" initialAmount="2304.80662905239" boundaryCondition="false" constant="false"/>
-      <species id="IL1b_R" name="IL1b/R" compartment="comp1" initialAmount="3.90069627504475" boundaryCondition="false" constant="false"/>
-      <species id="IRAK4" name="IRAK4" compartment="comp1" initialAmount="363743.012750619" boundaryCondition="false" constant="false">
+      <species id="il1r_prod" name="il1r_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="IL1R" name="IL1R" compartment="unnamed" initialConcentration="625" boundaryCondition="false" constant="false"/>
+      <species id="IL1b_R" name="IL1b/R" compartment="unnamed" initialConcentration="1" boundaryCondition="false" constant="false"/>
+      <species id="IRAK4" name="IRAK4" compartment="unnamed" initialConcentration="199999" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~200000 from liverdataset
 </body>
         </notes>
       </species>
-      <species id="IL1b_R_lyso" name="IL1b/R_lyso" compartment="comp1" initialAmount="0.0709019544201735" boundaryCondition="false" constant="false"/>
-      <species id="irak4_prod" name="irak4_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="TRAF6" name="TRAF6" compartment="comp1" initialAmount="2982.20480667625" boundaryCondition="false" constant="false">
+      <species id="IL1b_R_lyso" name="IL1b/R_lyso" compartment="unnamed" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="irak4_prod" name="irak4_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="TRAF6" name="TRAF6" compartment="unnamed" initialConcentration="2995" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">~3000 from liverdataset
 </body>
         </notes>
       </species>
-      <species id="IRF5" name="IRF5" compartment="comp1" initialAmount="69995.7519037811" boundaryCondition="false" constant="false">
+      <species id="IRF5" name="IRF5" compartment="unnamed" initialConcentration="146962" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">IC from liver dataset
 </body>
         </notes>
       </species>
-      <species id="aIRF5" name="aIRF5" compartment="comp1" initialAmount="80086.2480962196" boundaryCondition="false" constant="false"/>
-      <species id="aTRAF6" name="aTRAF6" compartment="comp1" initialAmount="17.7951933237633" boundaryCondition="false" constant="false"/>
-      <species id="IL1Ra" name="IL1Ra" compartment="comp1" initialAmount="44028.0632554165" boundaryCondition="false" constant="false">
+      <species id="aIRF5" name="aIRF5" compartment="unnamed" initialConcentration="3120" boundaryCondition="false" constant="false"/>
+      <species id="aTRAF6" name="aTRAF6" compartment="unnamed" initialConcentration="5" boundaryCondition="false" constant="false"/>
+      <species id="IL1Ra" name="IL1Ra" compartment="unnamed" initialConcentration="11000" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">resting is about 500 pg/ml (from 19922413) =~17500</body>
         </notes>
       </species>
-      <species id="IL1Ra_R" name="IL1Ra/R" compartment="comp1" initialAmount="176.442799326446" boundaryCondition="false" constant="false"/>
-      <species id="il1ra_prod" name="il1ra_prod" compartment="comp1" initialConcentration="1" boundaryCondition="true" constant="true"/>
-      <species id="pIRAK4" name="pIRAK4" compartment="comp1" initialAmount="55.3112884791249" boundaryCondition="false" constant="false"/>
-      <species id="GSK3b" name="GSK3b" compartment="comp1" initialAmount="47975.4264859869" boundaryCondition="false" constant="false">
+      <species id="IL1Ra_R" name="IL1Ra/R" compartment="unnamed" initialConcentration="16" boundaryCondition="false" constant="false"/>
+      <species id="il1ra_prod" name="il1ra_prod" compartment="unnamed" initialConcentration="1" boundaryCondition="true" constant="true"/>
+      <species id="pIRAK4" name="pIRAK4" compartment="unnamed" initialConcentration="1" boundaryCondition="false" constant="false"/>
+      <species id="GSK3b" name="GSK3b" compartment="unnamed" initialConcentration="87270" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">from liver dataset
 </body>
         </notes>
       </species>
-      <species id="pGSK3b" name="pGSK3b" compartment="comp1" initialAmount="92024.5735140134" boundaryCondition="false" constant="false">
+      <species id="pGSK3b" name="pGSK3b" compartment="unnamed" initialConcentration="52730" boundaryCondition="false" constant="false">
         <notes>
           <body xmlns="http://www.w3.org/1999/xhtml">serine 9 phosphorylated (inactive form)</body>
         </notes>
@@ -1768,9 +1764,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v44" name="v44" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="IL10_prod" stoichiometry="1"/>
@@ -2010,9 +2004,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v46" name="v46" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="IL12_prod" stoichiometry="1"/>
@@ -2140,9 +2132,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v48" name="v48" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="miR3473_prod" stoichiometry="1"/>
@@ -2456,9 +2446,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v56" name="v56" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="PPARG_prod" stoichiometry="1"/>
@@ -2816,9 +2804,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v72" name="v72" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="VEGF_prod" stoichiometry="1"/>
@@ -3524,9 +3510,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v98" name="v98" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="ARG1" stoichiometry="1"/>
@@ -3580,9 +3564,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v101" name="v101" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="SOCS1" stoichiometry="1"/>
@@ -5100,9 +5082,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v162" name="v162" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="pre_m146b" stoichiometry="1"/>
@@ -5139,9 +5119,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v164" name="v164" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="mir155_prod" stoichiometry="1"/>
@@ -5263,9 +5241,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v168" name="v168" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="CEBPB" stoichiometry="1"/>
@@ -5331,9 +5307,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v170" name="v170" reversible="true" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="TNFR" stoichiometry="1"/>
@@ -5626,9 +5600,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v184" name="v184" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="pp38" stoichiometry="1"/>
@@ -7025,9 +6997,7 @@ resting tnfa concentration is about 15-60 pg/ml or  ~164-640 molecules/cell (268
       </reaction>
       <reaction id="v243" name="v243" reversible="false" fast="false">
         <notes>
-          <body xmlns="http://www.w3.org/1999/xhtml">
-            <body xmlns="http://www.w3.org/1999/xhtml"/>
-          </body>
+          <body xmlns="http://www.w3.org/1999/xhtml"/>
         </notes>
         <listOfReactants>
           <speciesReference species="IL1b_R" stoichiometry="1"/>

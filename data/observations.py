@@ -8,11 +8,11 @@ range_12h_60mStep = list(range(3*int(60/t2m),12*int(60/t2m),int(60/t2m))) # span
 
 
 packages = {
-	'P11' : ['eq_mg','R05_nMg_f','Q21_Mg'], # mg entry and equalibrium
-	'P12' : ['Q21_M1','Q21_eq_trpm','Q21_eq_h3s10'],
-	'P1': [],
+	'M11' : ['eq_mg','R05_nMg_f','Q21_Mg'], # mg entry and equalibrium
+	'M12' : ['Q21_M1','Q21_eq_trpm','Q21_eq_h3s10'],
+	'M1': [],
 	# R05_mg_n (mg extrusion)
-	'P21' : ['eq_IL8','M05_IT'],
+	'IL8' : ['eq_IL8','M05_IT'],
 	#'M18','M05_NFKBn'
 
 	'P31' : ['S12_IKBa_mg','S12_NFKBn_mg','Z19_IKB_NFKB','Q21_Mg_IL8','Q21_14d'], # Mg regulate

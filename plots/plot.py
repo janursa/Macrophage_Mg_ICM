@@ -27,17 +27,17 @@ def reload_params(params): # apply inferred params
         inferred_params = json.load(file)
     params = {**params,**inferred_params}
     return params
-params = reload_params(params)
+# params = reload_params(params)
 print(params)
 # params['n_h3s10_il8_p'] = 4
 print('t2m: {} '.format(t2m))
 #params['IL8'] = 1
 #params['IL8R'] = 100
 flags = [
-    # 'P1',
-    # 'P2',
+    'P1',
+    'P2',
     'LPS',
-    # 'P3'
+    'P3'
 ]
 
 # params['kd_lps_irak_p'] = 1

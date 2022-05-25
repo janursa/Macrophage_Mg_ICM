@@ -159,19 +159,21 @@ class Macrophage:
   def run_sbml_model_recursive(model_sbml,selections,duration,params={},study_tag='',activation=False):
     """ run sbml model in a recursive way by change the step size
     """
-    jj = duration
-    
+
+    attp = 0
+    steps = duration
     while True:
-      steps = jj
       try:
-          results = Macrophage.run_sbml_model(model_sbml=model_sbml,selections=selections,duration=duration,params=params,study_tag=study_tag,activation=activation, steps = steps)
-          break
+        results = Macrophage.run_sbml_model(model_sbml=model_sbml,selections=selections,duration=duration,params=params,study_tag=study_tag,activation=activation, steps = steps)
+        break
       except Exception:
-          jj-=1
+        attp+=1
           
-      if jj < duration/2:
+      if attp > 10 :
           print('Invalid parameter set')
+          print(params)
           raise tools.InvalidParams('run model didnt converge')
+      steps = random.randint(int(duration/2),duration)
     
     return results
   def calculate_cost(self,results):
@@ -199,6 +201,7 @@ class Macrophage:
     return costs,np.mean(mean_errors)
 
   def simulate(self,study_tag,params,inputs,measurement_scheme,duration,activation):
+      
     if duration == None:
       raise ValueError('Value of duration is none')
     target_keys = list(measurement_scheme.keys())
@@ -216,8 +219,6 @@ class Macrophage:
       for measured_time in measured_times:
         measured_times_indices.append(tools.indexing(measured_time,results_raw['time'])) 
       results[key] = results_raw[key][measured_times_indices]
-    # print('inputs:',inputs)
-    # print('results:',results)
     return results
   def run(self,params,studies):
     flag = 1

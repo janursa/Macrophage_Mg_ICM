@@ -222,11 +222,16 @@
     </listOfSpecies>
     <listOfParameters>
       <parameter id="F_LPS_irak" value="1" constant="false"/>
-      <parameter id="kd_lps_irak_p" value="10.67" constant="true"/>
-      <parameter id="LPS_0" value="0" constant="true"/>
-      <parameter id="n_lps_irak_p" value="9.82" constant="true"/>
+      <parameter id="k_lps_irak_p" value="631249" constant="true"/>
+      <parameter id="kd_lps_irak_p" value="270" constant="true"/>
       <parameter id="nIKB" value="1" constant="false"/>
       <parameter id="IKB_0" value="435" constant="false"/>
+      <parameter id="nIL1b" value="1" constant="false"/>
+      <parameter id="IL1b_0" value="845" constant="false"/>
+      <parameter id="nIL10" value="1" constant="false"/>
+      <parameter id="IL10_0" value="900" constant="false"/>
+      <parameter id="nTNFa" value="1" constant="false"/>
+      <parameter id="TNFa_0" value="384" constant="false"/>
       <parameter id="kf1" value="1.6e-07" constant="true"/>
       <parameter id="kr1" value="0.01" constant="true"/>
       <parameter id="kf2" value="3" constant="true"/>
@@ -548,12 +553,28 @@
       <parameter id="k256" value="1" constant="true"/>
       <parameter id="k257" value="1.04e-10" constant="true"/>
       <parameter id="k258" value="0.1" constant="true"/>
-      <parameter id="k_lps_d" value="0.9" constant="true"/>
+      <parameter id="k_lps_d" value="0.199" constant="true"/>
+      <parameter id="LPS_0" value="0" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="IKB_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> IKB </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL1b_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL1b </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL10_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL10 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="TNFa_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> TNFa </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -581,21 +602,21 @@
       <assignmentRule variable="F_LPS_irak">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <power/>
+            <plus/>
+            <cn type="integer"> 1 </cn>
             <apply>
               <divide/>
+              <apply>
+                <times/>
+                <ci> k_lps_irak_p </ci>
+                <ci> LPS </ci>
+              </apply>
               <apply>
                 <plus/>
                 <ci> LPS </ci>
                 <ci> kd_lps_irak_p </ci>
               </apply>
-              <apply>
-                <plus/>
-                <ci> LPS_0 </ci>
-                <ci> kd_lps_irak_p </ci>
-              </apply>
             </apply>
-            <ci> n_lps_irak_p </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -605,6 +626,33 @@
             <divide/>
             <ci> IKB </ci>
             <ci> IKB_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIL1b">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL1b </ci>
+            <ci> IL1b_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIL10">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL10 </ci>
+            <ci> IL10_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nTNFa">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> TNFa </ci>
+            <ci> TNFa_0 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -7294,6 +7342,60 @@
           <eventAssignment variable="IKB_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <ci> IKB </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="_E1" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="IL1b_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> IL1b </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="_E2" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="IL10_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> IL10 </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="_E3" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="TNFa_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> TNFa </ci>
             </math>
           </eventAssignment>
         </listOfEventAssignments>

@@ -164,7 +164,7 @@ def activation_LPS():
     ## applies LPS to activate LPS model
     model = te.loadSBMLModel(dirs.dir_LPS_model)
     # apply LPS (1.0 μg/ml) for 24h
-    inputs = {'LPS':1000}
+    inputs = {'LPS':10000}
     species_IDs = model.getFloatingSpeciesIds()
     Macrophage.run_sbml_model(model_sbml = model,params = {**inputs},duration = 24*60, selections = ['time']+species_IDs)
 

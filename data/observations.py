@@ -1,3 +1,10 @@
+import sys
+import os
+from pathlib import Path
+dir_file = Path(__file__).resolve().parent
+main_dir = os.path.join(dir_file,'..')
+sys.path.insert(0,main_dir)
+from tools import tools
 
 t2m = 1 # relationship between each simulation time and minute
 
@@ -12,7 +19,8 @@ packages = {
 	'M12' : ['Q21_M1','Q21_eq_trpm','Q21_eq_h3s10'],
 	'M1': [],
 	# R05_mg_n (mg extrusion)
-	'IL8' : ['eq_IL8','M05_IT'],
+	'IL8' : ['eq_IL8','M05_IT','M05_NFKBn'],
+    # 'IL8' : ['M05_IT'],
 	#'M18','M05_NFKBn'
 
 	'P31' : ['S12_IKBa_mg','S12_NFKBn_mg','Z19_IKB_NFKB','Q21_Mg_IL8','Q21_14d'], # Mg regulate
@@ -23,18 +31,48 @@ packages = {
     ##F18_cytokines
     ##Z19_IL10
     #S12_LPS
-    'LPS':['S12_LPS']
+    'LPS':['S12_LPS','B20_LPS']
+    #B20_LPS
 
 }
 
 
 observations = {
+    'B20_LPS': { # LPS stimulates cytokine production
+        'IDs': ['ctr','stim'],
+        'activation': False,
+        'duration':int(13*3*60/t2m),
+        'measurement_scheme': {
+            'nTNFa': [int(13*3*60/t2m)]
+        },
+        'ctr': {
+            'inputs': {
+            },
+            'expectations': {
+                'nTNFa':{'mean':[1],
+                        'std':[0],
+                        'pvalue':[None]} #normalized format
+            }
+        },
+        'stim': {
+            'inputs': {
+             'LPS': 10*1000,
+             'IFNG':50*tools.c_2_ac['IFNG']
+            },
+            'expectations': {
+                'nTNFa':{'mean':[200],
+                        'std':[0],
+                        'pvalue':[None]} #normalized format
+            }
+        },
+    },
     'S12_LPS': { # mg influences NFkB level
         'IDs': ['LPS'],
         'activation': False,
-        'duration':int(8*60/t2m),
+        'duration':int(24*60/t2m),
         'measurement_scheme': {
-            'nIKB': [int(ii*60/t2m) for ii in [0,1,2,8]]
+            'nIKB': [int(ii*60/t2m) for ii in [0,1,2,8]],
+            'nTNFa': [int(ii*60/t2m) for ii in [0,1,2,4,8,24]]
         },
         'LPS': {
             'inputs': {
@@ -43,7 +81,11 @@ observations = {
             'expectations': {
                 'nIKB':{'mean':[1,15,8,4],
                         'std':[0,0,0,0],
-                        'pvalue':['ns','ns','ns','ns']} #normalized format
+                        'pvalue':['ns','ns','ns','ns']},
+                'nTNFa':{'mean':[1,27,8,7,4,5],
+                        'std':[0,0,0,0,0,0],
+                        'pvalue':['ns','ns','ns','ns','ns','ns']}
+                         #normalized format
             }
         },
     },
@@ -361,7 +403,7 @@ observations = {
     },
 	'M05_IT': { # IL8 regulate IRAK4 and TRAF6
         'IDs': ['ctr','100'],
-        'activation': True,
+        'activation': False,
         'duration':int(2*60/t2m),
         'measurement_scheme': {
             'nIRAK4': [int(2*60/t2m)],
@@ -400,7 +442,7 @@ observations = {
     },
     'M05_NFKBn': { # IL8 regulate NFKB
         'IDs': ['ctr','0dot1','1','10','100','1000'],
-        'activation': True,
+        'activation': False,
         'duration':int(2*60/t2m),
         'measurement_scheme': {
             'nNFKB_n': [int(2*60/t2m)],
@@ -474,11 +516,11 @@ observations = {
 	'M18': { # IL8 regulate IL4R, IFNGR, and IL-1b
         'IDs': ['ctr','0dot01','0dot1','1','10'],
         # 'IDs': ['ctr','10'],
-        'activation': True,
+        'activation': False,
         'duration':int(24*60/t2m),
         'measurement_scheme': {
-            'nIFNGR': [int(24*60/t2m)],
-            'nIL4R': [int(24*60/t2m)],
+            # 'nIFNGR': [int(24*60/t2m)],
+            # # 'nIL4R': [int(24*60/t2m)],
             'nIL1b': [int(24*60/t2m)],
             'nIL10': [int(24*60/t2m)],
             'nTNFa': [int(24*60/t2m)],
@@ -977,8 +1019,9 @@ observations = {
 		'duration':24*int(60/t2m), # hours
 		'activation': False,
 		'measurement_scheme':{
-			'nIL8':  range_24h_60mStep,
-			'nIL8R':  range_24h_60mStep
+			'nIL8_m':  range_24h_60mStep,
+			'nIL8_R':  range_24h_60mStep,
+            'nIFNGR':  range_24h_60mStep
 		},
 		'IDs': ['ctr'],
 		'ctr':{
@@ -986,12 +1029,15 @@ observations = {
 						
 					},
 			'expectations': {
-				'nIL8': {
+				'nIL8_m': {
 					'mean':[1 for i in range_24h_60mStep]
 				},
-				'nIL8R': {
+				'nIL8_R': {
 					'mean':[1 for i in range_24h_60mStep]
-				}
+				},
+                'nIFNGR': {
+                    'mean':[1 for i in range_24h_60mStep]
+                }
 			}
 		}
 	},

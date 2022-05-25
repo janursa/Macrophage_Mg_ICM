@@ -220,47 +220,49 @@
       <species id="GSK3b" compartment="unnamed" initialAmount="87270" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pGSK3b" compartment="unnamed" initialAmount="52730" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="LPS" compartment="comp1" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="IL8" compartment="default_compartment" initialAmount="7.40856822115139" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8R_prod" compartment="default_compartment" initialConcentration="0" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
-      <species id="IL8R" compartment="default_compartment" initialAmount="4800.42251986317" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="IL8_R" compartment="default_compartment" initialAmount="7.6891864720219" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8R" compartment="default_compartment" initialAmount="100000" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="IL8_R" compartment="default_compartment" initialAmount="3.55204908309428" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="IL8_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="IL8_m" compartment="default_compartment" initialAmount="9.78325517538315" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="F_LPS_irak" value="1" constant="false"/>
-      <parameter id="kd_lps_irak_p" value="10.67" constant="true"/>
-      <parameter id="LPS_0" value="0" constant="true"/>
-      <parameter id="n_lps_irak_p" value="9.82" constant="true"/>
+      <parameter id="k_lps_irak_p" value="631249" constant="true"/>
+      <parameter id="kd_lps_irak_p" value="270" constant="true"/>
       <parameter id="nIKB" value="1" constant="false"/>
       <parameter id="IKB_0" value="435" constant="false"/>
-      <parameter id="F_il8_irak" value="1" constant="false"/>
-      <parameter id="kd_il8_irak_p" value="33.3534510081678" constant="true"/>
-      <parameter id="IL8_R_0" value="7.6891864720219" constant="false"/>
-      <parameter id="F_nfkb_il8_p" value="0.308634368223632" constant="false"/>
-      <parameter id="kd_nfkb_il8_p" value="2085.51434789469" constant="true"/>
-      <parameter id="nIL8" value="1" constant="false"/>
-      <parameter id="IL8_0" value="7.40856822115139" constant="false"/>
-      <parameter id="nIL8R" value="1" constant="false"/>
-      <parameter id="IL8R_0" value="4800.42251986317" constant="false"/>
-      <parameter id="nIFNGR" value="1" constant="false"/>
-      <parameter id="IFNGR_0" value="93" constant="false"/>
-      <parameter id="nIL4R" value="1" constant="false"/>
-      <parameter id="IL4R_0" value="16" constant="false"/>
       <parameter id="nIL1b" value="1" constant="false"/>
       <parameter id="IL1b_0" value="845" constant="false"/>
       <parameter id="nIL10" value="1" constant="false"/>
       <parameter id="IL10_0" value="900" constant="false"/>
       <parameter id="nTNFa" value="1" constant="false"/>
       <parameter id="TNFa_0" value="384" constant="false"/>
+      <parameter id="F_il8_irak" value="1" constant="false"/>
+      <parameter id="k_il8_irak_p" value="1" constant="true"/>
+      <parameter id="IL8_R_0" value="3.55204908309428" constant="false"/>
+      <parameter id="kd_il8_irak_p" value="33.3534510081678" constant="true"/>
+      <parameter id="F_nfkb_il8_p" value="0.0887656105938145" constant="false"/>
+      <parameter id="kd_nfkb_il8_p" value="9557.29601657554" constant="true"/>
+      <parameter id="nIL8_m" value="1" constant="false"/>
+      <parameter id="IL8_m_0" value="9.78325517538315" constant="false"/>
+      <parameter id="nIL8R" value="1" constant="false"/>
+      <parameter id="IL8R_0" value="100000" constant="false"/>
+      <parameter id="nIFNGR" value="1" constant="false"/>
+      <parameter id="IFNGR_0" value="93" constant="false"/>
+      <parameter id="nIL4R" value="1" constant="false"/>
+      <parameter id="IL4R_0" value="16" constant="false"/>
       <parameter id="nIRAK4" value="1" constant="false"/>
       <parameter id="IRAK4_0" value="199999" constant="false"/>
       <parameter id="naTRAF6" value="1" constant="false"/>
       <parameter id="aTRAF6_0" value="5" constant="false"/>
       <parameter id="nNFKB_n" value="1" constant="false"/>
       <parameter id="NFKB_n_0" value="931" constant="false"/>
+      <parameter id="nIL8_R" value="1" constant="false"/>
       <parameter id="F_il8_ifngr" value="1" constant="false"/>
+      <parameter id="k_il8_ifngr_p" value="1" constant="true"/>
       <parameter id="kd_il8_ifngr_p" value="1" constant="true"/>
-      <parameter id="n_il8_ifngr_p" value="1" constant="true"/>
       <parameter id="F_il8_il4p" value="1" constant="false"/>
       <parameter id="kd_il8_il4r_p" value="1" constant="true"/>
       <parameter id="n_il8_il4r_p" value="1" constant="true"/>
@@ -585,43 +587,20 @@
       <parameter id="k256" value="1" constant="true"/>
       <parameter id="k257" value="1.04e-10" constant="true"/>
       <parameter id="k258" value="0.1" constant="true"/>
-      <parameter id="k_lps_d" value="0.9" constant="true"/>
+      <parameter id="k_lps_d" value="0.199" constant="true"/>
       <parameter id="k_il8r_p" value="917.456624671206" constant="true"/>
       <parameter id="k_il8r_d" value="0.190398774922591" constant="true"/>
-      <parameter id="k_il8_b" value="0.00118446460794019" constant="true"/>
-      <parameter id="k_il8_ub" value="0.726687117814418" constant="true"/>
-      <parameter id="k_il8_p" value="5.97046287081594" constant="true"/>
-      <parameter id="k_il8_d" value="0.375952946025251" constant="true"/>
+      <parameter id="k_il8_b" value="0.834296365731787" constant="true"/>
+      <parameter id="k_il8_p" value="11.5400804166966" constant="true"/>
+      <parameter id="k_il8m_il8" value="0.1" constant="true"/>
+      <parameter id="k_il8_d" value="0.0028875" constant="true"/>
+      <parameter id="k_il8m_d" value="0.001155" constant="true"/>
+      <parameter id="LPS_0" value="0" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="IKB_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> IKB </ci>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="IL8_R_0">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <ci> IL8_R </ci>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="IL8_0">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <ci> IL8 </ci>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="IL8R_0">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <ci> IL8R </ci>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="IFNGR_0">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <ci> IFNGR </ci>
-        </math>
-      </initialAssignment>
-      <initialAssignment symbol="IL4R_0">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <ci> IL4R </ci>
         </math>
       </initialAssignment>
       <initialAssignment symbol="IL1b_0">
@@ -639,6 +618,31 @@
           <ci> TNFa </ci>
         </math>
       </initialAssignment>
+      <initialAssignment symbol="IL8_R_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL8_R </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL8_m_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL8_m </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL8R_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL8R </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IFNGR_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IFNGR </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL4R_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL4R </ci>
+        </math>
+      </initialAssignment>
       <initialAssignment symbol="IRAK4_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> IRAK4 </ci>
@@ -652,6 +656,32 @@
       <initialAssignment symbol="NFKB_n_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> NFKB_n </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="k_il8_d">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <cn> 0.693 </cn>
+            <apply>
+              <times/>
+              <cn type="integer"> 4 </cn>
+              <cn type="integer"> 60 </cn>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="k_il8m_d">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <cn> 0.693 </cn>
+            <apply>
+              <times/>
+              <cn type="integer"> 10 </cn>
+              <cn type="integer"> 60 </cn>
+            </apply>
+          </apply>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -679,21 +709,21 @@
       <assignmentRule variable="F_LPS_irak">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <power/>
+            <plus/>
+            <cn type="integer"> 1 </cn>
             <apply>
               <divide/>
+              <apply>
+                <times/>
+                <ci> k_lps_irak_p </ci>
+                <ci> LPS </ci>
+              </apply>
               <apply>
                 <plus/>
                 <ci> LPS </ci>
                 <ci> kd_lps_irak_p </ci>
               </apply>
-              <apply>
-                <plus/>
-                <ci> LPS_0 </ci>
-                <ci> kd_lps_irak_p </ci>
-              </apply>
             </apply>
-            <ci> n_lps_irak_p </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -703,72 +733,6 @@
             <divide/>
             <ci> IKB </ci>
             <ci> IKB_0 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="F_il8_irak">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <apply>
-              <plus/>
-              <ci> IL8_R </ci>
-              <ci> kd_il8_irak_p </ci>
-            </apply>
-            <apply>
-              <plus/>
-              <ci> IL8_R_0 </ci>
-              <ci> kd_il8_irak_p </ci>
-            </apply>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="F_nfkb_il8_p">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> NFKB_n </ci>
-            <apply>
-              <plus/>
-              <ci> NFKB_n </ci>
-              <ci> kd_nfkb_il8_p </ci>
-            </apply>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="nIL8">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> IL8 </ci>
-            <ci> IL8_0 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="nIL8R">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> IL8R </ci>
-            <ci> IL8R_0 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="nIFNGR">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> IFNGR </ci>
-            <ci> IFNGR_0 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="nIL4R">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> IL4R </ci>
-            <ci> IL4R_0 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -799,6 +763,84 @@
           </apply>
         </math>
       </assignmentRule>
+      <assignmentRule variable="F_il8_irak">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <cn type="integer"> 1 </cn>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <ci> k_il8_irak_p </ci>
+                <apply>
+                  <minus/>
+                  <ci> IL8_R </ci>
+                  <ci> IL8_R_0 </ci>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <minus/>
+                  <ci> IL8_R </ci>
+                  <ci> IL8_R_0 </ci>
+                </apply>
+                <ci> kd_il8_irak_p </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="F_nfkb_il8_p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> NFKB_n </ci>
+            <apply>
+              <plus/>
+              <ci> NFKB_n </ci>
+              <ci> kd_nfkb_il8_p </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIL8_m">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL8_m </ci>
+            <ci> IL8_m_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIL8R">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL8R </ci>
+            <ci> IL8R_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIFNGR">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IFNGR </ci>
+            <ci> IFNGR_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nIL4R">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL4R </ci>
+            <ci> IL4R_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
       <assignmentRule variable="nIRAK4">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
@@ -826,24 +868,41 @@
           </apply>
         </math>
       </assignmentRule>
+      <assignmentRule variable="nIL8_R">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> IL8_R </ci>
+            <ci> IL8_R_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
       <assignmentRule variable="F_il8_ifngr">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
-            <power/>
+            <plus/>
+            <cn type="integer"> 1 </cn>
             <apply>
               <divide/>
               <apply>
-                <plus/>
-                <ci> IL8_R </ci>
-                <ci> kd_il8_ifngr_p </ci>
+                <times/>
+                <ci> k_il8_ifngr_p </ci>
+                <apply>
+                  <minus/>
+                  <ci> IL8_R </ci>
+                  <ci> IL8_R_0 </ci>
+                </apply>
               </apply>
               <apply>
                 <plus/>
-                <ci> IL8_R_0 </ci>
+                <apply>
+                  <minus/>
+                  <ci> IL8_R </ci>
+                  <ci> IL8_R_0 </ci>
+                </apply>
                 <ci> kd_il8_ifngr_p </ci>
               </apply>
             </apply>
-            <ci> n_il8_ifngr_p </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -872,41 +931,11 @@
     <listOfReactions>
       <reaction id="v1" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="IL8R_prod" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNG" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNGR_JAK" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <ci> k_il8r_p </ci>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="v2" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="deg" stoichiometry="1" constant="true"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> k_il8r_d </ci>
-              <ci> IL8R </ci>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="v3" reversible="true" fast="false">
-        <listOfReactants>
-          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
-          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNG_R_JAK" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -914,51 +943,114 @@
               <minus/>
               <apply>
                 <times/>
-                <ci> k_il8_b </ci>
-                <ci> IL8 </ci>
-                <ci> IL8R </ci>
+                <ci> kf1 </ci>
+                <ci> IFNG </ci>
+                <ci> IFNGR_JAK </ci>
               </apply>
               <apply>
                 <times/>
-                <ci> k_il8_ub </ci>
-                <ci> IL8_R </ci>
+                <ci> kr1 </ci>
+                <ci> IFNG_R_JAK </ci>
               </apply>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="v4" reversible="true" fast="false">
+      <reaction id="v2" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="IL8_prod" stoichiometry="1" constant="true"/>
-          <speciesReference species="NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="IFNG_R_JAK" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
-          <speciesReference species="NFKB_n" stoichiometry="1" constant="true"/>
+          <speciesReference species="pIFNG_R_JAK" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> kf2 </ci>
+                <ci> IFNG_R_JAK </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> kr2 </ci>
+                <ci> pIFNG_R_JAK </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="v3" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="STAT1" stoichiometry="1" constant="true"/>
+          <speciesReference species="pIFNG_R_JAK" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pIFNG_R_JAK_STAT1" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> kf3 </ci>
+                <ci> STAT1 </ci>
+                <ci> pIFNG_R_JAK </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> kr3 </ci>
+                <ci> pIFNG_R_JAK_STAT1 </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="v4" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="pIFNG_R_JAK_STAT1" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="pSTAT1" stoichiometry="1" constant="true"/>
+          <speciesReference species="pIFNG_R_JAK" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> k_il8_p </ci>
-              <ci> F_nfkb_il8_p </ci>
+              <ci> k4 </ci>
+              <ci> pIFNG_R_JAK_STAT1 </ci>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
       <reaction id="v5" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
+          <speciesReference species="pSTAT1" stoichiometry="2" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+          <speciesReference species="pSTAT1D" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
-              <times/>
-              <ci> k_il8_d </ci>
-              <ci> IL8 </ci>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> kf5 </ci>
+                <apply>
+                  <power/>
+                  <ci> pSTAT1 </ci>
+                  <cn type="integer"> 2 </cn>
+                </apply>
+              </apply>
+              <apply>
+                <times/>
+                <ci> kr5 </ci>
+                <ci> pSTAT1D </ci>
+              </apply>
             </apply>
           </math>
         </kineticLaw>
@@ -7511,6 +7603,157 @@
           </math>
         </kineticLaw>
       </reaction>
+      <reaction id="IL8_v1" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8R_prod" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <ci> k_il8r_p </ci>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL8_v2" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8r_d </ci>
+              <ci> IL8R </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL8_v3" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
+          <speciesReference species="IL8R" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8_b </ci>
+              <ci> IL8 </ci>
+              <apply>
+                <gt/>
+                <ci> IL8 </ci>
+                <cn type="integer"> 0 </cn>
+              </apply>
+              <ci> IL8R </ci>
+              <apply>
+                <gt/>
+                <ci> IL8R </ci>
+                <cn type="integer"> 0 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL8_v32" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8_R" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8r_d </ci>
+              <ci> IL8_R </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL8_v4" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8_prod" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB_n" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL8_m" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB_n" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8_p </ci>
+              <ci> F_nfkb_il8_p </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL8_v5" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8_m" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8m_il8 </ci>
+              <ci> IL8_m </ci>
+              <apply>
+                <gt/>
+                <ci> IL8_m </ci>
+                <cn type="integer"> 0 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL8_v6" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8_d </ci>
+              <ci> IL8 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL8_v7" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL8_m" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il8m_d </ci>
+              <ci> IL8_m </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
     </listOfReactions>
     <listOfEvents>
       <event id="_E0" useValuesFromTriggerTime="true">
@@ -7596,68 +7839,14 @@
           </math>
         </trigger>
         <listOfEventAssignments>
-          <eventAssignment variable="IL8_0">
+          <eventAssignment variable="IL8_m_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <ci> IL8 </ci>
+              <ci> IL8_m </ci>
             </math>
           </eventAssignment>
         </listOfEventAssignments>
       </event>
       <event id="_E5" useValuesFromTriggerTime="true">
-        <trigger initialValue="true" persistent="true">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <gt/>
-              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
-              <cn type="integer"> 0 </cn>
-            </apply>
-          </math>
-        </trigger>
-        <listOfEventAssignments>
-          <eventAssignment variable="IL1b_0">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <ci> IL1b </ci>
-            </math>
-          </eventAssignment>
-        </listOfEventAssignments>
-      </event>
-      <event id="_E6" useValuesFromTriggerTime="true">
-        <trigger initialValue="true" persistent="true">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <gt/>
-              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
-              <cn type="integer"> 0 </cn>
-            </apply>
-          </math>
-        </trigger>
-        <listOfEventAssignments>
-          <eventAssignment variable="IL10_0">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <ci> IL10 </ci>
-            </math>
-          </eventAssignment>
-        </listOfEventAssignments>
-      </event>
-      <event id="_E7" useValuesFromTriggerTime="true">
-        <trigger initialValue="true" persistent="true">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <gt/>
-              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
-              <cn type="integer"> 0 </cn>
-            </apply>
-          </math>
-        </trigger>
-        <listOfEventAssignments>
-          <eventAssignment variable="TNFa_0">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <ci> TNFa </ci>
-            </math>
-          </eventAssignment>
-        </listOfEventAssignments>
-      </event>
-      <event id="_E8" useValuesFromTriggerTime="true">
         <trigger initialValue="true" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -7675,7 +7864,7 @@
           </eventAssignment>
         </listOfEventAssignments>
       </event>
-      <event id="_E9" useValuesFromTriggerTime="true">
+      <event id="_E6" useValuesFromTriggerTime="true">
         <trigger initialValue="true" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -7693,7 +7882,7 @@
           </eventAssignment>
         </listOfEventAssignments>
       </event>
-      <event id="_E10" useValuesFromTriggerTime="true">
+      <event id="_E7" useValuesFromTriggerTime="true">
         <trigger initialValue="true" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -7711,7 +7900,7 @@
           </eventAssignment>
         </listOfEventAssignments>
       </event>
-      <event id="_E11" useValuesFromTriggerTime="true">
+      <event id="_E8" useValuesFromTriggerTime="true">
         <trigger initialValue="true" persistent="true">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -7722,9 +7911,9 @@
           </math>
         </trigger>
         <listOfEventAssignments>
-          <eventAssignment variable="IKB_0">
+          <eventAssignment variable="IL8_R_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <ci> IKB </ci>
+              <ci> IL8_R </ci>
             </math>
           </eventAssignment>
         </listOfEventAssignments>

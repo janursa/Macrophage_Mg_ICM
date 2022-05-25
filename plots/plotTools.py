@@ -31,12 +31,15 @@ labels = {
         'npH3S10': 'Activated H3S10',
 
         'IL8': 'IL8',
+        'IL8_m': 'IL8 mRNA',
+        'IL8_R': 'IL8/IL8R complex',
         'IL8R': 'IL8R',
         'nIL8': 'IL8',
         'nIL10': 'IL10',
         'nTNFa': 'TNFa',
         'nIL1b': 'IL1b',
         'nIFNGR': r'IFN-Y receptor',
+        'IFNGR':r'IFN-Y receptor',
         'nIL4R': r'IL4 receptor',
         
         'nIRAK4':'Cytosolic IRAK',
@@ -405,8 +408,9 @@ class plotTools:
         for target in targets:
             sims[target] = sims_raw[target]
         if study_tag == 'eq_IL8':
-            sims['IL8R'] = np.array(sims_raw['IL8R'])/model_sbml['IL8R_0']
-            sims['IL8'] = np.array(sims_raw['IL8'])/model_sbml['IL8_0']
+            sims['IL8_R'] = np.array(sims_raw['IL8_R'])/model_sbml['IL8_R_0']
+            sims['IL8_m'] = np.array(sims_raw['IL8_m'])/model_sbml['IL8_m_0']
+            sims['IFNGR'] = np.array(sims_raw['IFNGR'])/model_sbml['IFNGR_0']
         i_0 = 0
         x = sims_raw['time'][i_0:]
 

@@ -38,21 +38,21 @@ model Mg_model()
 
   // Reactions:
     # v1: Mg_e + TRPM => Mg_f + TRPM; k_m_i*Mg_e*(Mg_e > 0)*F_trpm_i - k_m_e*Mg_f*(Mg_f > 0);
-    v1: Mg_e => Mg_f ; k_m_i*(Mg_e-Mg_f)*(Mg_e > Mg_f);
-    v2: $ATP_prod + Mg_f => ATP + Mg_f; k_atp_p0 + k_atp_pm*Mg_f;
-    v3: ATP => $cons; k_atp_c*ATP;
+    M1_v1: Mg_e => Mg_f ; k_m_i*(Mg_e-Mg_f)*(Mg_e > Mg_f);
+    M1_v2: $ATP_prod + Mg_f => ATP + Mg_f; k_atp_p0 + k_atp_pm*Mg_f;
+    M1_v3: ATP => $cons; k_atp_c*ATP;
     
-    v4: Mg_f +  ATP -> Mg_ATP; k_matp_b*Mg_f*(Mg_f > 0)*ATP*(ATP > 0) - k_matp_ub*Mg_ATP*(Mg_ATP > 0);
-    v5: Mg_f +  $IM -> Mg_IM; k_mim_b*Mg_f*(Mg_f > 0)*IM*(IM > 0) - k_mim_ub*Mg_IM*(Mg_IM > 0);
+    M1_v4: Mg_f +  ATP -> Mg_ATP; k_matp_b*Mg_f*(Mg_f > 0)*ATP*(ATP > 0) - k_matp_ub*Mg_ATP*(Mg_ATP > 0);
+    M1_v5: Mg_f +  $IM -> Mg_IM; k_mim_b*Mg_f*(Mg_f > 0)*IM*(IM > 0) - k_mim_ub*Mg_IM*(Mg_IM > 0);
 
-    v6: $TRPM_prod + Mg_ATP => TRPM_n + Mg_ATP; k_ntrpm_p*TRPM_prod*(Mg_ATP)^n_ntrpm_p;
-    v7: TRPM_n => TRPM; k_ntrpm_t*TRPM_n;
-    v8: TRPM => M7CK; k_trpm_s*TRPM;
-    v9: M7CK -> M7CK_n; k_m7ck_t1*M7CK*(M7CK > 0) - k_m7ck_t2*M7CK_n*(M7CK_n > 0);
-    v10: M7CK => $deg; k_m7ck_deg*M7CK*(M7CK>0);
-    v11: $h3s10_prod -> H3S10; k_h3s10_p;
-    v12: H3S10 -> deg; k_h3s10_d*H3S10;
-    v13: H3S10 + M7CK_n -> pH3S10 + M7CK_n; k_h3s10_a*H3S10*M7CK_n*(H3S10 > 0) - k_h3s10_da*pH3S10*(pH3S10 > 0);
+    M1_v6: $TRPM_prod + Mg_ATP => TRPM_n + Mg_ATP; k_ntrpm_p*TRPM_prod*(Mg_ATP)^n_ntrpm_p;
+    M1_v7: TRPM_n => TRPM; k_ntrpm_t*TRPM_n;
+    M1_v8: TRPM => M7CK; k_trpm_s*TRPM;
+    M1_v9: M7CK -> M7CK_n; k_m7ck_t1*M7CK*(M7CK > 0) - k_m7ck_t2*M7CK_n*(M7CK_n > 0);
+    M1_v10: M7CK => $deg; k_m7ck_deg*M7CK*(M7CK>0);
+    M1_v11: $h3s10_prod -> H3S10; k_h3s10_p;
+    M1_v12: H3S10 -> deg; k_h3s10_d*H3S10;
+    M1_v13: H3S10 + M7CK_n -> pH3S10 + M7CK_n; k_h3s10_a*H3S10*M7CK_n*(H3S10 > 0) - k_h3s10_da*pH3S10*(pH3S10 > 0);
 
   // Species initializations:
     Mg_e = 0.8;

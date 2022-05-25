@@ -13,12 +13,12 @@ from plots.plotTools import plotTools, Specs,labels
 from data.observations import t2m
 
 def LPS_plot(model_sbml,model_macrophage,params,observations):
-    figsize = (8,4)
+    figsize = (12,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
 
-    width_ratios= [1,1]
+    width_ratios= [1,1,1]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
     
@@ -26,8 +26,20 @@ def LPS_plot(model_sbml,model_macrophage,params,observations):
     study_tag,target = 'S12_LPS','nIKB'
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
 
-    
+    g_size = 4
+    study_tag,target = 'S12_LPS','nTNFa'
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+    g_size = 4
+    study_tag,target = 'B20_LPS','nTNFa'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+
     fig.tight_layout()
 
 def P2_eq(model_sbml,model_macrophage,params,observations):
@@ -41,10 +53,11 @@ def P2_eq(model_sbml,model_macrophage,params,observations):
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
     g_size = 4
-    study_tag,targets = 'eq_IL8',['IL8','IL8R']
+    study_tag,targets = 'eq_IL8',['IL8_m','IL8_R','IFNGR']
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
 
+    
     
     fig.tight_layout()
 

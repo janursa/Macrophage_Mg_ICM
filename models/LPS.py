@@ -24,6 +24,9 @@ model LPS_model()
     compartment comp1;
     species LPS in comp1
     IKB is PP.IKB;
+    IL1b is PP.IL1b;
+    IL10 is PP.IL10;
+    TNFa is PP.TNFa;
     // adjustments to zhao's model:
     ### LPS upregulates IRAK recruitment/production ###
      PP.v246: $PP.irak4_prod + PP.m93 + LPS => PP.IRAK4 + PP.m93 + LPS; PP.k246*PP.irak4_prod*(1 - PP.m93/(PP.m93 + PP.ka246))* F_LPS_irak;
@@ -35,15 +38,24 @@ model LPS_model()
     LPS = 0;
     
     // params
-    n_lps_irak_p = 9.82
-    kd_lps_irak_p = 10.67
-    k_lps_d =  0.9
-    F_LPS_irak := ((LPS+kd_lps_irak_p)/(LPS_0+kd_lps_irak_p))^n_lps_irak_p
+    kd_lps_irak_p  = 270;
+     k_lps_d  = 0.199;
+     k_lps_irak_p  = 631249
+    F_LPS_irak := (1+k_lps_irak_p*(LPS)/(LPS+kd_lps_irak_p))
     
     IKB_0 = IKB;
+    IL1b_0 = IL1b;
+    IL10_0 = IL10;
+    TNFa_0 = TNFa;
     at (time>0): IKB_0 = IKB;
+    at (time > 0): IL1b_0 = IL1b;
+    at (time > 0): IL10_0 = IL10;
+    at (time > 0): TNFa_0 = TNFa;
     
     nIKB := IKB/IKB_0;
+    nIL1b := IL1b/IL1b_0;
+    nIL10 := IL10/IL10_0;
+    nTNFa := TNFa/TNFa_0;
 end
 
 """

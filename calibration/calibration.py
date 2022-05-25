@@ -38,7 +38,7 @@ def callback(xk, convergence):
     params = {**params,**fixed_params}
     error = model.run(params = params,studies=settings.studies)
     output(_params,error)
-    if  error < 0.01:
+    if  error < 0.02:
         return True
 
 def cost_function(calib_params_values):

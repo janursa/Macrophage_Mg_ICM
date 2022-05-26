@@ -11,12 +11,13 @@ import json
 from models.params import free_params_p, fixed_params
 from data.observations import observations,packages,select_obs
 from models.models import Macrophage
+import numpy as np
 # %load_ext autoreload
 # %autoreload
 
 class settings:
-    model_t = 'IL8'
-    target_package = 'IL8'
+    model_t = 'IL6'
+    target_package = 'IL6'
     free_params = free_params_p[target_package]
     studies = select_obs(packages[target_package])
 print(settings.free_params)
@@ -47,14 +48,32 @@ def cost_function(calib_params_values):
         calib_params[key] = value
     params = {**calib_params,**fixed_params}
     error = model.run(params=params,studies=settings.studies)
-
     return error
+def model_validity_test(free_params):
+    print('model validty test')
+    params = {}
+    for key in free_params.keys():
+        params[key] = np.mean(free_params[key])
+    model_sbml = Macrophage.create_sbml_model(settings.model_t)
+    studies = select_obs(settings.studies)
+    for study_tag in studies.keys():
+        study = studies[study_tag]
+        duration = study['duration']
+        selections = list(study['selections'].keys())
+        activation = study['activation']
+        IDs = study['IDs']
+        for ID in IDs:
+            inputs = study[ID]['inputs']
+            Macrophage.run_sbml_model(model_sbml=model_sbml,duration=duration,params={**params,**inputs},selections=['time']+selections,activation=activation)
+
+    print('model validty test completed')
     
 class Strategies:
     best1bin = 'best1bin'
     rand1exp = 'rand1exp'
 if __name__ == '__main__':
     workers = sys.argv[1]
+    model_validity_test(free_params = settings.free_params)
     inferred_params,error = calib_obj = calibrate(cost_function=cost_function, workers=workers,maxiter=500,callback=callback,free_params=settings.free_params)
 
     output(inferred_params,error)

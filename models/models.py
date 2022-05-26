@@ -31,6 +31,10 @@ class Macrophage:
         return te.loadSBMLModel(dirs.dir_LPS_model)
     elif model_t == 'Zhao':
         return te.loadSBMLModel(dirs.dir_Zhao_model)
+    elif model_t == 'IL6':
+        return te.loadSBMLModel(dirs.dir_IL6_model)
+    else:
+      raise ValueError('{} is not defined'.format(model_t))
 
   activation_s = retrieve_activation_stimuli()
 
@@ -56,14 +60,14 @@ class Macrophage:
       """
       Simulte one study
       """
-      measurement_scheme = study['measurement_scheme']
+      selections = study['selections']
       duration = study['duration']
       IDs = study['IDs']
       results = {}
       for ID in IDs:
           inputs = study[ID]['inputs']
           try:
-            ID_results = self.simulate(study_tag = study_tag,params=params,inputs=inputs,measurement_scheme=measurement_scheme,duration=duration,activation=study['activation'])
+            ID_results = self.simulate(study_tag = study_tag,params=params,inputs=inputs,selections=selections,duration=duration,activation=study['activation'])
           except tools.InvalidParams:
             raise tools.InvalidParams()
           results[ID] = ID_results
@@ -74,12 +78,12 @@ class Macrophage:
   #     """
   #     calculates cost values for each ID of the given study
   #     """
-  #     measurement_scheme = self.observations[study]['measurement_scheme']
+  #     selections = self.observations[study]['selections']
   #     errors = {}
   #     for ID, ID_results in study_results.items():
   #         ID_observations = self.observations[study][ID]['expectations']
   #         target_errors = {}
-  #         for target in measurement_scheme.keys():
+  #         for target in selections.keys():
   #             abs_diff =abs(np.array(ID_results[target])-np.array(ID_observations[target]['mean']))
   #             means = [ID_observations[target]['mean'],ID_results[target]]
   #             mean = np.mean(means)
@@ -166,7 +170,7 @@ class Macrophage:
       try:
         results = Macrophage.run_sbml_model(model_sbml=model_sbml,selections=selections,duration=duration,params=params,study_tag=study_tag,activation=activation, steps = steps)
         break
-      except Exception:
+      except RuntimeError:
         attp+=1
           
       if attp > 10 :
@@ -184,7 +188,7 @@ class Macrophage:
       for target,target_results in study_result.items():          
         exps,sims = np.array(target_results['exp']),np.array(target_results['sim'])
         ##---- for certain studies, the simulation results should be normalized ----##
-        if study_tag == 'eq_mg' or study_tag == 'R05_nMg_f' or study_tag == 'Q21_Mg' or study_tag == 'Q21_eq_trpm' or study_tag == 'Q21_eq_h3s10' or study_tag == 'eq_IL8' or study_tag == 'S12_LPS':
+        if study_tag == 'eq_mg' or study_tag == 'R05_nMg_f' or study_tag == 'Q21_Mg' or study_tag == 'Q21_eq_trpm' or study_tag == 'Q21_eq_h3s10' or study_tag == 'eq_IL8' or study_tag == 'S12_LPS' or study_tag == 'eq_combined' or study_tag == 'eq_IL6':
             n_sims,n_exps = sims,exps
         else:
             n_sims,n_exps = tools.normalize(study_tag=study_tag,target=target,sims=sims,exps=exps)
@@ -200,11 +204,11 @@ class Macrophage:
       mean_errors.append(np.mean(errors))
     return costs,np.mean(mean_errors)
 
-  def simulate(self,study_tag,params,inputs,measurement_scheme,duration,activation):
+  def simulate(self,study_tag,params,inputs,selections,duration,activation):
       
     if duration == None:
       raise ValueError('Value of duration is none')
-    target_keys = list(measurement_scheme.keys())
+    target_keys = list(selections.keys())
     params = {**params,**inputs}
     try:
       # results_raw = Macrophage.run_sbml_model(model_sbml=self.model,params = params,duration=duration+1,selections=target_keys,study_tag=study_tag,activation=activation)
@@ -214,7 +218,7 @@ class Macrophage:
       raise tools.InvalidParams()
     results ={}
     for key in target_keys:
-      measured_times = measurement_scheme[key]
+      measured_times = selections[key]
       measured_times_indices = []
       for measured_time in measured_times:
         measured_times_indices.append(tools.indexing(measured_time,results_raw['time'])) 

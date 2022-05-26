@@ -43,7 +43,13 @@ labels = {
         'nIL4R': r'IL4 receptor',
         
         'nIRAK4':'Cytosolic IRAK',
-        'naTRAF6':'Activated cytosolic TRAF6'
+        'naTRAF6':'Activated cytosolic TRAF6',
+        'npSTAT3': 'Phos STAT3',
+        'npIL6_R': 'Phos IL6/R',
+        'F_stat3_a': 'F_stat3_a',
+
+        'F_h3s10_ikb': 'H3S10 effect on IkBa',
+        'F_p3s10_il8_p': 'H3S10 effect on IL8'
     }
 
 class Specs:
@@ -68,7 +74,7 @@ class Specs:
     @staticmethod
     def determine_title(study_tag,target='',duration=None):
         prefix = study_tag.split('_')[0]
-        if study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag == 'eq_IL8':
+        if study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag == 'eq_IL8' or study_tag == 'eq_combined':
             # label = '(A) Equalibrium \n (no stimulus)'
             label = ''
         elif study_tag == 'R05_nMg_f' or study_tag == 'Q21_Mg':
@@ -77,7 +83,7 @@ class Specs:
         elif study_tag == 'Q21_14d':
             label = prefix+': '+labels[target]+' (%s'%(int(duration/60/24))+'d)'
         else:
-            label = prefix+': '+labels[target]+' (%s'%(int(duration/60))+'h)'
+            label = study_tag+'\n'+prefix+': '+labels[target]+' (%s'%(int(duration/60))+'h)'
         return label
     @staticmethod
     def determine_xlabel(study_tag):
@@ -88,6 +94,8 @@ class Specs:
             label = ''
         elif study_tag == 'M18' or study_tag == 'M05_IT' or study_tag == 'M05_NFKBn':
             label = 'IL8 (ng/ml)'
+        elif study_tag == 'B17' or study_tag == 'F17' or study_tag == 'N03':
+            label = 'IL6 (ng/ml)'
         
         return label
         
@@ -130,6 +138,11 @@ class Specs:
             lim = [0,1.35]
         elif study_tag == 'Q21_eq':
             lim = [-.1,1.5]
+        elif study_tag == 'eq_IL6':
+            if target == 'F_stat3_a':
+                lim = [0,2]
+            else:
+                raise ValueError('Define')
         else:
             if max_y == None:
                 raise ValueError('Define')
@@ -173,6 +186,16 @@ class Specs:
         elif study_tag == 'S12_LPS':
             adj_ticks = [int(ii*60) for ii in [0,1,2,8]]
             adj_labels = [0,1,2,8]
+        elif study_tag == 'B17':
+            adj_ticks = [0,1]
+            adj_labels = ['ctr','60']
+        elif study_tag == 'F17':
+            adj_ticks = [0,1,2,3]
+            adj_labels = ['ctr','50','100','200']
+        elif study_tag == 'N03':
+            adj_ticks = [0,1,2,3]
+            adj_labels = ['ctr','0.1','10','100']
+
         else:
             # pass
             adj_ticks = ticks[1:-1]
@@ -387,7 +410,7 @@ class plotTools:
         ii_0 = 0 # start ploting from this index onward
         x = sims['time'][ii_0:]
         ax.plot(x,sims[target][ii_0:],color='black',linewidth=specs.line_width, label = 'S')
-        obs_xx = study['measurement_scheme'][target]
+        obs_xx = study['selections'][target]
         obs_yy = study[ID]['expectations'][target]['mean']
         ax.scatter(obs_xx,obs_yy,color='r', linewidth=specs.line_width, label = 'E')
         ax.legend()

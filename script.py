@@ -5,7 +5,7 @@ import sys
 import os
 from pathlib import Path
 dir_file = Path(__file__).resolve().parent
-main_dir = os.path.join(dir_file,'..')
+main_dir = os.path.join(dir_file)
 sys.path.insert(0,main_dir)
 import json
 sys.path.insert(0,main_dir)
@@ -19,5 +19,14 @@ import tellurium as te
 from models.models import Macrophage
 
 ## activate macrophage
-if True:
+if False:
     tools.activation_LPS()
+## curate inferred parameters to insert into the model
+if True:
+    file_name = os.path.join(main_dir,'outputs','inferred_params_IL8.json')
+    with open(file_name,'r') as f:
+        ss = f.read()
+    ss = ss.replace(",",";")
+    ss = ss.replace(":","=")
+    ss = ss.replace("\""," ")
+    print(ss)

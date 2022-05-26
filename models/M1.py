@@ -87,7 +87,7 @@ model Mg_model()
    pH3S10_0 = pH3S10;
    ATP_0 = ATP;
    at (time > 0): Mg_f_0 = Mg_f;
-   at (time > 0): pH3S10_0 = pH3S10;
+   at (time > 1): pH3S10_0 = pH3S10;
    at (time > 0): Mg_0 = Mg_f + Mg_ATP + Mg_IM;
    at (time > 0): Mg_f_0 = Mg_f;
    at (time > 0): Mg_IM_0 = Mg_IM;

@@ -582,7 +582,7 @@
             <apply>
               <gt/>
               <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
-              <cn type="integer"> 0 </cn>
+              <cn type="integer"> 1 </cn>
             </apply>
           </math>
         </trigger>

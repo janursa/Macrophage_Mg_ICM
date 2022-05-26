@@ -91,6 +91,67 @@ def P21_plot(model_sbml,model_macrophage,params,observations):
     jj+=1
     
     fig.tight_layout()
+
+def P2_IL6_plot(model_sbml,model_macrophage,params,observations):
+    # figsize = (28,4)
+    figsize = (17,4)
+    fig = plt.figure(figsize=figsize)
+    fig.canvas.draw()
+    obs = observations
+
+    width_ratios= [1,1,1,1,1.5,1.5]
+    width_ratios= [1,1,1,1.25]
+    jj = 0
+    fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
+
+    # g_size = 4
+    # study_tag,target = 'eq_IL6','npIL6_R'
+    # ID = obs[study_tag]['IDs'][0]
+    # plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    # jj+=1
+
+    g_size = 4
+    study_tag,target = 'eq_IL6','F_stat3_a'
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+    g_size = 4
+    study_tag,target = 'B17','npSTAT3'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+
+    # axes[jj].set_title('B17: nNFKB_n')
+    # g_size = 4
+    # study_tag,target = 'B17','nNFKB_n'
+    # IDs = obs[study_tag]['IDs']
+    # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    # jj+=1
+
+    # axes[jj].set_title('F17: npSTAT3')
+    # g_size = 6
+    # study_tag,target = 'F17','npSTAT3'
+    # IDs = obs[study_tag]['IDs']
+    # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    # jj+=1
+    # 
+    
+    g_size = 6
+    study_tag,target = 'N03','nTNFa'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+
+    # axes[jj].set_title('F17_nIL10')
+    # g_size = 6
+    # study_tag,target = 'F17','nIL10'
+    # IDs = obs[study_tag]['IDs']
+    # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    # jj+=1
+
+    fig.tight_layout()
+
 def P22_plot(model_sbml,model_macrophage,params,observations):
     figsize = (12,4)
     fig = plt.figure(figsize=figsize)
@@ -148,14 +209,31 @@ def P23_plot(model_sbml,model_macrophage,params,observations):
     fig.tight_layout()
 
 
+def P3_eq_plot(model_sbml,model_macrophage,params,observations): # equalibrium for P1 to P3
+    figsize = (8,4)
+    fig = plt.figure(figsize=figsize)
+    obs = observations
+    fig.canvas.draw()
+    width_ratios= [1,1]
+    jj = 0
+    fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
-def P31_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IKB/NFKB
-    figsize = (13,4)
+
+    study_tag,targets = 'eq_combined',['F_h3s10_ikb','F_p3s10_il8_p']
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+
+    fig.tight_layout()
+
+def P3_IKB_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IKB/NFKB
+    figsize = (9,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
 
-    width_ratios= [1,1.25,1]
+    width_ratios= [1,1.25]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
@@ -172,22 +250,18 @@ def P31_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IK
     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
     jj+=1
     
-    size = 4
-    study_tag,target = 'Q21_14d','nIKB'
-    IDs = obs[study_tag]['IDs']
-    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    jj+=1
+   
 
     
     fig.tight_layout()
     
-def P32_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IKB/NFKB
-    figsize = (17,4)
+def P3_NFKB_plot(model_sbml,model_macrophage,params,observations): # Mg regulates NFKB
+    figsize = (13,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
 
-    width_ratios= [1,1.25,1,1]
+    width_ratios= [1,1.25,1]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
     
@@ -204,12 +278,6 @@ def P32_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IK
     jj+=1
     
     size = 4
-    study_tag,target = 'Q21_14d','nNFKB_n'
-    IDs = obs[study_tag]['IDs']
-    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    jj+=1
-    
-    size = 4
     study_tag,target = 'B20_NFKBn','nNFKB_n'
     IDs = obs[study_tag]['IDs']
     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
@@ -218,7 +286,7 @@ def P32_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IK
     fig.tight_layout()
        
 
-def P33_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL8
+def P3_cytokines1_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL8,IL10
     figsize = (17,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
@@ -247,9 +315,6 @@ def P33_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL
     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
     jj+=1
 #
-    
-    
-    
     size = 4
     study_tag,target = 'F18_cytokines','nIL10'
     IDs = obs[study_tag]['IDs']
@@ -262,7 +327,7 @@ def P33_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL
     
     fig.tight_layout()
 
-def P34_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL8
+def P3_cytokines2_plot(model_sbml,model_macrophage,params,observations): # Mg regulates TNF
     figsize = (12,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
@@ -293,7 +358,7 @@ def P34_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL
 
     fig.tight_layout()
     
-def P35_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL8
+def P3_cytokines3_plot(model_sbml,model_macrophage,params,observations): # Mg regulates nIL1b
     figsize = (8,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
@@ -316,8 +381,31 @@ def P35_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL
     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
     jj+=1
     
-    
     fig.tight_layout()
+
+def P3_cytokines4_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL8
+    figsize = (8,4)
+    fig = plt.figure(figsize=figsize)
+    fig.canvas.draw()
+    obs = observations
+
+    width_ratios= [1,1]
+    jj = 0
+    fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
+
+    size = 4
+    study_tag,target = 'Q21_14d','nIKB'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+
+    size = 4
+    study_tag,target = 'Q21_14d','nNFKB_n'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+    fig.tight_layout()
+
 
 def P1_eq(model_sbml,model_macrophage,params,observations): # equalibrium for P1 to P3
     figsize = (8,4)
@@ -441,9 +529,9 @@ def plot_eq_mg(ax,model_sbml,params,observations):
 def plot_Q21_eq(ax,model_sbml,params,observations):
     study_tag = 'Q21_eq'
     study1,study2 = 'Q21_eq_trpm','Q21_eq_h3s10'
-    targets1 = list(observations[study1]['measurement_scheme'].keys())
+    targets1 = list(observations[study1]['selections'].keys())
 
-    targets2 = list(observations[study2]['measurement_scheme'].keys())
+    targets2 = list(observations[study2]['selections'].keys())
 
     targets = targets1 + targets2
 

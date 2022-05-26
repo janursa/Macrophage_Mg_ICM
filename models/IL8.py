@@ -20,7 +20,7 @@ model IL8_model()
     NFKB_n is PP.NFKB_n;
     // adjustments to zhao's model:
     ### IL8 upregulates IRAK recruitment/production ###
-    PP.v246: $PP.irak4_prod + PP.m93 + PP.LPS + IL8 => PP.IRAK4 + PP.m93 + PP.LPS + IL8; PP.k246*PP.irak4_prod*(1 - PP.m93/(PP.m93 + PP.ka246))* PP.F_LPS_irak + F_il8_irak;
+    PP.v246: $PP.irak4_prod + PP.m93 + PP.LPS + IL8 => PP.IRAK4 + PP.m93 + PP.LPS + IL8; PP.k246*PP.irak4_prod*(1 - PP.m93/(PP.m93 + PP.ka246))* PP.F_LPS_irak + F_il8_irak*(F_il8_irak>0);
     ### IL8 upregulates IFNGR production ###
     # PP.v80: $PP.IFNGR_prod + IL8_R => PP.IFNGR + IL8_R; PP.k80*PP.IFNGR_prod*F_il8_ifngr ;
     ### IL8 downregulates IL4R production ###
@@ -41,24 +41,22 @@ model IL8_model()
     // Variables:
     IL8_prod = 1;
 
-IL8 = 0; # no extracellular IL8 initially
-IL8R = 100000;
-k_il8_d = 0.693/(4*60); # 4h half life
-k_il8m_d = 0.693/(10*60); # 10 half life
+    IL8 = 0; # no extracellular IL8 initially
+    IL8R = 100000;
+    k_il8_d = 0.693/(4*60); # 4h half life
+    k_il8m_d = 0.693/(10*60); # 10 half life
 
 
-IL8_m= 9.783255175383152;
-k_il8m_il8 = .1;
-k_il8_p= 11.540080416696583;
-kd_nfkb_il8_p= 9557.296016575541;
-IL8_R= 3.552049083094283;
-k_il8_b= 0.8342963657317872;
-k_il8r_d= 0.27663675607352745;
-    
-k_il8r_p = 917.4566246712063;
-k_il8r_d = 0.19039877492259133;
-kd_il8_irak_p = 33.35345100816778 
-k_il8_irak_p = 1;
+IL8_m = 1.00664143378666;
+k_il8m_il8 = 0.7055534274159563;
+k_il8_p = 7.7392148114967085;
+kd_nfkb_il8_p = 9060.08392469455;
+IL8_R = 9.170081838497477;
+k_il8_b = 0.14605373485078582;
+k_il8r_d = 0.07574267625162434;
+k_il8r_p = 7.9394693179698415;
+kd_il8_irak_p = 832.0720706453722;
+k_il8_irak_p = 8931.088667122709
     
     kd_il8_ifngr_p = 1; 
     k_il8_ifngr_p = 1;
@@ -74,19 +72,20 @@ k_il8_irak_p = 1;
     IRAK4_0 = IRAK4;
     aTRAF6_0 = aTRAF6;
     NFKB_n_0 = NFKB_n;
-    IL8_R_0 = IL8_R;
+    IL8_0 = IL8;
     at (time > 0): IFNGR_0 = IFNGR;
     at (time > 0): IL4R_0 = IL4R;
     at (time > 0): IL8R_0 = IL8R;
     at (time > 0): IL8_R_0 = IL8_R;
     at (time > 0): IL8_m_0 = IL8_m;
+    at (time > 0): IL8_0 = IL8;
     at (time > 0): IRAK4_0 = IRAK4;
     at (time > 0): aTRAF6_0 = aTRAF6; 
     at (time > 0): NFKB_n_0 = NFKB_n;
-    at (time > 0): IL8_R_0 = IL8_R;
     
     // assignements
     nIL8_m := IL8_m/IL8_m_0;
+    nIL8 := IL8/IL8_0;
     nIL8R := IL8R/IL8R_0;
     nIFNGR := IFNGR/IFNGR_0;
     nIL4R := IL4R/IL4R_0;

@@ -30,8 +30,7 @@ model LPS_model()
     // adjustments to zhao's model:
     ### LPS upregulates IRAK recruitment/production ###
      PP.v246: $PP.irak4_prod + PP.m93 + LPS => PP.IRAK4 + PP.m93 + LPS; PP.k246*PP.irak4_prod*(1 - PP.m93/(PP.m93 + PP.ka246))* F_LPS_irak;
-    #PP.v248: PP.IL1b_R + PP.TRAF6 + PP.A20 + PP.SOCS1 + PP.m146b + PP.IRAK4 + PP.pIRAK4 => PP.IL1b_R + PP.aTRAF6 + PP.A20 + PP.SOCS1 + PP.m146b + PP.IRAK4 + PP.pIRAK4; PP.k248*PP.IL1b_R*(PP.IRAK4 + PP.pIRAK4)*PP.TRAF6*(1.01 - PP.A20/(PP.A20 + PP.ka248))*(1 - PP.SOCS1/(PP.SOCS1 + PP.kb248))*(1.2 - PP.m146b/(PP.m146b + PP.kc248))*F_LPS_irak;
-        ## new reaction
+    ## new reaction
     LPS -> deg; k_lps_d*LPS*(LPS>0);
     
     LPS_0 = 0;
@@ -41,7 +40,7 @@ model LPS_model()
     kd_lps_irak_p  = 270;
      k_lps_d  = 0.199;
      k_lps_irak_p  = 631249
-    F_LPS_irak := (1+k_lps_irak_p*(LPS)/(LPS+kd_lps_irak_p))
+    
     
     IKB_0 = IKB;
     IL1b_0 = IL1b;
@@ -56,6 +55,8 @@ model LPS_model()
     nIL1b := IL1b/IL1b_0;
     nIL10 := IL10/IL10_0;
     nTNFa := TNFa/TNFa_0;
+    
+    F_LPS_irak := (1+k_lps_irak_p*(LPS)/(LPS+kd_lps_irak_p))
 end
 
 """

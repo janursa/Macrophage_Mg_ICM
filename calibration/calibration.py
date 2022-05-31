@@ -14,10 +14,14 @@ from models.models import Macrophage
 import numpy as np
 # %load_ext autoreload
 # %autoreload
+memory_check = False
+if memory_check == True:
+  import psutil
+  process = psutil.Process(os.getpid())
 
 class settings:
-    model_t = 'IL6'
-    target_package = 'IL6'
+    model_t = 'IL8'
+    target_package = 'IL8'
     free_params = free_params_p[target_package]
     studies = select_obs(packages[target_package])
 print(settings.free_params)
@@ -39,6 +43,7 @@ def callback(xk, convergence):
     params = {**params,**fixed_params}
     error = model.run(params = params,studies=settings.studies)
     output(_params,error)
+    # print('Curr Memory usage: %s (KB)' % (process.memory_info().rss / 1024))
     if  error < 0.02:
         return True
 

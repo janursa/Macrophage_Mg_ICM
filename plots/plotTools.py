@@ -31,7 +31,7 @@ labels = {
         'npH3S10': 'Activated H3S10',
 
         'IL8': 'IL8',
-        'IL8_m': 'IL8 mRNA',
+        'nIL8_m': 'IL8 mRNA',
         'IL8_R': 'IL8/IL8R complex',
         'IL8R': 'IL8R',
         'nIL8': 'IL8',
@@ -41,6 +41,8 @@ labels = {
         'nIFNGR': r'IFN-Y receptor',
         'IFNGR':r'IFN-Y receptor',
         'nIL4R': r'IL4 receptor',
+        'nIL6':'IL6',
+        'F_il8_irak':'F_il8_irak',
         
         'nIRAK4':'Cytosolic IRAK',
         'naTRAF6':'Activated cytosolic TRAF6',
@@ -429,15 +431,14 @@ class plotTools:
         params_copy = copy.deepcopy(params)
         for key,value in inputs.items():
             params_copy[key] = value
-        
         sims_raw = Macrophage.run_sbml_model(model_sbml = model_sbml,params = params_copy,selections=['TIME']+targets,duration=duration)
         sims = {}
         for target in targets:
             sims[target] = sims_raw[target]
-        if study_tag == 'eq_IL8':
-            sims['IL8_R'] = np.array(sims_raw['IL8_R'])/model_sbml['IL8_R_0']
-            sims['IL8_m'] = np.array(sims_raw['IL8_m'])/model_sbml['IL8_m_0']
-            sims['IFNGR'] = np.array(sims_raw['IFNGR'])/model_sbml['IFNGR_0']
+        # if study_tag == 'eq_IL8':
+        #     # sims['IL8_R'] = np.array(sims_raw['IL8_R'])/model_sbml['IL8_R_0']
+        #     sims['IL8_m'] = np.array(sims_raw['IL8_m'])/model_sbml['IL8_m_0']
+        #     sims['IFNGR'] = np.array(sims_raw['IFNGR'])/model_sbml['IFNGR_0']
         i_0 = 0
         x = sims_raw['time'][i_0:]
 

@@ -20,10 +20,9 @@ packages = {
 	'M1': [],
 	# R05_mg_n (mg extrusion)
 	'IL8' : ['eq_IL8','M05_IT','M05_NFKBn'],
+    # 'IL8' : ['eq_IL8','M05_IT'],
     # 'IL8' : ['M05_IT'],
 	#'M18','M05_NFKBn'
-
-
     #Q21_Mg_IL1b
     #Q21_NFKBn_72h is not quantitative
     #B20_NFKBn
@@ -741,7 +740,7 @@ observations = {
             'nIL1b': [int(24*60/t2m)],
             'nIL10': [int(24*60/t2m)],
             'nTNFa': [int(24*60/t2m)],
-            'nIL1b': [int(24*60/t2m)],
+            'nIL6': [int(24*60/t2m)],
         },
         'ctr': {
             'inputs': {
@@ -761,6 +760,9 @@ observations = {
                         'pvalue':[None]},
                 'nTNFa':{'mean':[1114.3/1114.3],
                     'std':[abs(722.2-1586.4)/1.35/1114],
+                    'pvalue':[None]},
+                'nIL6':{'mean':[14300/14300],
+                    'std':[abs(9382-16584)/1.35/14300],
                     'pvalue':[None]}
             }
         },
@@ -783,7 +785,10 @@ observations = {
                         'pvalue':[None]},
                 'nTNFa':{'mean':[1223.3/1114.3],
                         'std':[abs(555.0-1636.0)/1.35/1114],
-                    'pvalue':[None]}
+                    'pvalue':[None]},
+                'nIL6':{'mean':[17850/14300],
+                    'std':[abs(11850-21251)/1.35/14300],
+                    'pvalue':[0.01]}
             }
         },
         '0dot1': {
@@ -805,6 +810,9 @@ observations = {
                         'pvalue':[None]},
                 'nTNFa':{'mean':[1199.9/1114.3],
                     'std':[abs(806.6-1666.4)/1.35/1114],
+                    'pvalue':[None]},
+                'nIL6':{'mean':[16182/14300],
+                    'std':[abs(10776-20545)/1.35/14300],
                     'pvalue':[None]}
                 
             }
@@ -828,7 +836,10 @@ observations = {
                         'pvalue':[None]},
                 'nTNFa':{'mean':[1138.9/1114.3],
                         'std':[abs(780.3-1723.7)/1.35/1114],
-                        'pvalue':[None]}
+                        'pvalue':[None]},
+                'nIL6':{'mean':[15120/14300],
+                    'std':[abs(12115-19545)/1.35/14300],
+                    'pvalue':[0.01]}
             }
         },
        	'10': {
@@ -850,7 +861,10 @@ observations = {
                         'pvalue':[None]},
                 'nTNFa':{'mean':[1136.1/1114.3],
                         'std':[abs(665.5-1346.7)/1.35/1114],
-                        'pvalue':[None]}
+                        'pvalue':[None]},
+                'nIL6':{'mean':[12554/14300],
+                    'std':[abs(10212-16777)/1.35/14300],
+                    'pvalue':[None]}
             }
         },
         
@@ -1237,8 +1251,8 @@ observations = {
 		'activation': False,
 		'selections':{
 			'nIL8_m':  range_24h_60mStep,
-			'nIL8_R':  range_24h_60mStep,
-            'nIFNGR':  range_24h_60mStep
+			'F_il8_irak':  range_24h_60mStep,
+            # 'nIFNGR':  range_24h_60mStep
 		},
 		'IDs': ['ctr'],
 		'ctr':{
@@ -1249,12 +1263,9 @@ observations = {
 				'nIL8_m': {
 					'mean':[1 for i in range_24h_60mStep]
 				},
-				'nIL8_R': {
+				'F_il8_irak': {
 					'mean':[1 for i in range_24h_60mStep]
 				},
-                'nIFNGR': {
-                    'mean':[1 for i in range_24h_60mStep]
-                }
 			}
 		}
 	},

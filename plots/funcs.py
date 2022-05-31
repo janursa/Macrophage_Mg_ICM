@@ -53,7 +53,7 @@ def P2_eq(model_sbml,model_macrophage,params,observations):
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
     g_size = 4
-    study_tag,targets = 'eq_IL8',['IL8_m','IL8_R','IFNGR']
+    study_tag,targets = 'eq_IL8',['nIL8_m','F_il8_irak']
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
 
@@ -61,7 +61,7 @@ def P2_eq(model_sbml,model_macrophage,params,observations):
     
     fig.tight_layout()
 
-def P21_plot(model_sbml,model_macrophage,params,observations):
+def P2_ICs_plot(model_sbml,model_macrophage,params,observations):
     figsize = (18,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
@@ -103,12 +103,6 @@ def P2_IL6_IC_plot(model_sbml,model_macrophage,params,observations):
     # width_ratios= [1,1,1,1.25]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
-
-    # g_size = 4
-    # study_tag,target = 'eq_IL6','npIL6_R'
-    # ID = obs[study_tag]['IDs'][0]
-    # plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
-    # jj+=1
 
     g_size = 4
     study_tag,targets = 'eq_IL6',['F_stat3_a','F_pi3k_a']
@@ -170,7 +164,7 @@ def P2_IL6_CYs_plot(model_sbml,model_macrophage,params,observations):
 
     fig.tight_layout()
 
-def P22_plot(model_sbml,model_macrophage,params,observations):
+def P2_receptors_plot(model_sbml,model_macrophage,params,observations):
     figsize = (12,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
@@ -197,12 +191,12 @@ def P22_plot(model_sbml,model_macrophage,params,observations):
     fig.tight_layout()
     
 def P23_plot(model_sbml,model_macrophage,params,observations):
-    figsize = (18,4)
+    figsize = (24,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
     
-    width_ratios = [1.5,1.5,1.5]
+    width_ratios = [1.5,1.5,1.5,1.5]
     nn = len(width_ratios)
     fig, axes = plt.subplots(1, nn, gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
     jj = 0
@@ -220,6 +214,12 @@ def P23_plot(model_sbml,model_macrophage,params,observations):
 #
     g_size = 6
     study_tag,target = 'M18','nTNFa'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+
+    g_size = 6
+    study_tag,target = 'M18','nIL6'
     IDs = obs[study_tag]['IDs']
     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
     jj+=1

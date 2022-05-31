@@ -17,11 +17,12 @@ main_dir = os.path.join(dir_file,'..')
 sys.path.insert(0,main_dir)
 from tools import dirs, tools
 
-IL6_model_str = """
+ILs_model_str = """
 import "LPS_sbml.xml";
 model IL6_model()
     PP: LPS_model();
     compartment comp1;
+    IL6 in comp1;
     IFNGR is PP.IFNGR;
     IL4R is PP.IL4R;
     IRAK4 is PP.IRAK4;
@@ -30,7 +31,7 @@ model IL6_model()
     pSTAT3 is PP.pSTAT3;
     // adjustments to zhao's model:
 
-    ### IL6 signaling pathway ###
+    // IL6 signaling pathway 
     ## IL6/R/JAK/STAT3
     # IL6_v11: $IL6R_prod => IL6R; k_il6r_p;
     # IL6_v12: IL6R => deg; k_il6r_d*IL6R;
@@ -53,15 +54,14 @@ model IL6_model()
     ## PI3K/Akt Pathway
     PP.PI3K => PP.pPI3K; (F_pi3k_a-1)*(F_pi3k_a>1);
     
-    ### IL6 transcriptional stimulation ###
+    // IL6 transcriptional stimulation 
     IL6_v21: $IL6_prod + PP.NFKB_n => IL6_m + PP.NFKB_n; k_il6_p*F_nfkb_il6_p;
     IL6_v22: IL6_m => IL6; k_il6m_il6*IL6_m*(IL6_m>0);
     IL6_v23: IL6 => deg; k_il6_d*IL6;
     IL6_v24: IL6_m => deg; k_il6m_d*IL6_m;
 
-    ### Variables ###:
+    // Variables
     ## Known ##
-    IL6_prod = 1;
     IL6 = 0; # no extracellular IL6 initially
     k_il6_d = 0.693/(1*60); # 1h half life
     k_il6m_d = 0.693/(1*60); # 1h half life
@@ -71,6 +71,7 @@ model IL6_model()
     
     ## unknown ## 
     IL6_R = 100
+    pIL6_R = 100
     k_il6r_b = 0.01
     k_il6r_ub = 0.01
     k_il6r_a = 0.01

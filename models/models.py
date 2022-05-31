@@ -12,6 +12,8 @@ from tools import tools,dirs
 
 
 
+
+
 def retrieve_activation_stimuli():
     with open(dirs.dir_activation_stimuli) as ff:
       activation_s = json.load(ff)
@@ -211,9 +213,9 @@ class Macrophage:
     target_keys = list(selections.keys())
     params = {**params,**inputs}
     try:
-      # results_raw = Macrophage.run_sbml_model(model_sbml=self.model,params = params,duration=duration+1,selections=target_keys,study_tag=study_tag,activation=activation)
+      results_raw = Macrophage.run_sbml_model(model_sbml=self.model,params = params,duration=duration+1,selections=target_keys,study_tag=study_tag,activation=activation)
 
-      results_raw = Macrophage.run_sbml_model_recursive(model_sbml=self.model,params = params,duration=duration+1,selections=target_keys,study_tag=study_tag,activation=activation)
+      # results_raw = Macrophage.run_sbml_model_recursive(model_sbml=self.model,params = params,duration=duration+1,selections=target_keys,study_tag=study_tag,activation=activation)
     except tools.InvalidParams:
       raise tools.InvalidParams()
     results ={}

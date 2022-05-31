@@ -225,6 +225,8 @@
       <species id="IL6_R" compartment="default_compartment" initialAmount="100" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pIL6_R" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="STAT3_s" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="IL6_prod" compartment="default_compartment" initialConcentration="1" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="IL6_m" compartment="default_compartment" initialAmount="5" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="F_LPS_irak" value="1" constant="false"/>
@@ -243,8 +245,14 @@
       <parameter id="pIL6_R_0" value="0" constant="false"/>
       <parameter id="kd_stat3_a" value="100" constant="true"/>
       <parameter id="o_stat3_a" value="0" constant="true"/>
+      <parameter id="F_pi3k_a" value="1" constant="false"/>
+      <parameter id="k_pi3k_a" value="0.01" constant="true"/>
+      <parameter id="kd_pi3k_a" value="100" constant="true"/>
+      <parameter id="o_pi3k_a" value="0" constant="true"/>
+      <parameter id="F_nfkb_il6_p" value="1.90300678952473" constant="false"/>
+      <parameter id="k_nfkb_il6_p" value="1" constant="true"/>
+      <parameter id="kd_nfkb_il6_p" value="100" constant="true"/>
       <parameter id="nIL6_m" value="0.999980000399992" constant="false"/>
-      <parameter id="IL6_m" value="5" constant="true"/>
       <parameter id="IL6_m_0" value="5" constant="false"/>
       <parameter id="ee" value="0.0001" constant="true"/>
       <parameter id="nIL6" value="0" constant="false"/>
@@ -581,10 +589,11 @@
       <parameter id="k_il6r_ub" value="0.01" constant="true"/>
       <parameter id="k_il6r_a" value="0.01" constant="true"/>
       <parameter id="k_il6r_da" value="0.01" constant="true"/>
+      <parameter id="k_il6_p" value="5" constant="true"/>
+      <parameter id="k_il6m_il6" value="0.1" constant="true"/>
+      <parameter id="k_il6m_d" value="0.01155" constant="true"/>
       <parameter id="IL6_R_0" value="100" constant="false"/>
       <parameter id="LPS_0" value="0" constant="true"/>
-      <parameter id="IL6_prod" value="1" constant="true"/>
-      <parameter id="k_il6m_d" value="0.01155" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
       <initialAssignment symbol="IKB_0">
@@ -645,11 +654,6 @@
           </apply>
         </math>
       </initialAssignment>
-      <initialAssignment symbol="IL6_R_0">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <ci> IL6_R </ci>
-        </math>
-      </initialAssignment>
       <initialAssignment symbol="k_il6m_d">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
@@ -661,6 +665,11 @@
               <cn type="integer"> 60 </cn>
             </apply>
           </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="IL6_R_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> IL6_R </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -772,6 +781,60 @@
               </apply>
             </apply>
             <ci> o_stat3_a </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="F_pi3k_a">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <minus/>
+            <apply>
+              <plus/>
+              <cn type="integer"> 1 </cn>
+              <apply>
+                <divide/>
+                <apply>
+                  <times/>
+                  <ci> k_pi3k_a </ci>
+                  <apply>
+                    <minus/>
+                    <ci> pIL6_R </ci>
+                    <ci> pIL6_R_0 </ci>
+                  </apply>
+                </apply>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <minus/>
+                    <ci> pIL6_R </ci>
+                    <ci> pIL6_R_0 </ci>
+                  </apply>
+                  <ci> kd_pi3k_a </ci>
+                </apply>
+              </apply>
+            </apply>
+            <ci> o_pi3k_a </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="F_nfkb_il6_p">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <cn type="integer"> 1 </cn>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <ci> k_nfkb_il6_p </ci>
+                <ci> NFKB_n </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <ci> NFKB_n </ci>
+                <ci> kd_nfkb_il6_p </ci>
+              </apply>
+            </apply>
           </apply>
         </math>
       </assignmentRule>
@@ -7488,23 +7551,26 @@
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="_J0" reversible="true" fast="false">
+      <reaction id="_J0" reversible="false" fast="false">
         <listOfReactants>
-          <speciesReference species="LPS" stoichiometry="1" constant="true"/>
+          <speciesReference species="PI3K" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+          <speciesReference species="pPI3K" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> k_lps_d </ci>
-              <ci> LPS </ci>
+              <apply>
+                <minus/>
+                <ci> F_pi3k_a </ci>
+                <cn type="integer"> 1 </cn>
+              </apply>
               <apply>
                 <gt/>
-                <ci> LPS </ci>
-                <cn type="integer"> 0 </cn>
+                <ci> F_pi3k_a </ci>
+                <cn type="integer"> 1 </cn>
               </apply>
             </apply>
           </math>
@@ -7639,6 +7705,81 @@
                 <ci> F_stat3_a </ci>
                 <cn type="integer"> 1 </cn>
               </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL6_v21" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL6_prod" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB_n" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL6_m" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB_n" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il6_p </ci>
+              <ci> F_nfkb_il6_p </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL6_v22" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL6_m" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL6" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il6m_il6 </ci>
+              <ci> IL6_m </ci>
+              <apply>
+                <gt/>
+                <ci> IL6_m </ci>
+                <cn type="integer"> 0 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL6_v23" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL6" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il6_d </ci>
+              <ci> IL6 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="IL6_v24" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="IL6_m" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_il6m_d </ci>
+              <ci> IL6_m </ci>
             </apply>
           </math>
         </kineticLaw>

@@ -36,7 +36,7 @@ packages = {
     # 'combined' : ['S12_IKBa_mg','Z19_IKB_NFKB','S12_NFKBn_mg','Q21_Mg_IL8','B20_NFKBn','eq_combined'], # Mg regulate
     'combined' : ['S12_IKBa_mg','S12_NFKBn_mg','B20_NFKBn','Q21_Mg_IL8','eq_combined'], # Mg regulate
     # 'IL6':['F17']
-    'IL6':['eq_IL6','F17','N03']
+    'IL6':['eq_IL6','F17','N03','F14']
     #'F17'
     # ,'B17'
     # 'eq_IL6'
@@ -45,7 +45,35 @@ packages = {
 
 
 observations = {
-    'N03': { # IL6 stimulates STAT3 and NFKB
+    'F14': { # IL6 stimulates 
+        'IDs': ['ctr','IL6_10'],
+        'activation': False,
+        'cellType':'HM',
+        'duration':int(24*60/t2m),
+        'selections': {
+            'nIL10': [int(24*60/t2m)],
+        },
+        'ctr': {
+            'inputs': {
+            },
+            'expectations': {
+                'nIL10':{'mean':[40/40],
+                        'std':[15/40],
+                        'pvalue':[None]},
+            }
+        },
+        'IL6_10': {
+            'inputs': {
+                'IL6': 10*1000
+            },
+            'expectations': {
+                'nIL10':{'mean':[75/40],
+                        'std':[35/40],
+                        'pvalue':[None]},
+            }
+        }
+    },
+    'N03': { # IL6 stimulates nTNFa
         'IDs': ['ctr','IL6_0dot1','IL6_10','IL6_100'],
         'activation': False,
         'cellType':'HM',
@@ -99,7 +127,8 @@ observations = {
         'duration':int(24*60/t2m),
         'selections': {
             # 'npIL6_R': range_24h_60mStep,
-            'F_stat3_a': range_24h_60mStep
+            'F_stat3_a': range_24h_60mStep,
+            'F_pi3k_a': range_24h_60mStep
 
         },
         'ctr': {
@@ -108,17 +137,18 @@ observations = {
             'expectations': {
                 'npIL6_R':{'mean':[1 for i in range_24h_60mStep]}, #normalized format
                 'F_stat3_a': {'mean':[1 for i in range_24h_60mStep]},
+                'F_pi3k_a': {'mean':[1 for i in range_24h_60mStep]},
             }
         },
     },
-    'F17': { # IL6 stimulates STAT3 and NFKB
+    'F17': { # IL6 stimulates STAT3 
         'IDs': ['ctr','IL6_50','IL6_100','IL6_200'],
         'activation': False,
         'cellType':'PBMCs',
         'duration':int(24*60/t2m),
         'selections': {
             'npSTAT3': [int(24*60/t2m)],
-            # 'nIL10': [int(24*60/t2m)],
+            'nIL10': [int(24*60/t2m)],
         },
         'ctr': {
             'inputs': {
@@ -127,8 +157,8 @@ observations = {
                 'npSTAT3':{'mean':[0.25/0.25],
                         'std':[0.05/0.25],
                         'pvalue':[None]},
-                'nIL10':{'mean':[4/4],
-                        'std':[0.5/4],
+                'nIL10':{'mean':[0.5/0.5],
+                        'std':[0/0.5],
                         'pvalue':[None]}
             }
         },
@@ -140,8 +170,8 @@ observations = {
                 'npSTAT3':{'mean':[0.32/0.25],
                         'std':[0.05/0.25],
                         'pvalue':[0.01]},
-                'nIL10':{'mean':[17/4],
-                        'std':[2/4],
+                'nIL10':{'mean':[0.8/0.5],
+                        'std':[0.1/0.5],
                         'pvalue':[0.01]}
             }
         },
@@ -153,8 +183,8 @@ observations = {
                 'npSTAT3':{'mean':[0.38/0.25],
                         'std':[0.04/0.25],
                         'pvalue':[0.01]},
-                'nIL10':{'mean':[50/4],
-                        'std':[4/4],
+                'nIL10':{'mean':[1/0.5],
+                        'std':[0.2/0.5],
                         'pvalue':[0.001]}
             }
         },
@@ -166,9 +196,8 @@ observations = {
                 'npSTAT3':{'mean':[0.4/0.25],
                         'std':[0.03/0.25],
                         'pvalue':[0.001]},
-
-                'nIL10':{'mean':[59/4],
-                        'std':[2/4],
+                'nIL10':{'mean':[1.7/0.5],
+                        'std':[0.3/0.5],
                         'pvalue':[0.001]}
             }
         },

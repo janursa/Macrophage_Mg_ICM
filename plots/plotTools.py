@@ -47,6 +47,7 @@ labels = {
         'npSTAT3': 'Phos STAT3',
         'npIL6_R': 'Phos IL6/R',
         'F_stat3_a': 'F_stat3_a',
+        'F_pi3k_a':'F_pi3k_a',
 
         'F_h3s10_ikb': 'H3S10 effect on IkBa',
         'F_p3s10_il8_p': 'H3S10 effect on IL8'
@@ -74,7 +75,7 @@ class Specs:
     @staticmethod
     def determine_title(study_tag,target='',duration=None):
         prefix = study_tag.split('_')[0]
-        if study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag == 'eq_IL8' or study_tag == 'eq_combined':
+        if study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag == 'eq_IL8' or study_tag == 'eq_combined' or study_tag == 'eq_IL6':
             # label = '(A) Equalibrium \n (no stimulus)'
             label = ''
         elif study_tag == 'R05_nMg_f' or study_tag == 'Q21_Mg':
@@ -94,7 +95,7 @@ class Specs:
             label = ''
         elif study_tag == 'M18' or study_tag == 'M05_IT' or study_tag == 'M05_NFKBn':
             label = 'IL8 (ng/ml)'
-        elif study_tag == 'B17' or study_tag == 'F17' or study_tag == 'N03':
+        elif study_tag == 'B17' or study_tag == 'F17' or study_tag == 'N03' or study_tag == 'F14':
             label = 'IL6 (ng/ml)'
         
         return label
@@ -195,6 +196,9 @@ class Specs:
         elif study_tag == 'N03':
             adj_ticks = [0,1,2,3]
             adj_labels = ['ctr','0.1','10','100']
+        elif study_tag == 'F14':
+            adj_ticks = [0,1]
+            adj_labels = ['ctr','10']
 
         else:
             # pass

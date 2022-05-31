@@ -66,7 +66,8 @@ if 'IL6' in flags:
     model_sbml = Macrophage.create_sbml_model(model_t)
     macrophage_obj = Macrophage(model_t = model_t)
     print('IL6 is plotting')
-    fig = funcs.P2_IL6_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)                        
+    fig = funcs.P2_IL6_IC_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)                        
+    fig = funcs.P2_IL6_CYs_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)                        
 
 if 'combined' in flags : 
     model_t = 'combined'

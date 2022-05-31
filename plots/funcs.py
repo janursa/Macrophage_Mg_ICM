@@ -92,15 +92,15 @@ def P21_plot(model_sbml,model_macrophage,params,observations):
     
     fig.tight_layout()
 
-def P2_IL6_plot(model_sbml,model_macrophage,params,observations):
+def P2_IL6_IC_plot(model_sbml,model_macrophage,params,observations):
     # figsize = (28,4)
-    figsize = (17,4)
+    figsize = (10,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
 
-    width_ratios= [1,1,1,1,1.5,1.5]
-    width_ratios= [1,1,1,1.25]
+    width_ratios= [1,1.5]
+    # width_ratios= [1,1,1,1.25]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
@@ -111,16 +111,16 @@ def P2_IL6_plot(model_sbml,model_macrophage,params,observations):
     # jj+=1
 
     g_size = 4
-    study_tag,target = 'eq_IL6','F_stat3_a'
+    study_tag,targets = 'eq_IL6',['F_stat3_a','F_pi3k_a']
     ID = obs[study_tag]['IDs'][0]
-    plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
     jj+=1
 
-    g_size = 4
-    study_tag,target = 'B17','npSTAT3'
-    IDs = obs[study_tag]['IDs']
-    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    jj+=1
+    # g_size = 4
+    # study_tag,target = 'B17','npSTAT3'
+    # IDs = obs[study_tag]['IDs']
+    # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    # jj+=1
 
     # axes[jj].set_title('B17: nNFKB_n')
     # g_size = 4
@@ -130,25 +130,43 @@ def P2_IL6_plot(model_sbml,model_macrophage,params,observations):
     # jj+=1
 
     # axes[jj].set_title('F17: npSTAT3')
-    # g_size = 6
-    # study_tag,target = 'F17','npSTAT3'
-    # IDs = obs[study_tag]['IDs']
-    # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    # jj+=1
-    # 
+    g_size = 6
+    study_tag,target = 'F17','npSTAT3'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
     
+
+    fig.tight_layout()
+
+def P2_IL6_CYs_plot(model_sbml,model_macrophage,params,observations):
+    figsize = (14,4)
+    fig = plt.figure(figsize=figsize)
+    fig.canvas.draw()
+    obs = observations
+
+    width_ratios= [1.5,1,1.5]
+    jj = 0
+    fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
+
+    g_size = 6
+    study_tag,target = 'F17','nIL10'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+
+    g_size = 4
+    study_tag,target = 'F14','nIL10'
+    IDs = obs[study_tag]['IDs']
+    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    jj+=1
+
+
     g_size = 6
     study_tag,target = 'N03','nTNFa'
     IDs = obs[study_tag]['IDs']
     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
     jj+=1
-
-    # axes[jj].set_title('F17_nIL10')
-    # g_size = 6
-    # study_tag,target = 'F17','nIL10'
-    # IDs = obs[study_tag]['IDs']
-    # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    # jj+=1
 
     fig.tight_layout()
 

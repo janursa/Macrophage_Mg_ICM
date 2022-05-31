@@ -44,13 +44,13 @@ model_sbml = Macrophage.create_sbml_model(model_t)
 # params['k_stat3_a'] = 100
 
 # tags = ['F_il8_irak','IRAK4','NFKB_n']
-tags = ['IL6','pIL6_R','F_stat3_a','pSTAT3','TNFa','IL10']
+tags = ['IL1b','pPI3K','pAKT1','ARG1','TNFa','IL10']
 # tags = ['F_h3s10_ikb','F_p3s10_il8_p']
 activation = False
 duration = 24*60
 inputs = {}
 ctr = Macrophage.run_sbml_model(model_sbml=model_sbml,duration=duration,params={**params,**inputs},selections=['time']+tags,activation=activation)
-print(ctr['F_stat3_a'])
+# print(ctr['F_stat3_a'])
 inputs = {'IL6':50*1000}
 stim = Macrophage.run_sbml_model(model_sbml=model_sbml,duration=duration,params={**params,**inputs},selections=['time']+tags,activation=activation)
 # print(ctr['IL6_R_0'])

@@ -50,14 +50,14 @@ model IL6_model()
     IL6_v16: pIL6_R => IL6_R; k_il6r_da*pIL6_R*(pIL6_R>0);
     IL6_v17: $STAT3_s + pIL6_R => PP.pSTAT3; (F_stat3_a-1)*(F_stat3_a>1)
     
-    
     ## PI3K/Akt Pathway
+    PP.PI3K => PP.pPI3K; (F_pi3k_a-1)*(F_pi3k_a>1);
     
     ### IL6 transcriptional stimulation ###
-    # IL6_v21: $IL6_prod + PP.NFKB_n => IL6_m + PP.NFKB_n; k_il6_p*F_nfkb_il6_p;
-    # IL6_v22: IL6_m => IL6; k_il6m_il6*IL6_m*(IL6_m>0);
-    # IL6_v23: IL6 => deg; k_il6_d*IL6;
-    # IL6_v24: IL6_m => deg; k_il6m_d*IL6_m;
+    IL6_v21: $IL6_prod + PP.NFKB_n => IL6_m + PP.NFKB_n; k_il6_p*F_nfkb_il6_p;
+    IL6_v22: IL6_m => IL6; k_il6m_il6*IL6_m*(IL6_m>0);
+    IL6_v23: IL6 => deg; k_il6_d*IL6;
+    IL6_v24: IL6_m => deg; k_il6m_d*IL6_m;
 
     ### Variables ###:
     ## Known ##
@@ -78,12 +78,15 @@ model IL6_model()
     k_stat3_a = 0.01
     kd_stat3_a = 100
     o_stat3_a = 0
+    k_pi3k_a = 0.01
+    kd_pi3k_a = 100
+    o_pi3k_a = 0
     
     IL6_m = 5
-    # k_il6m_il6 = .1
-    # k_il6_p = 5
-    # k_nfkb_il6_p = 1
-    # kd_nfkb_il6_p = 100
+    k_il6m_il6 = .1
+    k_il6_p = 5
+    k_nfkb_il6_p = 1
+    kd_nfkb_il6_p = 100
 
     IL6_R_0 = IL6_R;
     IL6_m_0 = IL6_m;
@@ -106,8 +109,8 @@ model IL6_model()
     npSTAT3 := PP.pSTAT3/(pSTAT3_0+ee);
     npIL6_R := pIL6_R/(pIL6_R_0+ee);
     F_stat3_a := 1+k_stat3_a*(pIL6_R-pIL6_R_0)/(pIL6_R-pIL6_R_0 + kd_stat3_a) - o_stat3_a
-
-    # F_nfkb_il6_p := 1+k_nfkb_il6_p*PP.NFKB_n/(PP.NFKB_n+kd_nfkb_il6_p);
+    F_pi3k_a := 1+k_pi3k_a*(pIL6_R-pIL6_R_0)/(pIL6_R-pIL6_R_0 + kd_pi3k_a) - o_pi3k_a
+    F_nfkb_il6_p := 1+k_nfkb_il6_p*PP.NFKB_n/(PP.NFKB_n+kd_nfkb_il6_p);
 end
 
 """

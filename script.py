@@ -23,7 +23,7 @@ if False:
     tools.activation_LPS()
 ## curate inferred parameters to insert into the model
 if True:
-    file_name = os.path.join(main_dir,'outputs','inferred_params_IL8.json')
+    file_name = os.path.join(main_dir,'outputs','inferred_params_ILs.json')
     with open(file_name,'r') as f:
         ss = f.read()
     ss = ss.replace(",",";")

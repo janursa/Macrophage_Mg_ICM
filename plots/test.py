@@ -32,9 +32,10 @@ def reload_params(params): # apply inferred params
         inferred_params = json.load(file)
     params = {**params,**inferred_params}
     return params
-params = reload_params(params)
-params['k_il8_irak_p'] = 500000
-params['o_il8_irak_p'] = 0
+# params = reload_params(params)
+# params['k_il8_p'] = .4
+# params['k_il8m_il8'] = .05
+# params['o_il8_irak_p'] = 0
 model_t = 'IL8'
 # params['k_il8_irak_p'] = 10000
 # params['o_il8_irak_p'] = 0
@@ -46,7 +47,7 @@ model_sbml = Macrophage.create_sbml_model(model_t)
 # params['k_stat3_a'] = 100
 
 # tags = ['F_il8_irak','IRAK4','NFKB_n']
-tags = ['IL8','IL8_R','pIL8_R','F_il8_irak','IRAK4','pIL8_R_0']
+tags = ['IL8','IL8_m','IL8_R','pIL8_R','F_il8_irak','IRAK4','pIL8_R_0']
 # tags = ['F_h3s10_ikb','F_p3s10_il8_p']
 activation = False
 duration = 24*60

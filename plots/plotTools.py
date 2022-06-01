@@ -175,8 +175,8 @@ class Specs:
             adj_ticks = [0,1]
             adj_labels = ['ctr','100']
         elif study_tag == 'M05_NFKBn':
-            adj_ticks = [0,1,2,3,4,5]
-            adj_labels = ['ctr','1','10','10','100','1000']
+            adj_ticks = [0,1,2,3,4]
+            adj_labels = ['ctr','1','10','10','100']
         elif study_tag == 'Q21_IkBa_6h' or study_tag == 'Q21_IkBa_72h':
             adj_ticks = [0,1]
             adj_labels = ['0.08','8']

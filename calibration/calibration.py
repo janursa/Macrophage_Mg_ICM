@@ -20,8 +20,8 @@ if memory_check == True:
   process = psutil.Process(os.getpid())
 
 class settings:
-    model_t = 'IL8'
-    target_package = 'IL8'
+    model_t = 'ILs'
+    target_package = 'ILs'
     free_params = free_params_p[target_package]
     studies = select_obs(packages[target_package])
 print(settings.free_params)

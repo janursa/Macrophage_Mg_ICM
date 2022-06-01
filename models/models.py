@@ -10,10 +10,6 @@ main_dir = os.path.join(dir_file,'..')
 sys.path.insert(0,main_dir)
 from tools import tools,dirs
 
-
-
-
-
 def retrieve_activation_stimuli():
     with open(dirs.dir_activation_stimuli) as ff:
       activation_s = json.load(ff)
@@ -35,6 +31,8 @@ class Macrophage:
         return te.loadSBMLModel(dirs.dir_Zhao_model)
     elif model_t == 'IL6':
         return te.loadSBMLModel(dirs.dir_IL6_model)
+    elif model_t == 'ILs':
+        return te.loadSBMLModel(dirs.dir_ILs_model)
     else:
       raise ValueError('{} is not defined'.format(model_t))
 
@@ -182,7 +180,7 @@ class Macrophage:
       steps = random.randint(int(duration/2),duration)
     
     return results
-  def calculate_cost(self,results):
+  def calculate_cost(self,results,studies):
     costs = {}
     for study_tag,study_result in results.items():
       
@@ -198,12 +196,18 @@ class Macrophage:
         error = self.quantitative_cost_func(exp=n_exps,sim=n_sims)
         if (target == 'nTRPM_n' or target == 'nTRPM' or target == 'nM7CK_n' or target == 'anH3S10') and max(sims)>10: # to control the max values these factors can have
             error = max(sims)
-            
+        
         costs[study_tag][target] = error
     mean_errors = []
+
     for study_tag,study_costs in costs.items():
+      study = studies[study_tag]
       errors = list(study_costs.values())
-      mean_errors.append(np.mean(errors))
+      if 'weight' in study:
+        weight = study['weight']
+      else:
+        weight = 1
+      mean_errors.append(np.mean(errors)*weight)
     return costs,np.mean(mean_errors)
 
   def simulate(self,study_tag,params,inputs,selections,duration,activation):
@@ -236,6 +240,6 @@ class Macrophage:
       flag = 0
     if flag == 1:
       sims_vs_exps = self.sort_sim_vs_exp(sims,studies)
-      target_costs,mean_cost = self.calculate_cost(sims_vs_exps)
+      target_costs,mean_cost = self.calculate_cost(sims_vs_exps,studies)
     
     return mean_cost

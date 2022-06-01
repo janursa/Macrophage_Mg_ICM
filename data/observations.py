@@ -19,7 +19,12 @@ packages = {
 	'M12' : ['Q21_M1','Q21_eq_trpm','Q21_eq_h3s10'],
 	'M1': [],
 	# R05_mg_n (mg extrusion)
-	'IL8' : ['eq_IL8','M05_IT','M05_NFKBn'],
+	# 'IL8' : ['eq_IL8','M05_IT','M05_NFKBn'],
+    # 'ILs' : ['eq_IL8','M05_IT','M05_NFKBn'],
+    # 'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','eq_IL6','F17','N03','F14'],
+   'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','eq_IL6','F17','N03','F14','M18'], # 
+   # 'ILs' : ['eq_IL6','F17','N03','F14'], # 
+    # 'IL8' : ['eq_IL8','M05_IT'],
     # 'IL8' : ['eq_IL8','M05_IT'],
     # 'IL8' : ['M05_IT'],
 	#'M18','M05_NFKBn'
@@ -123,6 +128,7 @@ observations = {
     'eq_IL6':{ # eq 
         'IDs': ['ctr'],
         'activation': False,
+        'weight': 0.2,
         'duration':int(24*60/t2m),
         'selections': {
             # 'npIL6_R': range_24h_60mStep,
@@ -657,7 +663,8 @@ observations = {
         
     },
     'M05_NFKBn': { # IL8 regulate NFKB
-        'IDs': ['ctr','0dot1','1','10','100','1000'],
+        # 'IDs': ['ctr','0dot1','1','10','100','1000'],
+        'IDs': ['ctr','0dot1','1','10','100'],
         'activation': False,
         'duration':int(2*60/t2m),
         'selections': {
@@ -717,17 +724,17 @@ observations = {
                 		}, #normalized format
             }
         },
-       	'1000': {
-            'inputs': {
-            	'IL8': 1000*1000
-            },
-            'expectations': {
-                'nNFKB_n':{'mean':[4.7],
-                		'std':[0],
-                        'pvalue':['ns']
-                		}, #normalized format
-            }
-        },
+       	# '1000': {
+        #     'inputs': {
+        #     	'IL8': 1000*1000
+        #     },
+        #     'expectations': {
+        #         'nNFKB_n':{'mean':[4.7],
+        #         		'std':[0],
+        #                 'pvalue':['ns']
+        #         		}, #normalized format
+        #     }
+        # },
     },
 	'M18': { # IL8 regulate IL4R, IFNGR, and IL-1b
         'IDs': ['ctr','0dot01','0dot1','1','10'],
@@ -1249,6 +1256,7 @@ observations = {
 	'eq_IL8':{# equalibrium of IL8
 		'duration':24*int(60/t2m), # hours
 		'activation': False,
+        'weight': 0.2,
 		'selections':{
 			'nIL8_m':  range_24h_60mStep,
 			'F_il8_irak':  range_24h_60mStep,

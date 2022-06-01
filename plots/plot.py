@@ -22,21 +22,21 @@ from plots import funcs
 
 params = {**fixed_params}
 def reload_params(params): # apply inferred params
-    target_package = 'IL8'
+    target_package = 'ILs'
     with open(os.path.join(dirs.dir_outputs,'inferred_params_{}.json'.format(target_package)),'r') as file:
         inferred_params = json.load(file)
     params = {**params,**inferred_params}
     return params
 params = reload_params(params)
 print(params)
-# params['k_il8_irak_p'] = 500000
+# params['k_il8_p'] = 0.1
 # params['o_il8_irak_p'] = 0
 
 print('t2m: {} '.format(t2m))
 flags = [
     # 'M1',
     # 'LPS',
-    # 'IL6',
+    'IL6',
     'IL8',
     # 'combined'
 ]
@@ -56,7 +56,7 @@ if 'LPS' in flags :
     print('LPS is plotting')
     funcs.LPS_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations) 
 if 'IL8' in flags: 
-    model_t = 'IL8'
+    model_t = 'ILs'
     model_sbml = Macrophage.create_sbml_model(model_t)
     macrophage_obj = Macrophage(model_t = model_t)
     print('IL8 is plotting')
@@ -65,7 +65,7 @@ if 'IL8' in flags:
     # fig2 = funcs.P2_receptors_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
     fig2 = funcs.P23_plot(model_sbml=model_sbml,model_macrophage=macrophage_obj,params=params,observations=observations)
 if 'IL6' in flags: 
-    model_t = 'IL6'
+    model_t = 'ILs'
     model_sbml = Macrophage.create_sbml_model(model_t)
     macrophage_obj = Macrophage(model_t = model_t)
     print('IL6 is plotting')

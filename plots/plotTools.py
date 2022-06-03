@@ -43,7 +43,7 @@ labels = {
         'nIL4R': r'IL4 receptor',
         'nIL6':'IL6',
         'F_il8_irak':'F_il8_irak',
-        
+
         'nIRAK4':'Cytosolic IRAK',
         'naTRAF6':'Activated cytosolic TRAF6',
         'npSTAT3': 'Phos STAT3',
@@ -60,7 +60,7 @@ class Specs:
         self.line_width = 3
         self.bar_width = .2
         self.error_bar_width = 5
-        self.colors = ['lime' , 'violet', 'yellowgreen', 'peru', 'skyblue']
+        self.colors = ['lime' , 'violet', 'yellowgreen', 'peru', 'skyblue','b']
         self.legend_font_size = 15
         self.tick_font_size = 21
         self.title_font_size = 21
@@ -446,7 +446,10 @@ class plotTools:
 #        ax.plot(x,obs_yy,linestyle='--',color='r', linewidth=specs.line_width, label = 'Expectation')
         jj=0
         for target in targets:
-            ax.plot(x,sims[target][i_0:],color=specs.colors[jj],linewidth=specs.line_width, label = 'S: {}'.format(labels[target]))
+            label = target
+            if target in list(labels.keys()):
+                label = labels[target]
+            ax.plot(x,sims[target][i_0:],color=specs.colors[jj],linewidth=specs.line_width, label = 'S: {}'.format(label))
             jj+=1
         ax.legend()
         plotTools.ax_postprocess(ax,study_tag=study_tag,sims=sims,duration=duration,specs=specs)

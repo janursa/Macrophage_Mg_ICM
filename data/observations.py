@@ -20,9 +20,9 @@ packages = {
 	'M1': [],
 	# R05_mg_n (mg extrusion)
 	# 'IL8' : ['eq_IL8','M05_IT','M05_NFKBn'],
-    # 'ILs' : ['eq_IL8','M05_IT','M05_NFKBn'],
+    'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','M18'],
     # 'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','eq_IL6','F17','N03','F14'],
-   'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','eq_IL6','F17','N03','F14','M18'], # 
+   # 'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','eq_IL6','F17','N03','F14','M18'], # 
    # 'ILs' : ['eq_IL6','F17','N03','F14'], # 
     # 'IL8' : ['eq_IL8','M05_IT'],
     # 'IL8' : ['eq_IL8','M05_IT'],
@@ -131,7 +131,7 @@ observations = {
         'weight': 0.2,
         'duration':int(24*60/t2m),
         'selections': {
-            # 'npIL6_R': range_24h_60mStep,
+            'nIL6_m':range_24h_60mStep,
             'F_stat3_a': range_24h_60mStep,
             'F_pi3k_a': range_24h_60mStep
 
@@ -140,7 +140,7 @@ observations = {
             'inputs': {
             },
             'expectations': {
-                'npIL6_R':{'mean':[1 for i in range_24h_60mStep]}, #normalized format
+                'nIL6_m':{'mean':[1 for i in range_24h_60mStep]}, #normalized format
                 'F_stat3_a': {'mean':[1 for i in range_24h_60mStep]},
                 'F_pi3k_a': {'mean':[1 for i in range_24h_60mStep]},
             }
@@ -175,7 +175,7 @@ observations = {
                 'npSTAT3':{'mean':[0.32/0.25],
                         'std':[0.05/0.25],
                         'pvalue':[0.01]},
-                'nIL10':{'mean':[0.8/0.5],
+                'nIL10':{'mean':[1.1/0.5],
                         'std':[0.1/0.5],
                         'pvalue':[0.01]}
             }
@@ -188,7 +188,7 @@ observations = {
                 'npSTAT3':{'mean':[0.38/0.25],
                         'std':[0.04/0.25],
                         'pvalue':[0.01]},
-                'nIL10':{'mean':[1/0.5],
+                'nIL10':{'mean':[1.4/0.5],
                         'std':[0.2/0.5],
                         'pvalue':[0.001]}
             }
@@ -1260,7 +1260,10 @@ observations = {
 		'selections':{
 			'nIL8_m':  range_24h_60mStep,
 			'F_il8_irak':  range_24h_60mStep,
-            # 'nIFNGR':  range_24h_60mStep
+            'F_rho_a':  range_24h_60mStep,
+            'F_rho_pi3k_a':  range_24h_60mStep,
+            'F_nfkb_il8_p': range_24h_60mStep,
+            'F_ap1_il8_p': range_24h_60mStep,
 		},
 		'IDs': ['ctr'],
 		'ctr':{
@@ -1274,6 +1277,18 @@ observations = {
 				'F_il8_irak': {
 					'mean':[1 for i in range_24h_60mStep]
 				},
+                'F_rho_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_pi3k_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_nfkb_il8_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_ap1_il8_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
 			}
 		}
 	},

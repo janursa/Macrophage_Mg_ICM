@@ -53,7 +53,7 @@ def P2_eq(model_sbml,model_macrophage,params,observations):
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
     g_size = 4
-    study_tag,targets = 'eq_IL8',['nIL8_m','F_il8_irak']
+    study_tag,targets = 'eq_IL8',list(observations['eq_IL8']['selections'].keys())
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
 
@@ -105,7 +105,7 @@ def P2_IL6_IC_plot(model_sbml,model_macrophage,params,observations):
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
     g_size = 4
-    study_tag,targets = 'eq_IL6',['F_stat3_a','F_pi3k_a']
+    study_tag,targets = 'eq_IL6',list(observations['eq_IL6']['selections'].keys())
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
     jj+=1

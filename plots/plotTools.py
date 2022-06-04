@@ -8,7 +8,7 @@ dir_file = Path(__file__).resolve().parent
 main_dir = os.path.join(dir_file,'..')
 from data.observations import observations,t2m
 from models.models import Macrophage
-from tools import tools
+from tools import common
 
 plt.rcParams["font.family"] = "serif"
 plt.rcParams["font.serif"] = ["Arial"] + plt.rcParams["font.serif"]
@@ -60,7 +60,7 @@ class Specs:
         self.line_width = 3
         self.bar_width = .2
         self.error_bar_width = 5
-        self.colors = ['lime' , 'violet', 'yellowgreen', 'peru', 'skyblue','b']
+        self.colors = ['lime' , 'violet', 'yellowgreen', 'peru', 'skyblue','b','r','g']
         self.legend_font_size = 15
         self.tick_font_size = 21
         self.title_font_size = 21
@@ -375,7 +375,7 @@ class plotTools:
         sims = model.simulate_study(study_tag=study_tag,params= params,study=study)
 #        print('--',study_tag,target,sims)
         sims,exps,exps_std,pvalues = process_data.sort(sims=sims,exps=study,target = target,plot_t=plot_t)
-        sims,exps = tools.normalize(study_tag = study_tag,target=target, sims= sims, exps=exps)
+        sims,exps = common.normalize(study_tag = study_tag,target=target, sims= sims, exps=exps)
         specs = Specs(study_tag)
         xs = specs.bar_positions(sims,specs.delta,specs.D,plot_t=plot_t)
         max_y = 0 # to determine ylim

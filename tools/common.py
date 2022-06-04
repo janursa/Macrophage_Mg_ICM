@@ -13,7 +13,7 @@ import tellurium as te
 import json
 import copy
 from tools import dirs
-from models.models import Macrophage
+# from models.models import Macrophage
 
 
 

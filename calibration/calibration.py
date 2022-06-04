@@ -6,7 +6,7 @@ dir_file = Path(__file__).resolve().parent
 main_dir = os.path.join(dir_file,'..')
 sys.path.insert(0,main_dir)
 from tools import dirs
-from tools.tools import calibrate
+from tools.common import calibrate
 import json
 from models.params import free_params_p, fixed_params
 from data.observations import observations,packages,select_obs
@@ -21,7 +21,7 @@ if memory_check == True:
 
 class settings:
     model_t = 'ILs'
-    target_package = 'ILs'
+    target_package = 'ILs_p3'
     free_params = free_params_p[target_package]
     studies = select_obs(packages[target_package])
 print(settings.free_params)
@@ -41,7 +41,7 @@ def callback(xk, convergence):
         params[keys[ii]] = xk[ii]
     _params = params
     params = {**params,**fixed_params}
-    error = model.run(params = params,studies=settings.studies)
+    error,_ = model.run(params = params,studies=settings.studies)
     output(_params,error)
     # print('Curr Memory usage: %s (KB)' % (process.memory_info().rss / 1024))
     if  error < 0.02:
@@ -52,7 +52,7 @@ def cost_function(calib_params_values):
     for key,value in zip(settings.free_params.keys(),calib_params_values):
         calib_params[key] = value
     params = {**calib_params,**fixed_params}
-    error = model.run(params=params,studies=settings.studies)
+    error,_ = model.run(params=params,studies=settings.studies)
     return error
 def model_validity_test(free_params):
     print('model validty test')

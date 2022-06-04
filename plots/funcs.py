@@ -43,21 +43,40 @@ def LPS_plot(model_sbml,model_macrophage,params,observations):
     fig.tight_layout()
 
 def P2_eq(model_sbml,model_macrophage,params,observations):
-    figsize = (8,4)
+    figsize = (16,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
 
-    width_ratios= [1,1]
+    width_ratios= [1,1,1,1]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
+
+    g_size = 4
+    study_tag,targets = 'eq_IL8', ['nIL8_m','F_il8_irak']
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+    g_size = 4
+    study_tag,targets = 'eq_IL8', ['F_nfkb_il8_p','F_ap1_il8_p']
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+    g_size = 4
+    study_tag,targets = 'eq_IL8', ['F_rho_nfkb_a','F_rho_stat3_a','F_rho_pi3k_a']
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
 
     g_size = 4
     study_tag,targets = 'eq_IL8',list(observations['eq_IL8']['selections'].keys())
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
-
+    jj+=1
     
+
     
     fig.tight_layout()
 
@@ -123,7 +142,6 @@ def P2_IL6_IC_plot(model_sbml,model_macrophage,params,observations):
     # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
     # jj+=1
 
-    # axes[jj].set_title('F17: npSTAT3')
     g_size = 6
     study_tag,target = 'F17','npSTAT3'
     IDs = obs[study_tag]['IDs']
@@ -201,28 +219,29 @@ def P23_plot(model_sbml,model_macrophage,params,observations):
     fig, axes = plt.subplots(1, nn, gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
     jj = 0
     g_size = 6
-    study_tag,target = 'M18','nIL1b'
+    study_tag,targets = 'M18',list(observations['M18']['selections'].keys())
     IDs = obs[study_tag]['IDs']
-    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    jj+=1
+    for target in targets:
+        plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+        jj+=1
 #
-    g_size = 6
-    study_tag,target = 'M18','nIL10'
-    IDs = obs[study_tag]['IDs']
-    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    jj+=1
-#
-    g_size = 6
-    study_tag,target = 'M18','nTNFa'
-    IDs = obs[study_tag]['IDs']
-    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    jj+=1
+#     g_size = 6
+#     study_tag,target = 'M18','nIL10'
+#     IDs = obs[study_tag]['IDs']
+#     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+#     jj+=1
+# #
+#     g_size = 6
+#     study_tag,target = 'M18','nTNFa'
+#     IDs = obs[study_tag]['IDs']
+#     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+#     jj+=1
 
-    g_size = 6
-    study_tag,target = 'M18','nIL6'
-    IDs = obs[study_tag]['IDs']
-    plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
-    jj+=1
+#     g_size = 6
+#     study_tag,target = 'M18','nIL6'
+#     IDs = obs[study_tag]['IDs']
+#     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+#     jj+=1
     
     fig.tight_layout()
 

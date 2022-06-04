@@ -44,38 +44,7 @@ fixed_params_p = {
     
     
 }
-free_params_p = {
-    'M11':{
-        # not included
-        'ATP':[.1,100],
-        'k_atp_p0':[0.001,10],
-        'k_atp_pm':[0.001,10],
-        'k_atp_c':[.001,1],
-        'IM':[.1,100],
-        
-        'Mg_ATP':[.1,100],
-        'Mg_IM':[.1,100],
-        'k_m_i':[0.001,1],
-        'k_matp_b':[0.001,1],
-        'k_matp_ub':[0.001,1],
-        'k_mim_b':[0.001,1],
-        'k_mim_ub':[0.001,1],
-    },
-    'M12':{ ###---- P12----###
-        'k_ntrpm_p':[0.001,1],
-        'n_ntrpm_p':[.01,10],
-        'k_ntrpm_t':[0.001,1],
-        'k_trpm_s':[0.001,1],
-
-        'k_m7ck_t1':[0.001,1],
-        'k_m7ck_t2':[0.001,1],
-        'k_m7ck_deg':[0.001,1],
-        'k_h3s10_p':[0.01,10],
-        'k_h3s10_a':[0.01,1],
-        'k_h3s10_d':[0.01,1],
-        'k_h3s10_da':[0.01,1],
-               
-    },    
+free_params_p = {  
     'M1':{
         ### P11
         'ATP':[.1,100],
@@ -113,52 +82,74 @@ free_params_p = {
         'k_lps_d':[0.001,1],
         'k_lps_irak_p':[.1,1000000]
     },
-    # 'IL6':{
-    #     ## pathway
-    #     'IL6_R' : [1,10], 
-    #     'pIL6_R': [1,10], 
-    #     'k_il6r_b' :[0,1],
-    #     'k_il6r_ub':[0,1],
-    #     'k_il6r_a':[0,1],
-    #     'k_il6r_da':[0,1],
-    #     'k_stat3_a':[0,1000],
-    #     'kd_stat3_a':[0.01,1000000],
-    #     'o_stat3_a':[0,10],
-    #     'k_pi3k_a':[0,1000],
-    #     'kd_pi3k_a':[0.01,1000000],
-    #     'o_pi3k_a':[0,10],
-    #     ## production
-    #     'IL6_m' : [.1,10],
-    #     'k_il6m_il6' : [0,1],
-    #     'k_il6_p' : [0,100],
-    #     'k_nfkb_il6_p' : [0,1000],
-    #     'kd_nfkb_il6_p' : [1,100000],
-        
-
-    # },
-    
-    # 'IL8':{
-    #     ## IL8
-    #     'IL8_R': [0.1,10],
-    #     'pIL8_R': [0.1,10],
-    #     'k_il8r_b': [0,1],
-    #     'k_il8r_ub': [0,1],
-    #     'k_il8r_a': [0,1],
-    #     'k_il8r_da': [0,1],
-    #     'kd_il8_irak_p': [10000,100000],
-    #     'k_il8_irak_p': [5000,60000],
-    #     'o_il8_irak_p': [0,1],
-
-    #     'IL8_m':[0.01,10],
-    #     'k_il8m_il8':[0.0001,1],
-    #     'k_il8_p': [0.1,1000],
-    #     'kd_nfkb_il8_p' : [1000,10000],
-    
-
-    # },
-    'ILs':{
+    'ILs_p1':{
         ## IL8
 
+        # 'IL8':[0,10],
+        # 'IL8_m':[0,10],
+        # 'k_il8_p':[0,100],
+        # 'k_il8m_il8':[0,1],
+        # 'IL8_R': [0.1,10],
+        # 'pIL8_R': [0.1,10],
+        # 'k_il8r_b': [0,1],
+        # 'k_il8r_ub': [0,1],
+        # 'k_il8r_a': [0,1],
+        # 'k_il8r_da': [0,1],
+        # 'kd_il8_irak_p': [1,100000],
+        # 'k_il8_irak_p': [100,100000],
+        # 'o_il8_irak_p': [0,1],
+        ## regulated production of IL8
+        # 'k_nfkb_il8_p':[1,1000],
+        # 'kd_nfkb_il8_p':[1,100000],
+        # 'o_nfkb_il8_p': [0,1],
+        # 'k_ap1_il8_p': [1,1000],
+        # 'kd_ap1_il8_p':[1,100000],
+        # 'o_ap1_il8_p':[0,1],
+        
+        # 'k_rho_a':[1,100],
+        # 'kd_rho_a':[1,10000],
+        # 'o_rho_a':[0,1],
+        # 'k_rho_nfkb_a':[1,1000],
+        # 'kd_rho_nfkb_a':[1,10000],
+        # 'o_rho_nfkb_a':[0,1],
+        
+        # 'k_rho_pi3k_a':[1,10000],
+        # 'kd_rho_pi3k_a':[1,100000],
+        # 'o_rho_pi3k_a':[0,1],
+        # 'k_rho_stat3_a':[1,10000],
+        # 'kd_rho_stat3_a':[1,100000],
+        # 'o_rho_stat3_a':[0,1],
+        
+        # 'k_rho_jnk_a':[1,100000],
+        # 'kd_rho_jnk_a':[1,100000],
+        # 'o_rho_jnk_a':[0,1],
+
+
+        ## IL6
+        'IL6' : [1,10], 
+        'IL6_R_JACK' : [1,10], 
+        'pIL6_R_JACK': [1,10], 
+        'k_il6r_b' :[0,1],
+        'k_il6r_ub':[0,1],
+        'k_il6r_a':[0,1],
+        'k_il6r_da':[0,1],
+        'IL6_m' : [1,10],
+        'k_il6m_il6' : [0,1],
+        'k_il6_p' : [0,100],
+        'k_il6_stat3_a':[1,100],
+        'kd_il6_stat3_a':[1,10000],
+        'o_il6_stat3_a':[0,1],
+        'k_il6_pi3k_a':[1,1000],
+        'kd_il6_pi3k_a':[1,10000],
+        'o_il6_pi3k_a':[0,1],
+        
+        ## regulated IL6 production
+        'k_nfkb_il6_p' : [1,100],
+        'kd_nfkb_il6_p' : [1,100000],
+        'o_nfkb_il6_p' : [0,1],
+    },
+    'ILs_p2':{# ILs_p2
+        ## IL8
         'IL8':[0,10],
         'IL8_m':[0,10],
         'k_il8_p':[0,100],
@@ -169,30 +160,34 @@ free_params_p = {
         'k_il8r_ub': [0,1],
         'k_il8r_a': [0,1],
         'k_il8r_da': [0,1],
-        'kd_il8_irak_p': [1,100000],
-        'k_il8_irak_p': [1,60000],
+        'kd_il8_irak_p': [1000,100000],
+        'k_il8_irak_p': [1000,100000],
         'o_il8_irak_p': [0,1],
-        # 'k_rho_a':[1,1000],
-        # 'kd_rho_a':[1,100000],
+        ## regulated production of IL8
+        # 'k_nfkb_il8_p':[1,10],
+        # 'kd_nfkb_il8_p':[1,10],
+        # 'o_nfkb_il8_p': [0,1],
+        # 'k_ap1_il8_p': [1,1],
+        # 'kd_ap1_il8_p':[1,10],
+        # 'o_ap1_il8_p':[0,1],
+        
+        # 'k_rho_a':[1,100],
+        # 'kd_rho_a':[1,10000],
         # 'o_rho_a':[0,1],
-        # 'k_rho_pi3k_a':[1,100000],
-        # 'kd_rho_pi3k_a':[1,10000],
+        # 'k_rho_nfkb_a':[1,1000],
+        # 'kd_rho_nfkb_a':[1,10000],
+        # 'o_rho_nfkb_a':[0,1],
+        
+        # 'k_rho_pi3k_a':[1,10000],
+        # 'kd_rho_pi3k_a':[1,100000],
         # 'o_rho_pi3k_a':[0,1],
-        # 'k_rho_stat3_a':[1,100000],
+        # 'k_rho_stat3_a':[1,10000],
         # 'kd_rho_stat3_a':[1,100000],
         # 'o_rho_stat3_a':[0,1],
+        
         # 'k_rho_jnk_a':[1,100000],
         # 'kd_rho_jnk_a':[1,100000],
         # 'o_rho_jnk_a':[0,1],
-        
-
-        ## regulated production of IL8
-        # 'k_nfkb_il8_p':[1,1000],
-        # 'kd_nfkb_il8_p':[1,100000],
-        # 'o_nfkb_il8_p': [0,1],
-        # 'k_ap1_il8_p': [1,1000],
-        # 'kd_ap1_il8_p':[1,100000],
-        # 'o_ap1_il8_p':[0,1],
 
         ## IL6
         # 'IL6' : [1,10], 
@@ -202,38 +197,103 @@ free_params_p = {
         # 'k_il6r_ub':[0,1],
         # 'k_il6r_a':[0,1],
         # 'k_il6r_da':[0,1],
-        # 'k_stat3_a':[1,1000],
-        # 'kd_stat3_a':[1,1000000],
-        # 'o_stat3_a':[0,1],
-        # 'k_pi3k_a':[1,1000],
-        # 'kd_pi3k_a':[1,10000],
-        # 'o_pi3k_a':[0,1],
         # 'IL6_m' : [1,10],
         # 'k_il6m_il6' : [0,1],
         # 'k_il6_p' : [0,100],
+        # 'k_il6_stat3_a':[1,100],
+        # 'kd_il6_stat3_a':[1,10000],
+        # 'o_il6_stat3_a':[0,1],
+        # 'k_il6_pi3k_a':[1,1000],
+        # 'kd_il6_pi3k_a':[1,10000],
+        # 'o_il6_pi3k_a':[0,1],
         
         ## regulated IL6 production
-        # 'k_nfkb_il6_p' : [1,1000],
+        # 'k_nfkb_il6_p' : [1,100],
         # 'kd_nfkb_il6_p' : [1,100000],
+        # 'o_nfkb_il6_p' : [0,1],
     },
-    'P2':{
+    'ILs_p3':{
+        ## IL8
+        # 'IL8':[0,10],
+        # 'IL8_m':[0,10],
+        # 'k_il8_p':[0,100],
+        # 'k_il8m_il8':[0,1],
+        # 'IL8_R': [0.1,10],
+        # 'pIL8_R': [0.1,10],
+        # 'k_il8r_b': [0,1],
+        # 'k_il8r_ub': [0,1],
+        # 'k_il8r_a': [0,1],
+        # 'k_il8r_da': [0,1],
+        # 'kd_il8_irak_p': [1,100000],
+        # 'k_il8_irak_p': [100,100000],
+        # 'o_il8_irak_p': [0,1],
+        # ## regulated production of IL8
+        # 'k_nfkb_il8_p':[1,1000],
+        # 'kd_nfkb_il8_p':[1,100000],
+        # 'o_nfkb_il8_p': [0,1],
+        # 'k_ap1_il8_p': [1,1000],
+        # 'kd_ap1_il8_p':[1,100000],
+        # 'o_ap1_il8_p':[0,1],
+        
+        'k_rho_a':[1,100],
+        'kd_rho_a':[1000,10000],
+        'o_rho_a':[0,1],
+        'k_rho_nfkb_a':[10000,100000],
+        'kd_rho_nfkb_a':[1000,100000],
+        'o_rho_nfkb_a':[0,1],
+        
+        'k_rho_pi3k_a':[1000,100000],
+        'kd_rho_pi3k_a':[1000,100000],
+        'o_rho_pi3k_a':[0,1],
+        'k_rho_stat3_a':[1,10000],
+        'kd_rho_stat3_a':[1,100000],
+        'o_rho_stat3_a':[0,1],
 
+
+        ## IL6
+        # 'IL6' : [1,10], 
+        # 'IL6_R_JACK' : [1,10], 
+        # 'pIL6_R_JACK': [1,10], 
+        # 'k_il6r_b' :[0,1],
+        # 'k_il6r_ub':[0,1],
+        # 'k_il6r_a':[0,1],
+        # 'k_il6r_da':[0,1],
+        # 'IL6_m' : [1,10],
+        # 'k_il6m_il6' : [0,1],
+        # 'k_il6_p' : [0,100],
+        # 'k_il6_stat3_a':[1,100],
+        # 'kd_il6_stat3_a':[1,10000],
+        # 'o_il6_stat3_a':[0,1],
+        # 'k_il6_pi3k_a':[1,1000],
+        # 'kd_il6_pi3k_a':[1,10000],
+        # 'o_il6_pi3k_a':[0,1],
+        
+        ## regulated IL6 production
+        'k_nfkb_il6_p' : [1,1000],
+        'kd_nfkb_il6_p' : [1,100000],
+        'o_nfkb_il6_p' : [0,1],
     },
 
     'combined':{
+        'k_nfkb_il8_p':[1,1000],
+        'kd_nfkb_il8_p':[1,100000],
+        'o_nfkb_il8_p': [0,1],
+        'k_ap1_il8_p': [1,1000],
+        'kd_ap1_il8_p':[1,100000],
+        'o_ap1_il8_p':[0,1],
+
         'kd_mg_ikb_d':[0.1,10000],
         'n_mg_ikb_d':[0.1,50],
         
-        'kd_h3s10_ikb_p' : [0.1,1000],
-        'k_h3s10_ikb_p' : [0.1,100],
+        'kd_h3s10_ikb_p' : [0.1,10000],
+        'k_h3s10_ikb_p' : [0.1,1000],
 
 
-        'kd_h3s10_il8_p': [1,1000],
-        'k_h3s10_il8_p': [0.1,100],
+        'kd_h3s10_il8_p': [1,10000],
+        'k_h3s10_il8_p': [0.1,1000],
 
-        'o_h3s10_ikb': [0,2],
-        # 'o_h3s10_il8': [0,2],
-
+        'o_h3s10_ikb': [0,1],
+        'o_h3s10_il8': [0,1],
 
     } 
 }

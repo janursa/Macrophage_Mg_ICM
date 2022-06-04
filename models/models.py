@@ -8,8 +8,8 @@ import json
 dir_file = Path(__file__).resolve().parent
 main_dir = os.path.join(dir_file,'..')
 sys.path.insert(0,main_dir)
-from tools import tools,dirs
-
+from tools import common,dirs
+from data import observations
 def retrieve_activation_stimuli():
     with open(dirs.dir_activation_stimuli) as ff:
       activation_s = json.load(ff)
@@ -51,8 +51,8 @@ class Macrophage:
       for study_tag,study_item in studies.items():
           try:
             results = self.simulate_study(study_tag=study_tag,study=study_item,params=params)
-          except tools.InvalidParams:
-            raise tools.InvalidParams()
+          except common.InvalidParams:
+            raise common.InvalidParams()
           sims[study_tag]= results
       return sims
 
@@ -68,8 +68,8 @@ class Macrophage:
           inputs = study[ID]['inputs']
           try:
             ID_results = self.simulate(study_tag = study_tag,params=params,inputs=inputs,selections=selections,duration=duration,activation=study['activation'])
-          except tools.InvalidParams:
-            raise tools.InvalidParams()
+          except common.InvalidParams:
+            raise common.InvalidParams()
           results[ID] = ID_results
 
       
@@ -173,10 +173,10 @@ class Macrophage:
       except RuntimeError:
         attp+=1
           
-      if attp > 10 :
+      if attp > 5 :
           print('Invalid parameter set')
           print(params)
-          raise tools.InvalidParams('run model didnt converge')
+          raise common.InvalidParams('run model didnt converge')
       steps = random.randint(int(duration/2),duration)
     
     return results
@@ -188,10 +188,10 @@ class Macrophage:
       for target,target_results in study_result.items():          
         exps,sims = np.array(target_results['exp']),np.array(target_results['sim'])
         ##---- for certain studies, the simulation results should be normalized ----##
-        if study_tag == 'eq_mg' or study_tag == 'R05_nMg_f' or study_tag == 'Q21_Mg' or study_tag == 'Q21_eq_trpm' or study_tag == 'Q21_eq_h3s10' or study_tag == 'eq_IL8' or study_tag == 'S12_LPS' or study_tag == 'eq_combined' or study_tag == 'eq_IL6':
-            n_sims,n_exps = sims,exps
+        if study_tag in observations.normalized_obs:
+            n_sims,n_exps = common.normalize(study_tag=study_tag,target=target,sims=sims,exps=exps)
         else:
-            n_sims,n_exps = tools.normalize(study_tag=study_tag,target=target,sims=sims,exps=exps)
+            n_sims,n_exps = sims,exps
             
         error = self.quantitative_cost_func(exp=n_exps,sim=n_sims)
         if (target == 'nTRPM_n' or target == 'nTRPM' or target == 'nM7CK_n' or target == 'anH3S10') and max(sims)>10: # to control the max values these factors can have
@@ -220,26 +220,27 @@ class Macrophage:
       # results_raw = Macrophage.run_sbml_model(model_sbml=self.model,params = params,duration=duration+1,selections=target_keys,study_tag=study_tag,activation=activation)
 
       results_raw = Macrophage.run_sbml_model_recursive(model_sbml=self.model,params = params,duration=duration+1,selections=target_keys,study_tag=study_tag,activation=activation)
-    except tools.InvalidParams:
-      raise tools.InvalidParams()
+    except common.InvalidParams:
+      raise common.InvalidParams()
     results ={}
     for key in target_keys:
       measured_times = selections[key]
       measured_times_indices = []
       for measured_time in measured_times:
-        measured_times_indices.append(tools.indexing(measured_time,results_raw['time'])) 
+        measured_times_indices.append(common.indexing(measured_time,results_raw['time'])) 
       results[key] = results_raw[key][measured_times_indices]
     return results
   def run(self,params,studies):
     flag = 1
     try:
       sims = self.simulate_studies(params,studies)
-    except tools.InvalidParams:
+    except common.InvalidParams:
       # mean_cost = 1+random.random()
       mean_cost = 100
+      target_costs =None
       flag = 0
     if flag == 1:
       sims_vs_exps = self.sort_sim_vs_exp(sims,studies)
       target_costs,mean_cost = self.calculate_cost(sims_vs_exps,studies)
     
-    return mean_cost
+    return mean_cost,target_costs

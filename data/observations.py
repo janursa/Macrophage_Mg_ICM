@@ -4,8 +4,8 @@ from pathlib import Path
 dir_file = Path(__file__).resolve().parent
 main_dir = os.path.join(dir_file,'..')
 sys.path.insert(0,main_dir)
-from tools import tools
-
+from tools import common
+print(common.indexing)
 t2m = 1 # relationship between each simulation time and minute
 
 range_3h_10mStep = list(range(int(10/t2m),3*int(60/t2m),int(10/t2m)))
@@ -13,21 +13,25 @@ range_24h_60mStep = list(range(60,24*int(60/t2m),int(60/t2m)))
 range_48h_60mStep = list(range(12*int(60/t2m),48*int(60/t2m),int(60/t2m)))
 range_12h_60mStep = list(range(3*int(60/t2m),12*int(60/t2m),int(60/t2m))) # span of 3 to 12 hs
 
+normalized_obs = ['Q21_M1','M05_NFKBn','M05_IT','F17','N03','F14','B20_LPS','M18']
 
 packages = {
 	'M11' : ['eq_mg','R05_nMg_f','Q21_Mg'], # mg entry and equalibrium
 	'M12' : ['Q21_M1','Q21_eq_trpm','Q21_eq_h3s10'],
 	'M1': [],
 	# R05_mg_n (mg extrusion)
-	# 'IL8' : ['eq_IL8','M05_IT','M05_NFKBn'],
-    'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','M18'],
-    # 'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','eq_IL6','F17','N03','F14'],
-   # 'ILs' : ['eq_IL8','M05_IT','M05_NFKBn','eq_IL6','F17','N03','F14','M18'], # 
+	# 'IL8' : ['eq_IL8','M05_IT','M05_NFKBn','M18'],
+    
+    # 'ILs' : ['eq_IL8','M05_IT','M18'],
+   'ILs_p1':['eq_IL6','F17','N03','F14'], 
+   'ILs_p2' : ['eq_IL8_p2','M05_IT'],
+   # 'ILs_p3' : ['eq_IL6','F17','N03','F14','eq_IL8_p3','M05_NFKBn','M18'],
+   'ILs_p3' : ['eq_IL6','F17','N03','F14','eq_IL8_p3','M05_IT','M05_NFKBn','M18'],
+    # 
    # 'ILs' : ['eq_IL6','F17','N03','F14'], # 
     # 'IL8' : ['eq_IL8','M05_IT'],
     # 'IL8' : ['eq_IL8','M05_IT'],
     # 'IL8' : ['M05_IT'],
-	#'M18','M05_NFKBn'
     #Q21_Mg_IL1b
     #Q21_NFKBn_72h is not quantitative
     #B20_NFKBn
@@ -40,7 +44,7 @@ packages = {
     # 'combined' : ['S12_IKBa_mg','Z19_IKB_NFKB','S12_NFKBn_mg','Q21_Mg_IL8','B20_NFKBn','eq_combined'], # Mg regulate
     'combined' : ['S12_IKBa_mg','S12_NFKBn_mg','B20_NFKBn','Q21_Mg_IL8','eq_combined'], # Mg regulate
     # 'IL6':['F17']
-    'IL6':['eq_IL6','F17','N03','F14']
+    
     #'F17'
     # ,'B17'
     # 'eq_IL6'
@@ -132,8 +136,8 @@ observations = {
         'duration':int(24*60/t2m),
         'selections': {
             'nIL6_m':range_24h_60mStep,
-            'F_stat3_a': range_24h_60mStep,
-            'F_pi3k_a': range_24h_60mStep
+            'F_il6_stat3_a': range_24h_60mStep,
+            'F_il6_pi3k_a': range_24h_60mStep
 
         },
         'ctr': {
@@ -141,8 +145,8 @@ observations = {
             },
             'expectations': {
                 'nIL6_m':{'mean':[1 for i in range_24h_60mStep]}, #normalized format
-                'F_stat3_a': {'mean':[1 for i in range_24h_60mStep]},
-                'F_pi3k_a': {'mean':[1 for i in range_24h_60mStep]},
+                'F_il6_stat3_a': {'mean':[1 for i in range_24h_60mStep]},
+                'F_il6_pi3k_a': {'mean':[1 for i in range_24h_60mStep]},
             }
         },
     },
@@ -279,7 +283,7 @@ observations = {
         'stim': {
             'inputs': {
              'LPS': 10*1000,
-             'IFNG':50*tools.c_2_ac['IFNG']
+             'IFNG':50*common.c_2_ac['IFNG']
             },
             'expectations': {
                 'nTNFa':{'mean':[200],
@@ -745,9 +749,9 @@ observations = {
             # 'nIFNGR': [int(24*60/t2m)],
             # # 'nIL4R': [int(24*60/t2m)],
             'nIL1b': [int(24*60/t2m)],
-            'nIL10': [int(24*60/t2m)],
-            'nTNFa': [int(24*60/t2m)],
-            'nIL6': [int(24*60/t2m)],
+            # 'nIL10': [int(24*60/t2m)],
+            # 'nTNFa': [int(24*60/t2m)],
+            # 'nIL6': [int(24*60/t2m)],
         },
         'ctr': {
             'inputs': {
@@ -759,8 +763,8 @@ observations = {
                 'nIL4R':{'mean':[6251/6251],
                 		'std':[abs(4517-8834)/1.35/6251],
                         'pvalue':[0.01]},
-                'nIL1b':{'mean':[390.0/390.0],
-                		'std':[269/390.0],
+                'nIL1b':{'mean':[1],
+                		'std':[.2/1],
                         'pvalue':[None]},
                 'nIL10':{'mean':[126/126],
                 		'std':[abs(95.9-152.9)/1.35/126],
@@ -768,8 +772,8 @@ observations = {
                 'nTNFa':{'mean':[1114.3/1114.3],
                     'std':[abs(722.2-1586.4)/1.35/1114],
                     'pvalue':[None]},
-                'nIL6':{'mean':[14300/14300],
-                    'std':[abs(9382-16584)/1.35/14300],
+                'nIL6':{'mean':[1],
+                    'std':[.1],
                     'pvalue':[None]}
             }
         },
@@ -784,8 +788,8 @@ observations = {
                 'nIL4R':{'mean':[5462/6251],
                 		'std':[abs(3181-7475)/1.35/6251],
                         'pvalue':[0.01]},
-                'nIL1b':{'mean':[434.4/390.0],
-                		'std':[354/390.0],
+                'nIL1b':{'mean':[1.5],
+                		'std':[.18],
                         'pvalue':[None]},
                 'nIL10':{'mean':[137.9/126.8],
                 		'std':[abs(103.1-195.0)/1.35/126],
@@ -793,8 +797,8 @@ observations = {
                 'nTNFa':{'mean':[1223.3/1114.3],
                         'std':[abs(555.0-1636.0)/1.35/1114],
                     'pvalue':[None]},
-                'nIL6':{'mean':[17850/14300],
-                    'std':[abs(11850-21251)/1.35/14300],
+                'nIL6':{'mean':[1.8],
+                    'std':[.12],
                     'pvalue':[0.01]}
             }
         },
@@ -809,8 +813,8 @@ observations = {
                 'nIL4R':{'mean':[5359/6251],
                 		'std':[abs(3206-7697)/1.35/6251],
                         'pvalue':[0.01]},
-                'nIL1b':{'mean':[466.2/390.0],
-                		'std':[321/390.0],
+                'nIL1b':{'mean':[2.1],
+                		'std':[.15],
                         'pvalue':[None]},
                 'nIL10':{'mean':[161.7/126.8],
                 		'std':[abs(96.8-182.0)/1.35/126],
@@ -818,9 +822,9 @@ observations = {
                 'nTNFa':{'mean':[1199.9/1114.3],
                     'std':[abs(806.6-1666.4)/1.35/1114],
                     'pvalue':[None]},
-                'nIL6':{'mean':[16182/14300],
-                    'std':[abs(10776-20545)/1.35/14300],
-                    'pvalue':[None]}
+                'nIL6':{'mean':[1.7],
+                    'std':[.1],
+                    'pvalue':[0.01]}
                 
             }
         },
@@ -835,8 +839,8 @@ observations = {
                 'nIL4R':{'mean':[5367/6251],
                 		'std':[abs(3136-7625)/1.35/6251],
                         'pvalue':[0.01]},
-                'nIL1b':{'mean':[498.3/390.0],
-                		'std':[274/390.0],
+                'nIL1b':{'mean':[2.6],
+                		'std':[.3],
                         'pvalue':[None]},
                 'nIL10':{'mean':[150/126.8],
                 		'std':[abs(91.1-166.4)/1.35/126],
@@ -844,8 +848,8 @@ observations = {
                 'nTNFa':{'mean':[1138.9/1114.3],
                         'std':[abs(780.3-1723.7)/1.35/1114],
                         'pvalue':[None]},
-                'nIL6':{'mean':[15120/14300],
-                    'std':[abs(12115-19545)/1.35/14300],
+                'nIL6':{'mean':[1.6],
+                    'std':[.2],
                     'pvalue':[0.01]}
             }
         },
@@ -860,8 +864,8 @@ observations = {
                 'nIL4R':{'mean':[5323/6251],
                 		'std':[abs(3155-7715)/1.35/6251],
                         'pvalue':[0.01]},
-                'nIL1b':{'mean':[516/390.0],
-                		'std':[258/390.0],
+                'nIL1b':{'mean':[3],
+                		'std':[.3],
                         'pvalue':[0.01]},
                 'nIL10':{'mean':[127/126.8],
                 		'std':[abs(90.2-151.7)/1.35/126],
@@ -869,8 +873,8 @@ observations = {
                 'nTNFa':{'mean':[1136.1/1114.3],
                         'std':[abs(665.5-1346.7)/1.35/1114],
                         'pvalue':[None]},
-                'nIL6':{'mean':[12554/14300],
-                    'std':[abs(10212-16777)/1.35/14300],
+                'nIL6':{'mean':[.95],
+                    'std':[.3],
                     'pvalue':[None]}
             }
         },
@@ -1261,9 +1265,13 @@ observations = {
 			'nIL8_m':  range_24h_60mStep,
 			'F_il8_irak':  range_24h_60mStep,
             'F_rho_a':  range_24h_60mStep,
+            'F_rho_nfkb_a':range_24h_60mStep,
+            'F_rho_stat3_a':range_24h_60mStep,
             'F_rho_pi3k_a':  range_24h_60mStep,
             'F_nfkb_il8_p': range_24h_60mStep,
             'F_ap1_il8_p': range_24h_60mStep,
+            # # 'F_rho_jnk_a':range_24h_60mStep,
+            
 		},
 		'IDs': ['ctr'],
 		'ctr':{
@@ -1289,9 +1297,112 @@ observations = {
                 'F_ap1_il8_p':{
                     'mean':[1 for i in range_24h_60mStep]
                 },
+                'F_rho_jnk_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_stat3_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_nfkb_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                }
 			}
 		}
 	},
+    'eq_IL8_p2':{# equalibrium of IL8
+        'duration':24*int(60/t2m), # hours
+        'activation': False,
+        'weight': 0.5,
+        'selections':{
+            'nIL8_m':  range_24h_60mStep,
+            'F_il8_irak':  range_24h_60mStep,           
+        },
+        'IDs': ['ctr'],
+        'ctr':{
+            'inputs':{
+                        
+                    },
+            'expectations': {
+                'nIL8_m': {
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_il8_irak': {
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_pi3k_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_nfkb_il8_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_ap1_il8_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_jnk_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_stat3_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_nfkb_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                }
+            }
+        }
+    },
+    'eq_IL8_p3':{# equalibrium of IL8
+        'duration':24*int(60/t2m), # hours
+        'activation': False,
+        'weight': 0.2,
+        'selections':{
+            # 'nIL8_m':  range_24h_60mStep,
+            # 'F_nfkb_il8_p': range_24h_60mStep,
+            # 'F_ap1_il8_p': range_24h_60mStep, 
+            'F_rho_nfkb_a':range_24h_60mStep,
+            'F_rho_stat3_a':range_24h_60mStep,
+            'F_rho_pi3k_a':  range_24h_60mStep,
+            'F_nfkb_il8_p': range_24h_60mStep,
+            'F_ap1_il8_p': range_24h_60mStep,           
+        },
+        'IDs': ['ctr'],
+        'ctr':{
+            'inputs':{
+                        
+                    },
+            'expectations': {
+                'nIL8_m': {
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_il8_irak': {
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_pi3k_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_nfkb_il8_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_ap1_il8_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_jnk_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_stat3_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_rho_nfkb_a':{
+                    'mean':[1 for i in range_24h_60mStep]
+                }
+            }
+        }
+    },
 	
  'Q21_Mg_IL8':{# the effect of different Mg ion concentrations on IL8
         'duration':72*int(60/t2m), # hours

@@ -71,7 +71,6 @@ class Macrophage:
           except common.InvalidParams:
             raise common.InvalidParams()
           results[ID] = ID_results
-
       
       return results
   # def cost_study(self,study,study_results):

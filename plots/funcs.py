@@ -224,6 +224,12 @@ def P23_plot(model_sbml,model_macrophage,params,observations):
     for target in targets:
         plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
         jj+=1
+
+    # g_size = 6
+    # study_tag,target = 'M18','nIL1b'
+    # IDs = obs[study_tag]['IDs']
+    # plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
+    # jj+=1
 #
 #     g_size = 6
 #     study_tag,target = 'M18','nIL10'

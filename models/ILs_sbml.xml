@@ -283,14 +283,14 @@
       <parameter id="pIL8_R_0" value="2.89446745636511" constant="false"/>
       <parameter id="kd_il8_irak_p" value="75192.4684557955" constant="true"/>
       <parameter id="o_il8_irak_p" value="0.407632721898397" constant="true"/>
-      <parameter id="F_rho_a" value="0.072358544426072" constant="false"/>
-      <parameter id="k_rho_a" value="29.052917002478" constant="true"/>
-      <parameter id="kd_rho_a" value="8129.62306627748" constant="true"/>
-      <parameter id="o_rho_a" value="0.927641455573928" constant="true"/>
-      <parameter id="F_rho_nfkb_a" value="0.924114852768413" constant="false"/>
-      <parameter id="k_rho_nfkb_a" value="77972.8218479906" constant="true"/>
-      <parameter id="kd_rho_nfkb_a" value="10575.9847956753" constant="true"/>
-      <parameter id="o_rho_nfkb_a" value="0.0758851472315869" constant="true"/>
+      <parameter id="F_rho_a" value="0.477900658771271" constant="false"/>
+      <parameter id="k_rho_a" value="23.3725250195629" constant="true"/>
+      <parameter id="kd_rho_a" value="8801.60240120775" constant="true"/>
+      <parameter id="o_rho_a" value="0.522099341228729" constant="true"/>
+      <parameter id="F_rho_nfkb_a" value="0.946481999984726" constant="false"/>
+      <parameter id="k_rho_nfkb_a" value="70039.1230455772" constant="true"/>
+      <parameter id="kd_rho_nfkb_a" value="7778.79087212573" constant="true"/>
+      <parameter id="o_rho_nfkb_a" value="0.0535180000152741" constant="true"/>
       <parameter id="F_rho_pi3k_a" value="0.963895246029807" constant="false"/>
       <parameter id="k_rho_pi3k_a" value="95741.0295472099" constant="true"/>
       <parameter id="kd_rho_pi3k_a" value="1557.6419724575" constant="true"/>

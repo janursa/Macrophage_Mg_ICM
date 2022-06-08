@@ -54,6 +54,8 @@ class Macrophage:
           except common.InvalidParams:
             raise common.InvalidParams()
           sims[study_tag]= results
+      # print(results)
+      # sys.exit(2)
       return sims
 
   def simulate_study(self,study_tag,study,params):
@@ -172,7 +174,7 @@ class Macrophage:
       except RuntimeError:
         attp+=1
           
-      if attp > 5 :
+      if attp > 2 :
           print('Invalid parameter set')
           print(params)
           raise common.InvalidParams('run model didnt converge')
@@ -241,5 +243,5 @@ class Macrophage:
     if flag == 1:
       sims_vs_exps = self.sort_sim_vs_exp(sims,studies)
       target_costs,mean_cost = self.calculate_cost(sims_vs_exps,studies)
-    
+    # print(sims)
     return mean_cost,target_costs

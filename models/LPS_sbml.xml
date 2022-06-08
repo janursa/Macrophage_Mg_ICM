@@ -218,12 +218,13 @@
       <species id="pIRAK4" compartment="unnamed" initialAmount="1" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="GSK3b" compartment="unnamed" initialAmount="87270" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="pGSK3b" compartment="unnamed" initialAmount="52730" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="aLPS" compartment="comp1" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="LPS" compartment="comp1" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
-      <parameter id="F_LPS_irak" value="1" constant="false"/>
-      <parameter id="k_lps_irak_p" value="631249" constant="true"/>
-      <parameter id="kd_lps_irak_p" value="270" constant="true"/>
+      <parameter id="F_lps" value="1" constant="false"/>
+      <parameter id="k_lps" value="1419.63233017805" constant="true"/>
+      <parameter id="kd_lps" value="70095.6397988737" constant="true"/>
       <parameter id="nIKB" value="1" constant="false"/>
       <parameter id="IKB_0" value="435" constant="false"/>
       <parameter id="nIL1b" value="1" constant="false"/>
@@ -232,6 +233,8 @@
       <parameter id="IL10_0" value="900" constant="false"/>
       <parameter id="nTNFa" value="1" constant="false"/>
       <parameter id="TNFa_0" value="384" constant="false"/>
+      <parameter id="nNFKB_n" value="1" constant="false"/>
+      <parameter id="NFKB_n_0" value="931" constant="false"/>
       <parameter id="kf1" value="1.6e-07" constant="true"/>
       <parameter id="kr1" value="0.01" constant="true"/>
       <parameter id="kf2" value="3" constant="true"/>
@@ -553,7 +556,9 @@
       <parameter id="k256" value="1" constant="true"/>
       <parameter id="k257" value="1.04e-10" constant="true"/>
       <parameter id="k258" value="0.1" constant="true"/>
-      <parameter id="k_lps_d" value="0.199" constant="true"/>
+      <parameter id="k_lps_a" value="0.573458061458454" constant="true"/>
+      <parameter id="k_lpsa_d" value="0.00655518556156864" constant="true"/>
+      <parameter id="k_lps_d" value="0.213981964105976" constant="true"/>
       <parameter id="LPS_0" value="0" constant="true"/>
     </listOfParameters>
     <listOfInitialAssignments>
@@ -575,6 +580,11 @@
       <initialAssignment symbol="TNFa_0">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <ci> TNFa </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="NFKB_n_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> NFKB_n </ci>
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
@@ -599,7 +609,7 @@
           </apply>
         </math>
       </assignmentRule>
-      <assignmentRule variable="F_LPS_irak">
+      <assignmentRule variable="F_lps">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <plus/>
@@ -608,13 +618,13 @@
               <divide/>
               <apply>
                 <times/>
-                <ci> k_lps_irak_p </ci>
-                <ci> LPS </ci>
+                <ci> k_lps </ci>
+                <ci> aLPS </ci>
               </apply>
               <apply>
                 <plus/>
-                <ci> LPS </ci>
-                <ci> kd_lps_irak_p </ci>
+                <ci> aLPS </ci>
+                <ci> kd_lps </ci>
               </apply>
             </apply>
           </apply>
@@ -653,6 +663,15 @@
             <divide/>
             <ci> TNFa </ci>
             <ci> TNFa_0 </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="nNFKB_n">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> NFKB_n </ci>
+            <ci> NFKB_n_0 </ci>
           </apply>
         </math>
       </assignmentRule>
@@ -6897,12 +6916,10 @@
         <listOfReactants>
           <speciesReference species="irak4_prod" stoichiometry="1" constant="true"/>
           <speciesReference species="m93" stoichiometry="1" constant="true"/>
-          <speciesReference species="LPS" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
           <speciesReference species="IRAK4" stoichiometry="1" constant="true"/>
           <speciesReference species="m93" stoichiometry="1" constant="true"/>
-          <speciesReference species="LPS" stoichiometry="1" constant="true"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -6923,7 +6940,6 @@
                   </apply>
                 </apply>
               </apply>
-              <ci> F_LPS_irak </ci>
             </apply>
           </math>
         </kineticLaw>
@@ -7306,11 +7322,68 @@
       </reaction>
       <reaction id="_J0" reversible="true" fast="false">
         <listOfReactants>
+          <speciesReference species="IKB_NFKB" stoichiometry="1" constant="true"/>
           <speciesReference species="LPS" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="deg" stoichiometry="1" constant="true"/>
+          <speciesReference species="IKB" stoichiometry="1" constant="true"/>
+          <speciesReference species="NFKB" stoichiometry="1" constant="true"/>
+          <speciesReference species="LPS" stoichiometry="1" constant="true"/>
         </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <apply>
+                <minus/>
+                <ci> F_lps </ci>
+                <cn type="integer"> 1 </cn>
+              </apply>
+              <apply>
+                <gt/>
+                <ci> F_lps </ci>
+                <cn type="integer"> 1 </cn>
+              </apply>
+              <ci> IKB_NFKB </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J1" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="LPS" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="aLPS" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_lps_a </ci>
+              <ci> LPS </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J2" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="aLPS" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k_lpsa_d </ci>
+              <ci> aLPS </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J3" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="LPS" stoichiometry="1" constant="true"/>
+        </listOfReactants>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -7396,6 +7469,24 @@
           <eventAssignment variable="TNFa_0">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <ci> TNFa </ci>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="_E4" useValuesFromTriggerTime="true">
+        <trigger initialValue="true" persistent="true">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time"> time </csymbol>
+              <cn type="integer"> 0 </cn>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="NFKB_n_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> NFKB_n </ci>
             </math>
           </eventAssignment>
         </listOfEventAssignments>

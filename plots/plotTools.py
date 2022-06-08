@@ -85,6 +85,8 @@ class Specs:
         
         elif study_tag == 'Q21_14d':
             label = prefix+': '+labels[target]+' (%s'%(int(duration/60/24))+'d)'
+        elif study_tag == 'S12_LPS':
+            label = prefix+': '+labels[target]+' \n(%s'%('50 pg/ml')+')'
         else:
             label = study_tag+'\n'+prefix+': '+labels[target]+' (%s'%(int(duration/60))+'h)'
         return label
@@ -99,6 +101,8 @@ class Specs:
             label = 'IL8 (ng/ml)'
         elif study_tag == 'B17' or study_tag == 'F17' or study_tag == 'N03' or study_tag == 'F14':
             label = 'IL6 (ng/ml)'
+        elif study_tag == 'B20_LPS':
+            label = 'LPS (ng/ml)'
         
         return label
         
@@ -121,7 +125,7 @@ class Specs:
     @staticmethod
     def determine_ylabel(study_tag):
         label = 'Relative quantity \n (To control)'
-        if study_tag =='eq_IL8' or study_tag =='Q21_Mg' or study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag =='R05_nMg_f':
+        if study_tag =='eq_IL8' or study_tag =='Q21_Mg' or study_tag == 'eq_mg' or study_tag == 'Q21_eq' or study_tag =='R05_nMg_f' or study_tag == 'S12_LPS':
             label = 'Relative quantity \n (To initial value)'
         elif study_tag =='Q21_IkBa' or study_tag =='Q21_IkBa_6h' or study_tag =='Q21_IkBa_72h' :
             label = "% Input"
@@ -187,8 +191,8 @@ class Specs:
             adj_ticks = [0,1]
             adj_labels = ['ctr','5']
         elif study_tag == 'S12_LPS':
-            adj_ticks = [int(ii*60) for ii in [0,1,2,8]]
-            adj_labels = [0,1,2,8]
+            adj_ticks = [int(ii*60) for ii in [0,2,8,24]]
+            adj_labels = [0,2,8,24]
         elif study_tag == 'B17':
             adj_ticks = [0,1]
             adj_labels = ['ctr','60']
@@ -199,6 +203,9 @@ class Specs:
             adj_ticks = [0,1,2,3]
             adj_labels = ['ctr','0.1','10','100']
         elif study_tag == 'F14':
+            adj_ticks = [0,1]
+            adj_labels = ['ctr','10']
+        elif study_tag == 'B20_LPS':
             adj_ticks = [0,1]
             adj_labels = ['ctr','10']
 
@@ -242,6 +249,10 @@ class Specs:
             position = (.5,1)
         elif study_tag == 'M05_NFKBn':
             position = (.4,1)
+        elif study_tag == 'F17':
+            position = (.37,1.1)
+        elif study_tag == 'N03':
+            position = (1,1.1)
         ncol = 1
         return position,ncol
 

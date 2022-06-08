@@ -9,6 +9,7 @@ from tools import dirs, common
 combined_model_str = """
 import "M1_sbml.xml";
 import "ILs_sbml.xml";
+# import "LPS_sbml.xml";
 model combined()
     M1: Mg_model();
     PP: ILs_model();
@@ -41,7 +42,7 @@ model combined()
     
     // adjustments to previous model:
     ### Mg downregulate IKB degradation ###
-    PP.v226: PP.IKB + M1.Mg_f => deg + M1.Mg_f; PP.k226*PP.IKB* F_mg_ikb_d;
+    PP.v226: PP.IKB + M1.Mg_f => deg + M1.Mg_f; PP.k226 * PP.IKB * F_mg_ikb_d;
     ### Mg pH3S10 upregulates IKB production ###
     $PP.Ikb_prod + M1.pH3S10 => PP.IKB + M1.pH3S10; (F_h3s10_ikb-1)*(F_h3s10_ikb>1);
     ### IL8 production is regulated by pH3S10
@@ -51,7 +52,6 @@ model combined()
     
     // Variables:
     kd_mg_ikb_d = 88.948;
-    n_mg_ikb_d = 1;
     
     kd_h3s10_ikb_p = 1.207;
     k_h3s10_ikb_p = 29.52;
@@ -65,7 +65,7 @@ model combined()
     
     
     // assignements
-    F_mg_ikb_d := ((Mg_f_0+kd_mg_ikb_d)/(Mg_f+kd_mg_ikb_d))^n_mg_ikb_d;
+    F_mg_ikb_d := kd_mg_ikb_d/(Mg_f-Mg_f_0+kd_mg_ikb_d);
     F_h3s10_ikb := 1+k_h3s10_ikb_p*(pH3S10-pH3S10_0)/((pH3S10-pH3S10_0)+kd_h3s10_ikb_p) - o_h3s10_ikb
     F_p3s10_il8_p := 1+k_h3s10_il8_p*(pH3S10-pH3S10_0)/((pH3S10-pH3S10_0)+kd_h3s10_il8_p) - o_h3s10_il8;
 end
@@ -74,15 +74,18 @@ end
 combined = te.loada(combined_model_str)
 
 
-if True: # only labels of IL8 are replaced
+if False: # only labels of IL8 are replaced
     ILs_model = te.loadSBMLModel(dirs.dir_ILs_model)
     species_IDs = ILs_model.getFloatingSpeciesIds()
     combined_m = common.assign_surrogate_names(combined,species_IDs)
     combined_m.exportToSBML(dirs.dir_model)
-if False: # both labels of IL8 and M1 are replaced
-    IL8_model = te.loadSBMLModel(dirs.dir_IL8_model)
+if True: # both labels of IL8 and M1 are replaced
+    ILs_model = te.loadSBMLModel(dirs.dir_ILs_model)
     Mg_model = te.loadSBMLModel(dirs.dir_M1_model)
-    species_IDs_1 = IL8_model.getFloatingSpeciesIds()
+    species_IDs_1 = ILs_model.getFloatingSpeciesIds()
+    # LPS_model = te.loadSBMLModel(dirs.dir_LPS_model)
+    # Mg_model = te.loadSBMLModel(dirs.dir_M1_model)
+    # species_IDs_1 = LPS_model.getFloatingSpeciesIds()
     #species_IDs_2 = Mg_model.getFloatingSpeciesIds()
     combined_m_1 = common.assign_surrogate_names(combined,species_IDs_1)
     #combined_m_2 = tools.assign_surrogate_names(combined_m_1,species_IDs_2,prefix='M1_')

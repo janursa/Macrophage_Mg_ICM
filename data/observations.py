@@ -13,25 +13,18 @@ range_24h_60mStep = list(range(60,24*int(60/t2m),int(60/t2m)))
 range_48h_60mStep = list(range(12*int(60/t2m),48*int(60/t2m),int(60/t2m)))
 range_12h_60mStep = list(range(3*int(60/t2m),12*int(60/t2m),int(60/t2m))) # span of 3 to 12 hs
 
-normalized_obs = ['Q21_M1','M05_NFKBn','M05_IT','F17','N03','F14','B20_LPS','M18']
+normalized_obs = ['Q21_M1','M05_NFKBn','M05_IT','F17','N03','F14','B20_LPS','M18','S12_IKBa_mg','S12_NFKBn_mg','B20_NFKBn','Q21_Mg_IL8','B20_LPS']
 
 packages = {
 	'M11' : ['eq_mg','R05_nMg_f','Q21_Mg'], # mg entry and equalibrium
 	'M12' : ['Q21_M1','Q21_eq_trpm','Q21_eq_h3s10'],
 	'M1': [],
 	# R05_mg_n (mg extrusion)
-	# 'IL8' : ['eq_IL8','M05_IT','M05_NFKBn','M18'],
-    
-    # 'ILs' : ['eq_IL8','M05_IT','M18'],
-   'ILs_p1':['eq_IL6','F17','N03','F14'], 
-   'ILs_p2' : ['eq_IL8_p2','M05_IT'],
-   # 'ILs_p3' : ['eq_IL6','F17','N03','F14','eq_IL8_p3','M05_NFKBn','M18'],
-   'ILs_p3' : ['eq_IL6','F17','N03','F14','eq_IL8_p3','M05_IT','M05_NFKBn','M18'],
+    # IL6 validation -> 'F14' 
+   'ILs' : ['eq_IL6','F17','N03','eq_ILs','M05_IT','M05_NFKBn'],
+   'ILs_1' : ['eq_IL6','F17','N03'],
+   'ILs_2' : ['eq_ILs','M05_IT','M05_NFKBn'],
     # 
-   # 'ILs' : ['eq_IL6','F17','N03','F14'], # 
-    # 'IL8' : ['eq_IL8','M05_IT'],
-    # 'IL8' : ['eq_IL8','M05_IT'],
-    # 'IL8' : ['M05_IT'],
     #Q21_Mg_IL1b
     #Q21_NFKBn_72h is not quantitative
     #B20_NFKBn
@@ -42,12 +35,9 @@ packages = {
     'LPS':['S12_LPS','B20_LPS'],
     #B20_LPS
     # 'combined' : ['S12_IKBa_mg','Z19_IKB_NFKB','S12_NFKBn_mg','Q21_Mg_IL8','B20_NFKBn','eq_combined'], # Mg regulate
-    'combined' : ['S12_IKBa_mg','S12_NFKBn_mg','B20_NFKBn','Q21_Mg_IL8','eq_combined'], # Mg regulate
-    # 'IL6':['F17']
-    
-    #'F17'
-    # ,'B17'
-    # 'eq_IL6'
+    # 'combined' : ['S12_IKBa_mg','S12_NFKBn_mg','B20_NFKBn','Q21_Mg_IL8','eq_combined'], # Mg regulate
+    'combined' : ['eq_combined','S12_IKBa_mg','Z19_IKB_NFKB','B20_NFKBn','Q21_Mg_IL8'], # Mg regulate
+
 
 }
 
@@ -56,6 +46,7 @@ observations = {
     'F14': { # IL6 stimulates 
         'IDs': ['ctr','IL6_10'],
         'activation': False,
+        # 'weight':0.2,
         'cellType':'HM',
         'duration':int(24*60/t2m),
         'selections': {
@@ -132,27 +123,42 @@ observations = {
     'eq_IL6':{ # eq 
         'IDs': ['ctr'],
         'activation': False,
-        'weight': 0.2,
+        'weight': 1,
         'duration':int(24*60/t2m),
         'selections': {
+            'nIL6':range_24h_60mStep,
             'nIL6_m':range_24h_60mStep,
             'F_il6_stat3_a': range_24h_60mStep,
-            'F_il6_pi3k_a': range_24h_60mStep
+            'F_il6_pi3k_a': range_24h_60mStep,
+
+            'F_nfkb_il6_p':range_24h_60mStep, 
+            'F_ap1_il6_p':range_24h_60mStep,    
+            'F_creb_il6_p':range_24h_60mStep,
+
+            'npPI3K':range_24h_60mStep,
+            'npSTAT3':range_24h_60mStep,
 
         },
         'ctr': {
             'inputs': {
             },
             'expectations': {
+                'nIL6':{'mean':[1 for i in range_24h_60mStep]}, #normalized format
                 'nIL6_m':{'mean':[1 for i in range_24h_60mStep]}, #normalized format
                 'F_il6_stat3_a': {'mean':[1 for i in range_24h_60mStep]},
                 'F_il6_pi3k_a': {'mean':[1 for i in range_24h_60mStep]},
+                'F_nfkb_il6_p': {'mean':[1 for i in range_24h_60mStep]},
+                'F_ap1_il6_p': {'mean':[1 for i in range_24h_60mStep]},
+                'F_creb_il6_p': {'mean':[1 for i in range_24h_60mStep]},
+                'npPI3K': {'mean':[1 for i in range_24h_60mStep]},
+                'npSTAT3': {'mean':[1 for i in range_24h_60mStep]},
             }
         },
     },
     'F17': { # IL6 stimulates STAT3 
         'IDs': ['ctr','IL6_50','IL6_100','IL6_200'],
-        'activation': False,
+        'activation': False, #double checked
+        'weight':1,
         'cellType':'PBMCs',
         'duration':int(24*60/t2m),
         'selections': {
@@ -249,6 +255,7 @@ observations = {
     'eq_combined':{ # eq 
         'IDs': ['ctr'],
         'activation': False,
+        'weight':0.2,
         'duration':int(24*60/t2m),
         'selections': {
             'F_h3s10_ikb': range_24h_60mStep,
@@ -267,15 +274,15 @@ observations = {
     'B20_LPS': { # LPS stimulates cytokine production
         'IDs': ['ctr','stim'],
         'activation': False,
-        'duration':int(13*24*60/t2m),
+        'duration':int(72*60/t2m),
         'selections': {
-            'nTNFa': [int(13*24*60/t2m)]
+            'nTNFa': [int(72*60/t2m)]
         },
         'ctr': {
             'inputs': {
             },
             'expectations': {
-                'nTNFa':{'mean':[1],
+                'nTNFa':{'mean':[30/30],
                         'std':[0],
                         'pvalue':[None]} #normalized format
             }
@@ -286,9 +293,9 @@ observations = {
              'IFNG':50*common.c_2_ac['IFNG']
             },
             'expectations': {
-                'nTNFa':{'mean':[200],
-                        'std':[0],
-                        'pvalue':[None]} #normalized format
+                'nTNFa':{'mean':[150/30],
+                        'std':[abs(250 - 100)/1.35/2/30],
+                        'pvalue':[0.001]} #normalized format
             }
         },
     },
@@ -298,7 +305,7 @@ observations = {
         'duration':int(24*60/t2m),
         'selections': {
             'nIKB': [int(ii*60/t2m) for ii in [0,1,2,8]],
-            'nTNFa': [int(ii*60/t2m) for ii in [0,1,2,4,8,24]]
+            # 'nTNFa': [int(ii*60/t2m) for ii in [0,1,2,4,8,24]]
         },
         'LPS': {
             'inputs': {
@@ -308,10 +315,10 @@ observations = {
                 'nIKB':{'mean':[1,15,8,4],
                         'std':[0,0,0,0],
                         'pvalue':['ns','ns','ns','ns']},
-                'nTNFa':{'mean':[1,27,8,7,4,5],
-                        'std':[0,0,0,0,0,0],
-                        'pvalue':['ns','ns','ns','ns','ns','ns']}
-                         #normalized format
+                # 'nTNFa':{'mean':[1,27,8,7,4,5],
+                #         'std':[0,0,0,0,0,0],
+                #         'pvalue':['ns','ns','ns','ns','ns','ns']}
+                #          #normalized format
             }
         },
     },
@@ -630,6 +637,7 @@ observations = {
 	'M05_IT': { # IL8 regulate IRAK4 and TRAF6
         'IDs': ['ctr','100'],
         'activation': False,
+        'weight':1.5,
         'duration':int(2*60/t2m),
         'selections': {
             'nIRAK4': [int(2*60/t2m)],
@@ -743,14 +751,15 @@ observations = {
 	'M18': { # IL8 regulate IL4R, IFNGR, and IL-1b
         'IDs': ['ctr','0dot01','0dot1','1','10'],
         # 'IDs': ['ctr','10'],
-        'activation': False,
+        'weight': 0.5,
+        'activation': True,
         'duration':int(24*60/t2m),
         'selections': {
             # 'nIFNGR': [int(24*60/t2m)],
             # # 'nIL4R': [int(24*60/t2m)],
-            'nIL1b': [int(24*60/t2m)],
+            # 'nIL1b': [int(24*60/t2m)],
             # 'nIL10': [int(24*60/t2m)],
-            'nTNFa': [int(24*60/t2m)],
+            # 'nTNFa': [int(24*60/t2m)],
             'nIL6': [int(24*60/t2m)],
         },
         'ctr': {
@@ -1257,20 +1266,24 @@ observations = {
 		}
 	},
 	
-	'eq_IL8':{# equalibrium of IL8
+	'eq_ILs':{# equalibrium of IL8
 		'duration':24*int(60/t2m), # hours
 		'activation': False,
         'weight': 0.2,
 		'selections':{
+            'nIL8':  range_24h_60mStep,
 			'nIL8_m':  range_24h_60mStep,
-			'F_il8_irak':  range_24h_60mStep,
-            'F_rho_a':  range_24h_60mStep,
+			'F_il8_irak_p':  range_24h_60mStep,
+            'pIL8_R':range_24h_60mStep,  
+
             'F_rho_nfkb_a':range_24h_60mStep,
             'F_rho_stat3_a':range_24h_60mStep,
             'F_rho_pi3k_a':  range_24h_60mStep,
             'F_nfkb_il8_p': range_24h_60mStep,
             'F_ap1_il8_p': range_24h_60mStep,
-            # # 'F_rho_jnk_a':range_24h_60mStep,
+
+            'npPI3K':range_24h_60mStep,
+            'npSTAT3':range_24h_60mStep,
             
 		},
 		'IDs': ['ctr'],
@@ -1279,13 +1292,21 @@ observations = {
 						
 					},
 			'expectations': {
-				'nIL8_m': {
+				'nIL8_m': {'mean':[1 for i in range_24h_60mStep]},
+                'nIL8': {'mean':[1 for i in range_24h_60mStep]},
+				'F_il8_irak_p': {
 					'mean':[1 for i in range_24h_60mStep]
 				},
-				'F_il8_irak': {
-					'mean':[1 for i in range_24h_60mStep]
-				},
-                'F_rho_a':{
+                'pIL8_R':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_nfkb_il6_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_ap1_il6_p':{
+                    'mean':[1 for i in range_24h_60mStep]
+                },
+                'F_creb_il6_p':{
                     'mean':[1 for i in range_24h_60mStep]
                 },
                 'F_rho_pi3k_a':{
@@ -1305,17 +1326,22 @@ observations = {
                 },
                 'F_rho_nfkb_a':{
                     'mean':[1 for i in range_24h_60mStep]
-                }
+                },
+                'npPI3K': {'mean':[1 for i in range_24h_60mStep]},
+                'npSTAT3': {'mean':[1 for i in range_24h_60mStep]},
 			}
 		}
 	},
-    'eq_IL8_p2':{# equalibrium of IL8
+    'eq_IL8':{# equalibrium of IL8
         'duration':24*int(60/t2m), # hours
         'activation': False,
         'weight': 0.5,
         'selections':{
             'nIL8_m':  range_24h_60mStep,
-            'F_il8_irak':  range_24h_60mStep,           
+            'F_il8_irak_p':  range_24h_60mStep,  
+            'pIL8_R':range_24h_60mStep,      
+            'F_rho_nfkb_a':range_24h_60mStep, 
+
         },
         'IDs': ['ctr'],
         'ctr':{
@@ -1326,25 +1352,10 @@ observations = {
                 'nIL8_m': {
                     'mean':[1 for i in range_24h_60mStep]
                 },
-                'F_il8_irak': {
+                'F_il8_irak_p': {
                     'mean':[1 for i in range_24h_60mStep]
                 },
-                'F_rho_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_pi3k_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_nfkb_il8_p':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_ap1_il8_p':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_jnk_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_stat3_a':{
+                'pIL8_R':{
                     'mean':[1 for i in range_24h_60mStep]
                 },
                 'F_rho_nfkb_a':{
@@ -1353,57 +1364,7 @@ observations = {
             }
         }
     },
-    'eq_IL8_p3':{# equalibrium of IL8
-        'duration':24*int(60/t2m), # hours
-        'activation': False,
-        'weight': 0.2,
-        'selections':{
-            # 'nIL8_m':  range_24h_60mStep,
-            # 'F_nfkb_il8_p': range_24h_60mStep,
-            # 'F_ap1_il8_p': range_24h_60mStep, 
-            'F_rho_nfkb_a':range_24h_60mStep,
-            'F_rho_stat3_a':range_24h_60mStep,
-            'F_rho_pi3k_a':  range_24h_60mStep,
-            'F_nfkb_il8_p': range_24h_60mStep,
-            'F_ap1_il8_p': range_24h_60mStep,           
-        },
-        'IDs': ['ctr'],
-        'ctr':{
-            'inputs':{
-                        
-                    },
-            'expectations': {
-                'nIL8_m': {
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_il8_irak': {
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_pi3k_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_nfkb_il8_p':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_ap1_il8_p':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_jnk_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_stat3_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                },
-                'F_rho_nfkb_a':{
-                    'mean':[1 for i in range_24h_60mStep]
-                }
-            }
-        }
-    },
-	
+    
  'Q21_Mg_IL8':{# the effect of different Mg ion concentrations on IL8
         'duration':72*int(60/t2m), # hours
         'activation': False,

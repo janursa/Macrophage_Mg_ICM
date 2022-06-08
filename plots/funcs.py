@@ -13,12 +13,12 @@ from plots.plotTools import plotTools, Specs,labels
 from data.observations import t2m
 
 def LPS_plot(model_sbml,model_macrophage,params,observations):
-    figsize = (12,4)
+    figsize = (8,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
 
-    width_ratios= [1,1,1]
+    width_ratios= [1,1]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
     
@@ -28,11 +28,11 @@ def LPS_plot(model_sbml,model_macrophage,params,observations):
     plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
     jj+=1
 
-    g_size = 4
-    study_tag,target = 'S12_LPS','nTNFa'
-    ID = obs[study_tag]['IDs'][0]
-    plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
-    jj+=1
+    # g_size = 4
+    # study_tag,target = 'S12_LPS','nTNFa'
+    # ID = obs[study_tag]['IDs'][0]
+    # plotTools.run_plot_line(ax=axes[jj],study_tag=study_tag,target=target,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    # jj+=1
 
     g_size = 4
     study_tag,target = 'B20_LPS','nTNFa'
@@ -53,7 +53,13 @@ def P2_eq(model_sbml,model_macrophage,params,observations):
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
     g_size = 4
-    study_tag,targets = 'eq_IL8', ['nIL8_m','F_il8_irak']
+    study_tag,targets = 'eq_IL8', ['nIL8_m','pIL8_R','F_il8_irak_p']
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+    g_size = 4
+    study_tag,targets = 'eq_IL8', []
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
     jj+=1
@@ -70,11 +76,6 @@ def P2_eq(model_sbml,model_macrophage,params,observations):
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
     jj+=1
 
-    g_size = 4
-    study_tag,targets = 'eq_IL8',list(observations['eq_IL8']['selections'].keys())
-    ID = obs[study_tag]['IDs'][0]
-    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
-    jj+=1
     
 
     
@@ -113,21 +114,35 @@ def P2_ICs_plot(model_sbml,model_macrophage,params,observations):
 
 def P2_IL6_IC_plot(model_sbml,model_macrophage,params,observations):
     # figsize = (28,4)
-    figsize = (10,4)
+    figsize = (18,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
     obs = observations
 
-    width_ratios= [1,1.5]
+    width_ratios= [1,1,1,1.5]
     # width_ratios= [1,1,1,1.25]
     jj = 0
     fig, axes = plt.subplots(1, len(width_ratios), gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
 
     g_size = 4
-    study_tag,targets = 'eq_IL6',list(observations['eq_IL6']['selections'].keys())
+    study_tag,targets = 'eq_IL6',['nIL6_m','nIL6','npSTAT3','npPI3K']
     ID = obs[study_tag]['IDs'][0]
     plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
     jj+=1
+
+    g_size = 4
+    study_tag,targets = 'eq_IL6',['F_il6_stat3_a','F_il6_pi3k_a']
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+    g_size = 4
+    study_tag,targets = 'eq_IL6',['F_ap1_il6_p','F_nfkb_il6_p']
+    ID = obs[study_tag]['IDs'][0]
+    plotTools.run_plot_line_multi_target(ax=axes[jj],study_tag=study_tag,targets=targets,ID=ID,model_sbml=model_sbml,params=params,study=observations[study_tag])
+    jj+=1
+
+
 
     # g_size = 4
     # study_tag,target = 'B17','npSTAT3'
@@ -217,6 +232,7 @@ def P23_plot(model_sbml,model_macrophage,params,observations):
     width_ratios = [1.5,1.5,1.5,1.5]
     nn = len(width_ratios)
     fig, axes = plt.subplots(1, nn, gridspec_kw={'width_ratios': width_ratios},figsize=figsize)
+
     jj = 0
     g_size = 6
     study_tag,targets = 'M18',list(observations['M18']['selections'].keys())
@@ -293,8 +309,6 @@ def P3_IKB_plot(model_sbml,model_macrophage,params,observations): # Mg regulates
     plotTools.run_plot_bar(ax=axes[jj],model=model_macrophage,params=params,study_tag=study_tag,target=target,study=obs[study_tag],plot_t='bar1',IDs=IDs)
     jj+=1
     
-   
-
     
     fig.tight_layout()
     
@@ -426,7 +440,7 @@ def P3_cytokines3_plot(model_sbml,model_macrophage,params,observations): # Mg re
     
     fig.tight_layout()
 
-def P3_cytokines4_plot(model_sbml,model_macrophage,params,observations): # Mg regulates IL8
+def P3_NFKB_14d_plot(model_sbml,model_macrophage,params,observations): # Mg regulates NFKB in 14
     figsize = (8,4)
     fig = plt.figure(figsize=figsize)
     fig.canvas.draw()
